@@ -1,9 +1,7 @@
+import TabsExamplePage from "./pages/example/page";
+
 function App() {
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-      <h1 className="text-4xl font-bold">Hello, shadcn + Tailwind CSS!</h1>
-    </div>
-  );
+  return <TabsExamplePage />;
 }
 
 export default App;
