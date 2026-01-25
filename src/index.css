@@ -224,6 +224,28 @@
 }
 
 @theme inline {
+  /* ===== Gray Scale ===== */
+  --color-gray-black: #000000;
+  --color-gray-1000: #1A1C20;
+  --color-gray-900: #2A3038;
+  --color-gray-800: #565D6D;
+  --color-gray-700: #868894;
+  --color-gray-600: #B1B3BB;
+  --color-gray-500: #D2D3D9;
+  --color-gray-400: #DDDEE4;
+  --color-gray-300: #EEEFF1;
+  --color-gray-200: #F3F4F5;
+  --color-gray-100: #F7F8F9;
+  --color-gray-50: #FBFBFC;
+  --color-gray-0: #FFFFFF;
+
+  /* ===== Chromatic ===== */
+  --color-green-200: #0DAC7D;
+  --color-green-100: #42C694;
+  --color-red-100: #FF3830;
+  --color-blue-100: #217CF9;
+
+  /* ===== Shadcn Colors ===== */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
