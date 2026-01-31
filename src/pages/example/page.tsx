@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Chip } from "@/components/ui/chip";
 import { FAB } from "@/components/ui/fab";
 import { FeedCard } from "@/components/ui/feed-card";
 import { Group, Stack } from "@/components/ui/flex";
@@ -248,6 +249,21 @@ export default function ExamplePage() {
                 onVote={(id) => console.log("Voted:", id)}
                 onMoreClick={() => console.log("More clicked")}
               />
+            </div>
+          </div>
+        </section>
+
+        {/* Chip Section */}
+        <section>
+          <h1 className="text-h2-bold text-gray-black mb-8">Chip 컴포넌트</h1>
+
+          <div className="space-y-8">
+            <div className="rounded-lg bg-white p-6 shadow-sm">
+              <h2 className="text-t1-bold text-gray-900 mb-4">Checked 상태</h2>
+              <div className="flex items-center gap-4">
+                <Chip checked>Chip</Chip>
+                <Chip checked={false}>Chip</Chip>
+              </div>
             </div>
           </div>
         </section>
