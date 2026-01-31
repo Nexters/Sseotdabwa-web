@@ -67,93 +67,93 @@ function FeedCard({
             {/* User Info */}
             <Stack gap={3}>
               <Group gap={4} align="center">
-                <Typography variant="s4-semibold" className="text-gray-900">
+                <Typography variant="b6-medium" className="text-gray-800">
                   {username}
                 </Typography>
                 {category && (
                   <>
                     <Icon icon="right" size={12} className="text-gray-600" />
-                    <Typography variant="c1-medium" className="text-gray-600">
+                    <Typography variant="b6-medium" className="text-gray-600">
                       {category}
                     </Typography>
                   </>
                 )}
               </Group>
-              <Typography variant="c2-regular" className="text-gray-600">
+              <Typography variant="b7-medium" className="text-gray-600">
                 {timeAgo}
               </Typography>
             </Stack>
           </Group>
 
           {/* More Button */}
-          <button
-            type="button"
-            onClick={onMoreClick}
-            className="p-1"
-          >
+          <button type="button" onClick={onMoreClick} className="p-1">
             <Icon icon="dots-solid" size={20} className="text-gray-600" />
           </button>
         </Group>
 
-        {/* Content */}
-        <Typography variant="p2-medium" className="text-gray-900">
-          {content}
-        </Typography>
+        <Stack gap={12} className="bg-gray-100 rounded-2xl px-4 py-3.5">
+          {/* Content */}
+          <Typography variant="p4-medium" className="text-gray-900">
+            {content}
+          </Typography>
 
-        {/* Image with Price */}
-        {image && (
-          <div className="relative w-full aspect-square rounded-[12px] overflow-hidden">
-            <img
-              src={image}
-              alt="Feed content"
-              className="size-full object-cover"
-            />
-            {price !== undefined && (
-              <Group
-                gap={4}
-                align="center"
-                className="absolute left-[16px] bottom-[16px]"
-              >
-                <Icon icon="krw" size={18} className="text-white" />
-                <Typography variant="h2-bold" className="text-white">
-                  {price.toLocaleString()}
-                </Typography>
-              </Group>
-            )}
-          </div>
-        )}
-
-        {/* Vote Options */}
-        <Stack gap={8}>
-          {voteOptions.map((option) => {
-            const isSelected = selectedVoteId === option.id;
-            return (
-              <button
-                key={option.id}
-                type="button"
-                onClick={() => onVote?.(option.id)}
-                className={cn(
-                  "w-full px-[14px] py-[12px] rounded-[8px] text-left transition-colors",
-                  isSelected
-                    ? "bg-gray-900"
-                    : "bg-gray-100 hover:bg-gray-200",
-                )}
-              >
-                <Typography
-                  variant="s3-semibold"
-                  className={isSelected ? "text-white" : "text-gray-900"}
+          {/* Image with Price */}
+          {image && (
+            <div className="relative w-full aspect-square rounded-[12px] overflow-hidden">
+              <img
+                src={image}
+                alt="Feed content"
+                className="size-full object-cover"
+              />
+              {price !== undefined && (
+                <Group
+                  gap={4}
+                  align="center"
+                  className="absolute left-[16px] bottom-[16px]"
                 >
-                  {option.label}
-                </Typography>
-              </button>
-            );
-          })}
-        </Stack>
+                  <Icon icon="krw" size={18} className="text-white" />
+                  <Typography variant="t1-bold" className="text-white">
+                    {price.toLocaleString()}
+                  </Typography>
+                </Group>
+              )}
+            </div>
+          )}
 
-        {/* Vote Status */}
-        <Typography variant="c1-medium" className="text-gray-600">
-          {voteCount}명이 투표했어요 · {isVoting ? "진행중" : "종료"}
-        </Typography>
+          <Stack gap={10}>
+            {/* Vote Options */}
+            <Stack gap={8}>
+              {voteOptions.map((option) => {
+                const isSelected = selectedVoteId === option.id;
+                return (
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => onVote?.(option.id)}
+                    className={cn(
+                      "w-full px-[14px] py-[12px] rounded-[8px] text-left transition-colors",
+                      isSelected
+                        ? "bg-gray-900"
+                        : "bg-gray-100 hover:bg-gray-200",
+                    )}
+                  >
+                    <Typography
+                      variant="s3-semibold"
+                      className={isSelected ? "text-white" : "text-gray-900"}
+                    >
+                      {option.label}
+                    </Typography>
+                  </button>
+                );
+              })}
+            </Stack>
+
+            {/* Vote Status */}
+            <Typography variant="b7-medium" className="text-gray-600">
+              {voteCount}명이 투표했어요 · {isVoting ? "진행중" : "종료"}
+            </Typography>
+          </Stack>
+        </Stack>
       </Stack>
     </div>
   );
