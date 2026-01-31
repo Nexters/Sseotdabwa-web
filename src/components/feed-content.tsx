@@ -73,8 +73,8 @@ function FeedContent() {
   const [selectedFilter, setSelectedFilter] = useState("all");
 
   return (
-    <div data-slot="feed-content" className="px-[20px] pt-[20px] pb-[60px]">
-      <Group gap={8} className="mb-[20px]">
+    <div data-slot="feed-content" className="flex flex-col gap-[20px] px-[20px] pt-[20px] pb-[60px]">
+      <Group gap={8}>
         <Chip
           checked={selectedFilter === "all"}
           onClick={() => setSelectedFilter("all")}
@@ -95,8 +95,9 @@ function FeedContent() {
         </Chip>
       </Group>
       {mockFeeds.map((feed, index) => (
-        <div key={feed.id}>
+        <>
           <FeedCard
+            key={feed.id}
             username={feed.username}
             category={feed.category}
             timeAgo={feed.timeAgo}
@@ -111,9 +112,9 @@ function FeedContent() {
             onMoreClick={() => console.log("More clicked:", feed.id)}
           />
           {index < mockFeeds.length - 1 && (
-            <Divider size="small" className="my-[20px] bg-gray-100" />
+            <Divider key={`divider-${feed.id}`} size="small" className="bg-gray-100" />
           )}
-        </div>
+        </>
       ))}
     </div>
   );
