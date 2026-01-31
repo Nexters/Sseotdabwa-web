@@ -20,8 +20,8 @@ function Tabs({
 const tabsListVariants = cva("inline-flex items-center", {
   variants: {
     variant: {
-      default: "gap-8",
-      line: "gap-8",
+      default: "gap-[14px]",
+      line: "gap-[14px]",
     },
   },
   defaultVariants: {
