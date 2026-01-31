@@ -7,7 +7,7 @@ const buttonVariants = cva(
   [
     "inline-flex items-center justify-center",
     "transition-colors",
-    "disabled:pointer-events-none disabled:opacity-50",
+    "disabled:pointer-events-none disabled:bg-gray-300 disabled:text-gray-700 disabled:border-transparent",
   ],
   {
     variants: {
