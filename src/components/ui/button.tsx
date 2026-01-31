@@ -12,9 +12,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-gray-black text-white",
-        secondary: "bg-gray-200 text-gray-black",
-        outline: "bg-white border border-gray-300 text-gray-700",
+        filled: "bg-gray-900 text-white",
+        outline: "bg-transparent text-gray-800 border border-gray-300",
       },
       size: {
         large: "w-[148px] h-[50px] rounded-[14px] text-t2-bold",
@@ -30,7 +29,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "primary",
+      variant: "filled",
       size: "large",
       rounded: false,
       fullWidth: false,
