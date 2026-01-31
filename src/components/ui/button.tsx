@@ -1,8 +1,8 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils"
-import { Typography, type TypographyVariant } from "@/components/ui/typography"
+import { cn } from "@/lib/utils";
+import { Typography, type TypographyVariant } from "@/components/ui/typography";
 
 const buttonVariants = cva(
   [
@@ -35,21 +35,22 @@ const buttonVariants = cva(
       rounded: false,
       fullWidth: false,
     },
-  }
-)
+  },
+);
 
 const textColorMap = {
   filled: "text-white",
   outline: "text-gray-800",
-} as const
+} as const;
 
 const typographyMap: Record<"large" | "small", TypographyVariant> = {
   large: "t2-bold",
   small: "s5-semibold",
-}
+};
 
 interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
 
 function Button({
@@ -62,13 +63,18 @@ function Button({
   disabled,
   ...props
 }: ButtonProps) {
-  const textColor = disabled ? "text-gray-700" : textColorMap[variant ?? "filled"]
+  const textColor = disabled
+    ? "text-gray-700"
+    : textColorMap[variant ?? "filled"];
 
   return (
     <button
       data-slot="button"
       disabled={disabled}
-      className={cn(buttonVariants({ variant, size, rounded, fullWidth }), className)}
+      className={cn(
+        buttonVariants({ variant, size, rounded, fullWidth }),
+        className,
+      )}
       {...props}
     >
       <Typography
@@ -78,7 +84,7 @@ function Button({
         {children}
       </Typography>
     </button>
-  )
+  );
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };
