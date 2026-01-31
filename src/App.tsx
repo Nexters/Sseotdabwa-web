@@ -1,6 +1,6 @@
+import { FeedContent } from "./components/feed-content";
 import { NavBar } from "./components/nav-bar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
-import TabsExamplePage from "./pages/example/page";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
           <TabsTrigger value="product-review">상품 리뷰</TabsTrigger>
         </TabsList>
         <TabsContent value="vote-feed">
-          <TabsExamplePage />
+          <FeedContent />
         </TabsContent>
         <TabsContent value="product-review">
           <div className="p-4">상품 리뷰 콘텐츠</div>
