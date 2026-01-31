@@ -1,226 +1,228 @@
 @import 'tailwindcss';
 
 /* ===== Typography System ===== */
-@utility text-d1-bold {
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 150%;
-}
+@layer utilities {
+  .text-d1-bold {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 150%;
+  }
 
-@utility text-d2-bold {
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 145%;
-}
+  .text-d2-bold {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 145%;
+  }
 
-@utility text-h1-bold {
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 140%;
-}
+  .text-h1-bold {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 140%;
+  }
 
-@utility text-h2-bold {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 140%;
-}
+  .text-h2-bold {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 140%;
+  }
 
-@utility text-h3-bold {
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 140%;
-}
+  .text-h3-bold {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 140%;
+  }
 
-@utility text-h4-bold {
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 135%;
-}
+  .text-h4-bold {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 135%;
+  }
 
-@utility text-h1-semibold {
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 140%;
-}
+  .text-h1-semibold {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 140%;
+  }
 
-@utility text-t1-bold {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 125%;
-}
+  .text-t1-bold {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 125%;
+  }
 
-@utility text-t2-bold {
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 125%;
-}
+  .text-t2-bold {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 125%;
+  }
 
-@utility text-t3-bold {
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 125%;
-}
+  .text-t3-bold {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 125%;
+  }
 
-@utility text-t4-bold {
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 125%;
-}
+  .text-t4-bold {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 125%;
+  }
 
-@utility text-s1-semibold {
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 120%;
-}
+  .text-s1-semibold {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 120%;
+  }
 
-@utility text-s2-semibold {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 125%;
-}
+  .text-s2-semibold {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 125%;
+  }
 
-@utility text-s3-semibold {
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 120%;
-}
+  .text-s3-semibold {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 120%;
+  }
 
-@utility text-s4-semibold {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 125%;
-}
+  .text-s4-semibold {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 125%;
+  }
 
-@utility text-s5-semibold {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 125%;
-}
+  .text-s5-semibold {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 125%;
+  }
 
-@utility text-b1-medium {
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 125%;
-}
+  .text-b1-medium {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 125%;
+  }
 
-@utility text-b2-medium {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 125%;
-}
+  .text-b2-medium {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 125%;
+  }
 
-@utility text-b3-medium {
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 125%;
-}
+  .text-b3-medium {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 125%;
+  }
 
-@utility text-b4-medium {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 125%;
-}
+  .text-b4-medium {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 125%;
+  }
 
-@utility text-b5-medium {
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 125%;
-}
+  .text-b5-medium {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 125%;
+  }
 
-@utility text-b6-medium {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 125%;
-}
+  .text-b6-medium {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 125%;
+  }
 
-@utility text-b7-medium {
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 125%;
-}
+  .text-b7-medium {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 125%;
+  }
 
-@utility text-c1-medium {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 140%;
-}
+  .text-c1-medium {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 140%;
+  }
 
-@utility text-c2-medium {
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 140%;
-}
+  .text-c2-medium {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 140%;
+  }
 
-@utility text-c3-medium {
-  font-size: 10px;
-  font-weight: 500;
-  line-height: 140%;
-}
+  .text-c3-medium {
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 140%;
+  }
 
-@utility text-c1-regular {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 140%;
-}
+  .text-c1-regular {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 140%;
+  }
 
-@utility text-c2-regular {
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 140%;
-}
+  .text-c2-regular {
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 140%;
+  }
 
-@utility text-c3-regular {
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 140%;
-}
+  .text-c3-regular {
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 140%;
+  }
 
-@utility text-p1-medium {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
-}
+  .text-p1-medium {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 140%;
+  }
 
-@utility text-p2-medium {
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 140%;
-}
+  .text-p2-medium {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 140%;
+  }
 
-@utility text-p3-medium {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 140%;
-}
+  .text-p3-medium {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 140%;
+  }
 
-@utility text-p4-medium {
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 140%;
-}
+  .text-p4-medium {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 140%;
+  }
 
-@utility text-p1-regular {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
-}
+  .text-p1-regular {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+  }
 
-@utility text-p2-regular {
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 140%;
-}
+  .text-p2-regular {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 140%;
+  }
 
-@utility text-p3-regular {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 140%;
-}
+  .text-p3-regular {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+  }
 
-@utility text-p4-regular {
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 140%;
+  .text-p4-regular {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 140%;
+  }
 }
 
 @theme inline {
