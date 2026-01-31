@@ -4,6 +4,7 @@ import { FAB } from "@/components/ui/fab";
 import { FeedCard } from "@/components/ui/feed-card";
 import { Group, Stack } from "@/components/ui/flex";
 import { Icon } from "@/components/ui/icon";
+import { Logo } from "@/components/ui/logo";
 import { Snackbar, SnackbarProvider, useSnackbar } from "@/components/ui/snackbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -327,6 +328,18 @@ export default function ExamplePage() {
             <div className="rounded-lg bg-white p-6 shadow-sm">
               <h2 className="text-t1-bold text-gray-900 mb-4">Toast 기능 (open/close)</h2>
               <SnackbarDemo />
+            </div>
+          </div>
+        </section>
+
+        {/* Logo Section */}
+        <section>
+          <h1 className="text-h2-bold text-gray-black mb-8">Logo 컴포넌트</h1>
+
+          <div className="space-y-8">
+            <div className="rounded-lg bg-white p-6 shadow-sm">
+              <h2 className="text-t1-bold text-gray-900 mb-4">기본</h2>
+              <Logo />
             </div>
           </div>
         </section>
