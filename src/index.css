@@ -1,223 +1,222 @@
 @import "tailwindcss";
 
-/* ===== Typography System ===== */
-.text-d1-bold {
+@utility text-d1-bold {
   font-size: 36px !important;
   font-weight: 700 !important;
   line-height: 150% !important;
 }
 
-.text-d2-bold {
+@utility text-d2-bold {
   font-size: 32px !important;
   font-weight: 700 !important;
   line-height: 145% !important;
 }
 
-.text-h1-bold {
+@utility text-h1-bold {
   font-size: 28px !important;
   font-weight: 700 !important;
   line-height: 140% !important;
 }
 
-.text-h2-bold {
+@utility text-h2-bold {
   font-size: 24px !important;
   font-weight: 700 !important;
   line-height: 140% !important;
 }
 
-.text-h3-bold {
+@utility text-h3-bold {
   font-size: 22px !important;
   font-weight: 700 !important;
   line-height: 140% !important;
 }
 
-.text-h4-bold {
+@utility text-h4-bold {
   font-size: 20px !important;
   font-weight: 700 !important;
   line-height: 135% !important;
 }
 
-.text-h1-semibold {
+@utility text-h1-semibold {
   font-size: 24px !important;
   font-weight: 600 !important;
   line-height: 140% !important;
 }
 
-.text-t1-bold {
+@utility text-t1-bold {
   font-size: 18px !important;
   font-weight: 700 !important;
   line-height: 125% !important;
 }
 
-.text-t2-bold {
+@utility text-t2-bold {
   font-size: 16px !important;
   font-weight: 700 !important;
   line-height: 125% !important;
 }
 
-.text-t3-bold {
+@utility text-t3-bold {
   font-size: 15px !important;
   font-weight: 700 !important;
   line-height: 125% !important;
 }
 
-.text-t4-bold {
+@utility text-t4-bold {
   font-size: 14px !important;
   font-weight: 700 !important;
   line-height: 125% !important;
 }
 
-.text-s1-semibold {
+@utility text-s1-semibold {
   font-size: 18px !important;
   font-weight: 600 !important;
   line-height: 120% !important;
 }
 
-.text-s2-semibold {
+@utility text-s2-semibold {
   font-size: 16px !important;
   font-weight: 600 !important;
   line-height: 125% !important;
 }
 
-.text-s3-semibold {
+@utility text-s3-semibold {
   font-size: 15px !important;
   font-weight: 600 !important;
   line-height: 120% !important;
 }
 
-.text-s4-semibold {
+@utility text-s4-semibold {
   font-size: 14px !important;
   font-weight: 600 !important;
   line-height: 125% !important;
 }
 
-.text-s5-semibold {
+@utility text-s5-semibold {
   font-size: 13px !important;
   font-weight: 600 !important;
   line-height: 125% !important;
 }
 
-.text-b1-medium {
+@utility text-b1-medium {
   font-size: 18px !important;
   font-weight: 500 !important;
   line-height: 125% !important;
 }
 
-.text-b2-medium {
+@utility text-b2-medium {
   font-size: 16px !important;
   font-weight: 500 !important;
   line-height: 125% !important;
 }
 
-.text-b3-medium {
+@utility text-b3-medium {
   font-size: 15px !important;
   font-weight: 500 !important;
   line-height: 125% !important;
 }
 
-.text-b4-medium {
+@utility text-b4-medium {
   font-size: 14px !important;
   font-weight: 500 !important;
   line-height: 125% !important;
 }
 
-.text-b5-medium {
+@utility text-b5-medium {
   font-size: 13px !important;
   font-weight: 500 !important;
   line-height: 125% !important;
 }
 
-.text-b6-medium {
+@utility text-b6-medium {
   font-size: 12px !important;
   font-weight: 500 !important;
   line-height: 125% !important;
 }
 
-.text-b7-medium {
+@utility text-b7-medium {
   font-size: 11px !important;
   font-weight: 500 !important;
   line-height: 125% !important;
 }
 
-.text-c1-medium {
+@utility text-c1-medium {
   font-size: 12px !important;
   font-weight: 500 !important;
   line-height: 140% !important;
 }
 
-.text-c2-medium {
+@utility text-c2-medium {
   font-size: 11px !important;
   font-weight: 500 !important;
   line-height: 140% !important;
 }
 
-.text-c3-medium {
+@utility text-c3-medium {
   font-size: 10px !important;
   font-weight: 500 !important;
   line-height: 140% !important;
 }
 
-.text-c1-regular {
+@utility text-c1-regular {
   font-size: 12px !important;
   font-weight: 400 !important;
   line-height: 140% !important;
 }
 
-.text-c2-regular {
+@utility text-c2-regular {
   font-size: 11px !important;
   font-weight: 400 !important;
   line-height: 140% !important;
 }
 
-.text-c3-regular {
+@utility text-c3-regular {
   font-size: 10px !important;
   font-weight: 400 !important;
   line-height: 140% !important;
 }
 
-.text-p1-medium {
+@utility text-p1-medium {
   font-size: 16px !important;
   font-weight: 500 !important;
   line-height: 140% !important;
 }
 
-.text-p2-medium {
+@utility text-p2-medium {
   font-size: 15px !important;
   font-weight: 500 !important;
   line-height: 140% !important;
 }
 
-.text-p3-medium {
+@utility text-p3-medium {
   font-size: 14px !important;
   font-weight: 500 !important;
   line-height: 140% !important;
 }
 
-.text-p4-medium {
+@utility text-p4-medium {
   font-size: 13px !important;
   font-weight: 500 !important;
   line-height: 140% !important;
 }
 
-.text-p1-regular {
+@utility text-p1-regular {
   font-size: 16px !important;
   font-weight: 400 !important;
   line-height: 140% !important;
 }
 
-.text-p2-regular {
+@utility text-p2-regular {
   font-size: 15px !important;
   font-weight: 400 !important;
   line-height: 140% !important;
 }
 
-.text-p3-regular {
+@utility text-p3-regular {
   font-size: 14px !important;
   font-weight: 400 !important;
   line-height: 140% !important;
 }
 
-.text-p4-regular {
+@utility text-p4-regular {
   font-size: 13px !important;
   font-weight: 400 !important;
   line-height: 140% !important;
