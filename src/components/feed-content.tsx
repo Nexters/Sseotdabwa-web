@@ -1,5 +1,9 @@
+import { useState } from "react";
+
+import { Chip } from "@/components/ui/chip";
 import { Divider } from "@/components/ui/divider";
 import { FeedCard } from "@/components/ui/feed-card";
+import { Group } from "@/components/ui/flex";
 
 const mockFeeds = [
   {
@@ -66,8 +70,30 @@ const mockFeeds = [
 ];
 
 function FeedContent() {
+  const [selectedFilter, setSelectedFilter] = useState("all");
+
   return (
     <div data-slot="feed-content" className="px-[20px] pt-[20px] pb-[60px]">
+      <Group gap={8} className="mb-[20px]">
+        <Chip
+          checked={selectedFilter === "all"}
+          onClick={() => setSelectedFilter("all")}
+        >
+          전체
+        </Chip>
+        <Chip
+          checked={selectedFilter === "ongoing"}
+          onClick={() => setSelectedFilter("ongoing")}
+        >
+          진행중 투표
+        </Chip>
+        <Chip
+          checked={selectedFilter === "closed"}
+          onClick={() => setSelectedFilter("closed")}
+        >
+          마감된 투표
+        </Chip>
+      </Group>
       {mockFeeds.map((feed, index) => (
         <div key={feed.id}>
           <FeedCard
