@@ -49,7 +49,7 @@ function FeedCard({
       className={cn("w-full bg-white", className)}
       {...props}
     >
-      <Stack gap={16} className="px-4 py-4">
+      <Stack gap={16}>
         {/* Header */}
         <Group align="center" justify="between">
           <Group gap={10} align="center">

@@ -1,8 +1,8 @@
-import * as React from "react"
-import * as TabsPrimitive from "@radix-ui/react-tabs"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import * as TabsPrimitive from "@radix-ui/react-tabs";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 function Tabs({
   className,
@@ -14,23 +14,20 @@ function Tabs({
       className={cn("flex flex-col", className)}
       {...props}
     />
-  )
+  );
 }
 
-const tabsListVariants = cva(
-  "inline-flex items-center",
-  {
-    variants: {
-      variant: {
-        default: "gap-8",
-        line: "gap-8",
-      },
+const tabsListVariants = cva("inline-flex items-center", {
+  variants: {
+    variant: {
+      default: "gap-8",
+      line: "gap-8",
     },
-    defaultVariants: {
-      variant: "line",
-    },
-  }
-)
+  },
+  defaultVariants: {
+    variant: "line",
+  },
+});
 
 function TabsList({
   className,
@@ -45,7 +42,7 @@ function TabsList({
       className={cn(tabsListVariants({ variant }), className)}
       {...props}
     />
-  )
+  );
 }
 
 const tabsTriggerVariants = cva(
@@ -74,8 +71,8 @@ const tabsTriggerVariants = cva(
     defaultVariants: {
       variant: "line",
     },
-  }
-)
+  },
+);
 
 function TabsTrigger({
   className,
@@ -89,7 +86,7 @@ function TabsTrigger({
       className={cn(tabsTriggerVariants({ variant }), className)}
       {...props}
     />
-  )
+  );
 }
 
 function TabsContent({
@@ -99,10 +96,17 @@ function TabsContent({
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"
-      className={cn("flex-1 outline-none mt-4", className)}
+      className={cn("flex-1 outline-none", className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants, tabsTriggerVariants }
+export {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  tabsListVariants,
+  tabsTriggerVariants,
+};
