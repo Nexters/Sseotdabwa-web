@@ -1,11 +1,12 @@
 import { FeedContent } from "./components/feed-content";
 import { NavBar } from "./components/nav-bar";
 import { Divider } from "./components/ui/divider";
+import { FAB } from "./components/ui/fab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 
 function App() {
   return (
-    <div className="mx-auto max-w-[540px]">
+    <div className="relative mx-auto max-w-[540px]">
       <NavBar />
       <Tabs defaultValue="vote-feed">
         <div className="sticky top-0 z-10 bg-white">
@@ -22,6 +23,7 @@ function App() {
           <div className="p-4">상품 리뷰 콘텐츠</div>
         </TabsContent>
       </Tabs>
+      <FAB className="fixed bottom-[20px] right-[20px]" />
     </div>
   );
 }
