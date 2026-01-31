@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function ExamplePage() {
@@ -71,6 +72,103 @@ export default function ExamplePage() {
               <div className="flex items-center gap-4">
                 <Button disabled>Filled Disabled</Button>
                 <Button variant="outline" disabled>Outline Disabled</Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Icon Section */}
+        <section>
+          <h1 className="text-h2-bold text-gray-black mb-8">Icon 컴포넌트</h1>
+
+          <div className="space-y-8">
+            {/* All Icons */}
+            <div className="rounded-lg bg-white p-6 shadow-sm">
+              <h2 className="text-t1-bold text-gray-900 mb-4">아이콘 목록</h2>
+              <div className="grid grid-cols-5 gap-4">
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="noti" />
+                  <span className="text-s5-medium text-gray-600">noti</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="noti-solid" />
+                  <span className="text-s5-medium text-gray-600">noti-solid</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="plus" />
+                  <span className="text-s5-medium text-gray-600">plus</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="cross" />
+                  <span className="text-s5-medium text-gray-600">cross</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="right" />
+                  <span className="text-s5-medium text-gray-600">right</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="left" />
+                  <span className="text-s5-medium text-gray-600">left</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="down" />
+                  <span className="text-s5-medium text-gray-600">down</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="dots-solid" />
+                  <span className="text-s5-medium text-gray-600">dots-solid</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="vote-solid" />
+                  <span className="text-s5-medium text-gray-600">vote-solid</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="checked-vote-solid" />
+                  <span className="text-s5-medium text-gray-600">checked-vote-solid</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="camera-solid" />
+                  <span className="text-s5-medium text-gray-600">camera-solid</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="krw" />
+                  <span className="text-s5-medium text-gray-600">krw</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="my-solid" />
+                  <span className="text-s5-medium text-gray-600">my-solid</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="product-solid" />
+                  <span className="text-s5-medium text-gray-600">product-solid</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="circle-checked-solid" />
+                  <span className="text-s5-medium text-gray-600">circle-checked-solid</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Size */}
+            <div className="rounded-lg bg-white p-6 shadow-sm">
+              <h2 className="text-t1-bold text-gray-900 mb-4">Size</h2>
+              <div className="flex items-center gap-6">
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="noti" size={16} />
+                  <span className="text-s5-medium text-gray-600">16px</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="noti" size={20} />
+                  <span className="text-s5-medium text-gray-600">20px (기본)</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="noti" size={24} />
+                  <span className="text-s5-medium text-gray-600">24px</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Icon icon="noti" size={32} />
+                  <span className="text-s5-medium text-gray-600">32px</span>
+                </div>
               </div>
             </div>
           </div>
