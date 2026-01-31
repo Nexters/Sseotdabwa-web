@@ -4,11 +4,50 @@ import { FAB } from "@/components/ui/fab";
 import { FeedCard } from "@/components/ui/feed-card";
 import { Group, Stack } from "@/components/ui/flex";
 import { Icon } from "@/components/ui/icon";
-import { Snackbar } from "@/components/ui/snackbar";
+import { Snackbar, SnackbarProvider, useSnackbar } from "@/components/ui/snackbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+function SnackbarDemo() {
+  const { open } = useSnackbar();
+
+  return (
+    <div className="flex flex-wrap gap-4">
+      <Button
+        size="small"
+        onClick={() => open({ message: "기본 스낵바입니다." })}
+      >
+        기본 스낵바
+      </Button>
+      <Button
+        size="small"
+        onClick={() =>
+          open({
+            message: "아이콘이 있는 스낵바입니다.",
+            icon: <Icon icon="circle-checked-solid" size={20} className="text-green-100" />,
+          })
+        }
+      >
+        아이콘 스낵바
+      </Button>
+      <Button
+        size="small"
+        variant="outline"
+        onClick={() =>
+          open({
+            message: "2초 후 사라집니다.",
+            duration: 2000,
+          })
+        }
+      >
+        짧은 duration (2초)
+      </Button>
+    </div>
+  );
+}
 
 export default function ExamplePage() {
   return (
+    <SnackbarProvider>
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="mx-auto max-w-2xl space-y-12">
         {/* Button Section */}
@@ -284,6 +323,11 @@ export default function ExamplePage() {
                 />
               </div>
             </div>
+
+            <div className="rounded-lg bg-white p-6 shadow-sm">
+              <h2 className="text-t1-bold text-gray-900 mb-4">Toast 기능 (open/close)</h2>
+              <SnackbarDemo />
+            </div>
           </div>
         </section>
 
@@ -393,5 +437,6 @@ export default function ExamplePage() {
         </section>
       </div>
     </div>
+    </SnackbarProvider>
   );
 }
