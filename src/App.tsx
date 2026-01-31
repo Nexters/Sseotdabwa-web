@@ -7,7 +7,7 @@ function App() {
     <div className="mx-auto max-w-[540px]">
       <NavBar />
       <Tabs defaultValue="vote-feed">
-        <TabsList className="pl-[20px]">
+        <TabsList className="sticky top-0 pl-[20px]">
           <TabsTrigger value="vote-feed">투표 피드</TabsTrigger>
           <TabsTrigger value="product-review">상품 리뷰</TabsTrigger>
         </TabsList>
