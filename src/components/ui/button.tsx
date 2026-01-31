@@ -2,22 +2,23 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { Typography, type TypographyVariant } from "@/components/ui/typography"
 
 const buttonVariants = cva(
   [
     "inline-flex items-center justify-center",
     "transition-colors",
-    "disabled:pointer-events-none disabled:bg-gray-300 disabled:text-gray-700 disabled:border-transparent",
+    "disabled:pointer-events-none disabled:bg-gray-300 disabled:border-transparent",
   ],
   {
     variants: {
       variant: {
-        filled: "bg-gray-900 text-white",
-        outline: "bg-transparent text-gray-800 border border-gray-300",
+        filled: "bg-gray-900",
+        outline: "bg-transparent border border-gray-300",
       },
       size: {
-        large: "w-[148px] h-[50px] rounded-[14px] text-t2-bold",
-        small: "p-[10px] rounded-[10px] text-s5-semibold",
+        large: "w-[148px] h-[50px] rounded-[14px]",
+        small: "p-[10px] rounded-[10px]",
       },
       rounded: {
         true: "!rounded-full",
@@ -37,24 +38,46 @@ const buttonVariants = cva(
   }
 )
 
+const textColorMap = {
+  filled: "text-white",
+  outline: "text-gray-800",
+} as const
+
+const typographyMap: Record<"large" | "small", TypographyVariant> = {
+  large: "t2-bold",
+  small: "s5-semibold",
+}
+
 interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
 
 function Button({
   className,
-  variant,
-  size,
+  variant = "filled",
+  size = "large",
   rounded,
   fullWidth,
+  children,
+  disabled,
   ...props
 }: ButtonProps) {
+  const textColor = disabled ? "text-gray-700" : textColorMap[variant ?? "filled"]
+
   return (
     <button
       data-slot="button"
+      disabled={disabled}
       className={cn(buttonVariants({ variant, size, rounded, fullWidth }), className)}
       {...props}
-    />
+    >
+      <Typography
+        variant={typographyMap[size ?? "large"]}
+        className={textColor}
+      >
+        {children}
+      </Typography>
+    </button>
   )
 }
 
