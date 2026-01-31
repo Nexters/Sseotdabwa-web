@@ -1,5 +1,6 @@
 import { FeedContent } from "./components/feed-content";
 import { NavBar } from "./components/nav-bar";
+import { Divider } from "./components/ui/divider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
           <TabsTrigger value="vote-feed" className="px-[4px] py-[12px]">투표 피드</TabsTrigger>
           <TabsTrigger value="product-review" className="px-[4px] py-[12px]">상품 리뷰</TabsTrigger>
         </TabsList>
+        <Divider size="small" className="bg-gray-100" />
         <TabsContent value="vote-feed">
           <FeedContent />
         </TabsContent>
