@@ -32,7 +32,7 @@ function Chip({ className, checked, children, ...props }: ChipProps) {
     >
       <Typography
         variant="s5-semibold"
-        className={checked ? "text-white" : "text-gray-500"}
+        className={checked ? "text-white" : "text-gray-700"}
       >
         {children}
       </Typography>
