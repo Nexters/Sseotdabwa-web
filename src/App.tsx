@@ -8,11 +8,13 @@ function App() {
     <div className="mx-auto max-w-[540px]">
       <NavBar />
       <Tabs defaultValue="vote-feed">
-        <TabsList className="sticky top-0 z-10 bg-white pl-[20px]">
-          <TabsTrigger value="vote-feed" className="px-[4px] py-[12px]">투표 피드</TabsTrigger>
-          <TabsTrigger value="product-review" className="px-[4px] py-[12px]">상품 리뷰</TabsTrigger>
-        </TabsList>
-        <Divider size="small" className="bg-gray-100" />
+        <div className="sticky top-0 z-10 bg-white">
+          <TabsList className="pl-[20px]">
+            <TabsTrigger value="vote-feed" className="px-[4px] py-[12px]">투표 피드</TabsTrigger>
+            <TabsTrigger value="product-review" className="px-[4px] py-[12px]">상품 리뷰</TabsTrigger>
+          </TabsList>
+          <Divider size="small" className="bg-gray-100" />
+        </div>
         <TabsContent value="vote-feed">
           <FeedContent />
         </TabsContent>
