@@ -50,7 +50,7 @@ function Icon({ icon, size = 20, className, ...props }: IconProps) {
       data-slot="icon"
       width={size}
       height={size}
-      className={cn("shrink-0", className)}
+      className={cn("shrink-0 text-gray-900", className)}
       {...props}
     />
   );

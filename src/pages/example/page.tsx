@@ -1,4 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { FAB } from "@/components/ui/fab";
+import { FeedCard } from "@/components/ui/feed-card";
+import { Group, Stack } from "@/components/ui/flex";
 import { Icon } from "@/components/ui/icon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -170,6 +173,81 @@ export default function ExamplePage() {
                   <span className="text-s5-medium text-gray-600">32px</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAB Section */}
+        <section>
+          <h1 className="text-h2-bold text-gray-black mb-8">FAB 컴포넌트</h1>
+
+          <div className="space-y-8">
+            <div className="rounded-lg bg-white p-6 shadow-sm">
+              <h2 className="text-t1-bold text-gray-900 mb-4">
+                기본 (클릭하여 토글)
+              </h2>
+              <div className="flex items-center gap-8">
+                <div className="flex flex-col items-center gap-2">
+                  <FAB onChange={(isOpen) => console.log("FAB isOpen:", isOpen)} />
+                  <span className="text-s5-medium text-gray-600">
+                    클릭하여 토글
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Flex/Group/Stack Section */}
+        <section>
+          <h1 className="text-h2-bold text-gray-black mb-8">
+            Flex / Group / Stack 컴포넌트
+          </h1>
+
+          <div className="space-y-8">
+            <div className="rounded-lg bg-white p-6 shadow-sm">
+              <h2 className="text-t1-bold text-gray-900 mb-4">Group (row)</h2>
+              <Group gap={4} align="center">
+                <div className="size-10 bg-gray-300 rounded" />
+                <div className="size-10 bg-gray-400 rounded" />
+                <div className="size-10 bg-gray-500 rounded" />
+              </Group>
+            </div>
+
+            <div className="rounded-lg bg-white p-6 shadow-sm">
+              <h2 className="text-t1-bold text-gray-900 mb-4">Stack (col)</h2>
+              <Stack gap={4} align="start">
+                <div className="h-10 w-20 bg-gray-300 rounded" />
+                <div className="h-10 w-32 bg-gray-400 rounded" />
+                <div className="h-10 w-24 bg-gray-500 rounded" />
+              </Stack>
+            </div>
+          </div>
+        </section>
+
+        {/* FeedCard Section */}
+        <section>
+          <h1 className="text-h2-bold text-gray-black mb-8">FeedCard 컴포넌트</h1>
+
+          <div className="space-y-8">
+            <div className="rounded-lg shadow-sm overflow-hidden">
+              <FeedCard
+                username="참새방앗간12456"
+                category="업무·공부 생산성"
+                timeAgo="6시간 전"
+                content="가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카타"
+                image="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"
+                price={31900}
+                voteOptions={[
+                  { id: "1", label: "사! 가즈아!" },
+                  { id: "2", label: "애매하긴 해.." },
+                ]}
+                voteCount={89}
+                isVoting={true}
+                selectedVoteId="1"
+                onVote={(id) => console.log("Voted:", id)}
+                onMoreClick={() => console.log("More clicked")}
+              />
             </div>
           </div>
         </section>
