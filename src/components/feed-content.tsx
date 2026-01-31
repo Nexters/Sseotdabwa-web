@@ -67,7 +67,7 @@ const mockFeeds = [
 
 function FeedContent() {
   return (
-    <div data-slot="feed-content" className="px-[20px]">
+    <div data-slot="feed-content" className="px-[20px] pb-[60px]">
       {mockFeeds.map((feed, index) => (
         <div key={feed.id}>
           <FeedCard
