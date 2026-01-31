@@ -1,5 +1,5 @@
+import { Divider } from "@/components/ui/divider";
 import { FeedCard } from "@/components/ui/feed-card";
-import { Stack } from "@/components/ui/flex";
 
 const mockFeeds = [
   {
@@ -67,11 +67,10 @@ const mockFeeds = [
 
 function FeedContent() {
   return (
-    <div data-slot="feed-content" className="p-[20px]">
-      <Stack gap={16}>
-        {mockFeeds.map((feed) => (
+    <div data-slot="feed-content" className="px-[20px]">
+      {mockFeeds.map((feed, index) => (
+        <div key={feed.id}>
           <FeedCard
-            key={feed.id}
             username={feed.username}
             category={feed.category}
             timeAgo={feed.timeAgo}
@@ -85,8 +84,11 @@ function FeedContent() {
             onVote={(id) => console.log("Voted:", feed.id, id)}
             onMoreClick={() => console.log("More clicked:", feed.id)}
           />
-        ))}
-      </Stack>
+          {index < mockFeeds.length - 1 && (
+            <Divider size="small" className="my-[20px] bg-gray-100" />
+          )}
+        </div>
+      ))}
     </div>
   );
 }
