@@ -8,8 +8,8 @@ function App() {
       <NavBar />
       <Tabs defaultValue="vote-feed">
         <TabsList className="sticky top-0 z-10 bg-white pl-[20px]">
-          <TabsTrigger value="vote-feed">투표 피드</TabsTrigger>
-          <TabsTrigger value="product-review">상품 리뷰</TabsTrigger>
+          <TabsTrigger value="vote-feed" className="px-4 py-[12px]">투표 피드</TabsTrigger>
+          <TabsTrigger value="product-review" className="px-4 py-[12px]">상품 리뷰</TabsTrigger>
         </TabsList>
         <TabsContent value="vote-feed">
           <FeedContent />
