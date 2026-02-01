@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Chip } from "@/components/ui/chip";
+import { ConsumptionCard } from "@/components/ui/consumption-card";
 import { Divider } from "@/components/ui/divider";
 import { FeedCard } from "@/components/ui/feed-card";
 import { Group } from "@/components/ui/flex";
@@ -94,6 +95,10 @@ function FeedContent() {
           마감된 투표
         </Chip>
       </Group>
+      <ConsumptionCard
+        onClose={() => console.log("ConsumptionCard closed")}
+        onButtonClick={() => console.log("ConsumptionCard button clicked")}
+      />
       {mockFeeds.map((feed, index) => (
         <>
           <FeedCard
