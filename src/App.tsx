@@ -3,16 +3,21 @@ import { NavBar } from "./components/nav-bar";
 import { Divider } from "./components/ui/divider";
 import { FAB } from "./components/ui/fab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
+import ExamplePage from "./pages/example/page";
 
 function App() {
   return (
-    <div className="relative mx-auto max-w-[540px]">
+    <div className="relative mx-auto max-w-[540px] bg-white">
       <NavBar />
       <Tabs defaultValue="vote-feed">
         <div className="sticky top-0 z-10 bg-white">
           <TabsList className="pl-[20px]">
-            <TabsTrigger value="vote-feed" className="px-[4px] py-[12px]">투표 피드</TabsTrigger>
-            <TabsTrigger value="product-review" className="px-[4px] py-[12px]">상품 리뷰</TabsTrigger>
+            <TabsTrigger value="vote-feed" className="px-[4px] py-[12px]">
+              투표 피드
+            </TabsTrigger>
+            <TabsTrigger value="product-review" className="px-[4px] py-[12px]">
+              상품 리뷰
+            </TabsTrigger>
           </TabsList>
           <Divider size="small" className="bg-gray-100" />
         </div>
@@ -20,7 +25,7 @@ function App() {
           <FeedContent />
         </TabsContent>
         <TabsContent value="product-review">
-          <div className="p-4">상품 리뷰 콘텐츠</div>
+          <ExamplePage />
         </TabsContent>
       </Tabs>
       <FAB className="fixed bottom-[20px] right-[20px]" />
