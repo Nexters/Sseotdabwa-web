@@ -61,6 +61,7 @@ export default function ExamplePage() {
               <h2 className="text-t1-bold text-gray-900 mb-4">Variant</h2>
               <div className="flex items-center gap-4">
                 <Button variant="filled">Filled</Button>
+                <Button variant="neutral">Neutral</Button>
                 <Button variant="outline">Outline</Button>
               </div>
             </div>
@@ -71,6 +72,10 @@ export default function ExamplePage() {
               <div className="flex items-center gap-4">
                 <Button size="large">Large</Button>
                 <Button size="small">Small</Button>
+              </div>
+              <div className="flex items-center gap-4 mt-4">
+                <Button variant="neutral" size="large">Large</Button>
+                <Button variant="neutral" size="small">Small</Button>
               </div>
               <div className="flex items-center gap-4 mt-4">
                 <Button variant="outline" size="large">Large</Button>
@@ -86,6 +91,10 @@ export default function ExamplePage() {
                 <Button rounded>Rounded</Button>
               </div>
               <div className="flex items-center gap-4 mt-4">
+                <Button variant="neutral" rounded={false}>Default</Button>
+                <Button variant="neutral" rounded>Rounded</Button>
+              </div>
+              <div className="flex items-center gap-4 mt-4">
                 <Button variant="outline" rounded={false}>Default</Button>
                 <Button variant="outline" rounded>Rounded</Button>
               </div>
@@ -96,6 +105,7 @@ export default function ExamplePage() {
               <h2 className="text-t1-bold text-gray-900 mb-4">FullWidth</h2>
               <div className="space-y-4">
                 <Button fullWidth>FullWidth Filled</Button>
+                <Button variant="neutral" fullWidth>FullWidth Neutral</Button>
                 <Button variant="outline" fullWidth>FullWidth Outline</Button>
               </div>
             </div>
@@ -105,8 +115,10 @@ export default function ExamplePage() {
               <h2 className="text-t1-bold text-gray-900 mb-4">조합 예시</h2>
               <div className="flex flex-wrap items-center gap-4">
                 <Button size="small" rounded>Small Rounded</Button>
+                <Button variant="neutral" size="small" rounded>Neutral Small Rounded</Button>
                 <Button variant="outline" size="small" rounded>Outline Small Rounded</Button>
                 <Button size="large" rounded>Large Rounded</Button>
+                <Button variant="neutral" size="large" rounded>Neutral Large Rounded</Button>
                 <Button variant="outline" size="large" rounded>Outline Large Rounded</Button>
               </div>
             </div>
@@ -116,6 +128,7 @@ export default function ExamplePage() {
               <h2 className="text-t1-bold text-gray-900 mb-4">Disabled</h2>
               <div className="flex items-center gap-4">
                 <Button disabled>Filled Disabled</Button>
+                <Button variant="neutral" disabled>Neutral Disabled</Button>
                 <Button variant="outline" disabled>Outline Disabled</Button>
               </div>
             </div>
