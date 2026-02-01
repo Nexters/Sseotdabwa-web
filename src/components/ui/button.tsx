@@ -7,14 +7,18 @@ import { Typography, type TypographyVariant } from "@/components/ui/typography";
 const buttonVariants = cva(
   [
     "inline-flex items-center justify-center cursor-pointer",
-    "transition-colors",
-    "disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-gray-300 disabled:border-transparent",
+    "transition-colors duration-200",
+    "disabled:pointer-events-none disabled:cursor-not-allowed",
   ],
   {
     variants: {
       variant: {
-        filled: "bg-gray-900",
-        outline: "bg-transparent border border-gray-300",
+        filled:
+          "bg-gray-900 hover:bg-gray-800 active:bg-gray-1000 disabled:bg-gray-300 disabled:border-transparent",
+        neutral:
+          "bg-gray-100 hover:bg-gray-300 active:bg-gray-400 disabled:bg-gray-100",
+        outline:
+          "bg-transparent border border-gray-300 hover:bg-gray-100 active:bg-gray-400 disabled:bg-gray-0",
       },
       size: {
         large: "w-[148px] h-[50px] rounded-[14px]",
@@ -40,7 +44,14 @@ const buttonVariants = cva(
 
 const textColorMap = {
   filled: "text-white",
+  neutral: "text-gray-700",
   outline: "text-gray-800",
+} as const;
+
+const disabledTextColorMap = {
+  filled: "text-gray-700",
+  neutral: "text-gray-500",
+  outline: "text-gray-500",
 } as const;
 
 const typographyMap: Record<"large" | "small", TypographyVariant> = {
@@ -63,9 +74,10 @@ function Button({
   disabled,
   ...props
 }: ButtonProps) {
+  const variantKey = variant ?? "filled";
   const textColor = disabled
-    ? "text-gray-700"
-    : textColorMap[variant ?? "filled"];
+    ? disabledTextColorMap[variantKey]
+    : textColorMap[variantKey];
 
   return (
     <button
