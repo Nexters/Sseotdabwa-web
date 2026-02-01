@@ -66,10 +66,22 @@ function ConsumptionCard({
       </button>
 
       {/* Brand Assets */}
-      <div className="flex items-center justify-center gap-[10px] pb-[16px] pt-[8px]">
-        {assets.map((asset) => (
-          <BrandAssetBox key={asset} asset={asset} />
-        ))}
+      <div className="flex items-center justify-center pb-[16px] pt-[8px]">
+        <BrandAssetBox
+          asset="socks"
+          className="z-0 -mr-[8px]"
+          style={{ transform: "rotate(16.98deg)" }}
+        />
+        <BrandAssetBox
+          asset="tshirt"
+          className="z-10"
+          style={{ transform: "rotate(-18.01deg)" }}
+        />
+        <BrandAssetBox
+          asset="pants"
+          className="z-0 -ml-[8px]"
+          style={{ transform: "rotate(12.76deg)" }}
+        />
       </div>
 
       {/* Gradient Button */}
