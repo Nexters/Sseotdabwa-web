@@ -53,7 +53,7 @@ function BrandAssetBox({ asset, className, ...props }: BrandAssetBoxProps) {
     <div
       data-slot="brand-asset-box"
       className={cn(
-        "flex items-center justify-center rounded-[14px] border-[1.2px] border-gray-200 bg-gray-0",
+        "flex shrink-0 items-center justify-center rounded-[14px] border-[1.2px] border-gray-200 bg-gray-0",
         className
       )}
       style={{
