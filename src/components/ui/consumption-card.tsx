@@ -47,7 +47,7 @@ function ConsumptionCard({
     <div
       data-slot="consumption-card"
       className={cn(
-        "relative rounded-[20px] border border-gray-300 bg-gray-0 px-[18px] py-[16px]",
+        "relative rounded-[20px] border border-gray-300 bg-gray-0 px-[18px] pb-[16px] pt-0",
         "transition-opacity duration-300 ease-out",
         isVisible ? "opacity-100" : "opacity-0",
         className,
@@ -59,14 +59,14 @@ function ConsumptionCard({
       <button
         type="button"
         onClick={handleClose}
-        className="absolute right-[18px] top-[16px] text-gray-500"
+        className="absolute right-[18px] top-[16px] flex h-[24px] w-[24px] items-center justify-center"
         aria-label="닫기"
       >
         <Icon icon="cross" size={16} className="text-gray-500" />
       </button>
 
       {/* Brand Assets */}
-      <div className="flex items-center justify-center pb-[16px] pt-[8px]">
+      <div className="flex h-[113px] items-center justify-center">
         <BrandAssetBox
           asset="socks"
           className="z-0 -mr-[8px]"
