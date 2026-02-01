@@ -57,8 +57,8 @@ function BrandAssetBox({ asset, className, style, ...props }: BrandAssetBoxProps
         className
       )}
       style={{
-        width: 49,
-        height: 57,
+        width: 54,
+        height: 62,
         boxShadow: "0px 4px 30px 0px #D7DCE180",
         ...style,
       }}
