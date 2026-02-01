@@ -90,7 +90,7 @@ function ConsumptionCard({
         onClick={onButtonClick}
         className="w-full cursor-pointer rounded-[14px] py-[13px]"
         style={{
-          background: "linear-gradient(90deg, #1A1C20 0%, #8A97B2 100%)",
+          background: "radial-gradient(circle, #1A1C20 0%, #8A97B2 100%)",
         }}
       >
         <Typography variant="s4-semibold" className="text-gray-0">
