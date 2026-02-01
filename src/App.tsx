@@ -7,7 +7,7 @@ import ExamplePage from "./pages/example/page";
 
 function App() {
   return (
-    <div className="relative mx-auto max-w-[540px] bg-white">
+    <div className="relative mx-auto h-screen max-w-[540px] overflow-y-auto bg-white">
       <NavBar />
       <Tabs defaultValue="vote-feed">
         <div className="sticky top-0 z-10 bg-white">
