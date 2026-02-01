@@ -44,4 +44,28 @@ function BrandAsset({ asset, size = 30, className, ...props }: BrandAssetProps) 
   );
 }
 
-export { BrandAsset, brandAssets };
+interface BrandAssetBoxProps extends React.HTMLAttributes<HTMLDivElement> {
+  asset: BrandAssetName;
+}
+
+function BrandAssetBox({ asset, className, ...props }: BrandAssetBoxProps) {
+  return (
+    <div
+      data-slot="brand-asset-box"
+      className={cn(
+        "flex items-center justify-center rounded-[14px] border-[1.2px] border-gray-200 bg-gray-0",
+        className
+      )}
+      style={{
+        width: 49,
+        height: 57,
+        boxShadow: "0px 4px 30px 0px #D7DCE180",
+      }}
+      {...props}
+    >
+      <BrandAsset asset={asset} size={30} />
+    </div>
+  );
+}
+
+export { BrandAsset, BrandAssetBox, brandAssets };
