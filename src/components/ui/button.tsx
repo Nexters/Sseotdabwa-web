@@ -6,9 +6,9 @@ import { Typography, type TypographyVariant } from "@/components/ui/typography";
 
 const buttonVariants = cva(
   [
-    "inline-flex items-center justify-center",
+    "inline-flex items-center justify-center cursor-pointer",
     "transition-colors",
-    "disabled:pointer-events-none disabled:bg-gray-300 disabled:border-transparent",
+    "disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-gray-300 disabled:border-transparent",
   ],
   {
     variants: {

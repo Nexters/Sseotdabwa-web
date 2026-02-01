@@ -59,7 +59,7 @@ function ConsumptionCard({
       <button
         type="button"
         onClick={handleClose}
-        className="absolute right-[18px] top-[16px] flex h-[24px] w-[24px] items-center justify-center"
+        className="absolute right-[18px] top-[16px] flex h-[24px] w-[24px] cursor-pointer items-center justify-center"
         aria-label="닫기"
       >
         <Icon icon="cross" size={16} className="text-gray-500" />
@@ -88,7 +88,7 @@ function ConsumptionCard({
       <button
         type="button"
         onClick={onButtonClick}
-        className="w-full rounded-[14px] py-[13px]"
+        className="w-full cursor-pointer rounded-[14px] py-[13px]"
         style={{
           background: "linear-gradient(90deg, #1A1C20 0%, #8A97B2 100%)",
         }}
