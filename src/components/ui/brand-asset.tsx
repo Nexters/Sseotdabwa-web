@@ -46,9 +46,10 @@ function BrandAsset({ asset, size = 30, className, ...props }: BrandAssetProps) 
 
 interface BrandAssetBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   asset: BrandAssetName;
+  iconSize?: number;
 }
 
-function BrandAssetBox({ asset, className, style, ...props }: BrandAssetBoxProps) {
+function BrandAssetBox({ asset, iconSize = 30, className, style, ...props }: BrandAssetBoxProps) {
   return (
     <div
       data-slot="brand-asset-box"
@@ -64,7 +65,7 @@ function BrandAssetBox({ asset, className, style, ...props }: BrandAssetBoxProps
       }}
       {...props}
     >
-      <BrandAsset asset={asset} size={30} />
+      <BrandAsset asset={asset} size={iconSize} />
     </div>
   );
 }

@@ -66,16 +66,19 @@ function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
       <div className="mb-[16px] flex h-[240px] w-full max-w-[412px] items-center justify-center">
         <BrandAssetBox
           asset="socks"
+          iconSize={60}
           className="z-0 -mr-[8px]"
           style={{ width: 108, height: 125, transform: "rotate(16.98deg)" }}
         />
         <BrandAssetBox
           asset="tshirt"
+          iconSize={60}
           className="z-10"
           style={{ width: 108, height: 125, transform: "rotate(-18.01deg)" }}
         />
         <BrandAssetBox
           asset="pants"
+          iconSize={60}
           className="z-0 -ml-[8px]"
           style={{ width: 108, height: 125, transform: "rotate(12.76deg)" }}
         />
