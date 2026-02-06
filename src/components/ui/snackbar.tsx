@@ -56,7 +56,7 @@ function SnackbarProvider({ children }: SnackbarProviderProps) {
   const [queue, setQueue] = React.useState<SnackbarItem[]>([]);
   const [current, setCurrent] = React.useState<SnackbarItem | null>(null);
   const [isVisible, setIsVisible] = React.useState(false);
-  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = React.useRef<number | null>(null);
 
   const open = React.useCallback((options: Omit<SnackbarItem, "id">) => {
     const id = Math.random().toString(36).substring(2, 9);

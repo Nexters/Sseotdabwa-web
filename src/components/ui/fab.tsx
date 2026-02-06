@@ -3,7 +3,10 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icon";
 
-interface FABProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface FABProps extends Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "onChange"
+> {
   onChange?: (isOpen: boolean) => void;
 }
 

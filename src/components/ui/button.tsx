@@ -60,7 +60,7 @@ const typographyMap: Record<"large" | "small", TypographyVariant> = {
   small: "s5-semibold",
 };
 
-interface ButtonProps
+export interface ButtonProps
   extends
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}

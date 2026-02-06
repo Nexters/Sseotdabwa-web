@@ -1,17 +1,17 @@
-import * as React from "react"
-import { GoogleLogin } from "@react-oauth/google"
-import type { CredentialResponse } from "@react-oauth/google"
-import { useQueryClient } from "@tanstack/react-query"
-import { useLoginWithGoogle } from "@/api/auth/auth"
-import type { ApiResponseTokenResponse } from "@/api/model"
-import { getGetMyInfoQueryKey } from "@/api/users/users"
-import { Button, type ButtonProps } from "@/components/ui/button"
-import { setTokens } from "@/lib/token"
+import * as React from "react";
+import { GoogleLogin } from "@react-oauth/google";
+import type { CredentialResponse } from "@react-oauth/google";
+import { useQueryClient } from "@tanstack/react-query";
+import { useLoginWithGoogle } from "@/api/auth/auth";
+import type { ApiResponseTokenResponse } from "@/api/model";
+import { getGetMyInfoQueryKey } from "@/api/users/users";
+import { Button, type ButtonProps } from "@/components/ui/button";
+import { setTokens } from "@/lib/token";
 
 interface GoogleLoginButtonProps extends Omit<ButtonProps, "onClick"> {
-  children: React.ReactNode
-  onSuccess?: () => void
-  onError?: (error: unknown) => void
+  children: React.ReactNode;
+  onSuccess?: () => void;
+  onError?: (error: unknown) => void;
 }
 
 function GoogleLoginButton({
@@ -20,33 +20,33 @@ function GoogleLoginButton({
   onError,
   ...props
 }: GoogleLoginButtonProps) {
-  const queryClient = useQueryClient()
-  const { mutate: loginWithGoogle, isPending } = useLoginWithGoogle()
+  const queryClient = useQueryClient();
+  const { mutate: loginWithGoogle, isPending } = useLoginWithGoogle();
 
   const handleCredentialResponse = (response: CredentialResponse) => {
     if (!response.credential) {
-      onError?.(new Error("No credential received"))
-      return
+      onError?.(new Error("No credential received"));
+      return;
     }
 
     loginWithGoogle(
       { data: { idToken: response.credential } },
       {
         onSuccess: (res) => {
-          const tokenData = res.data as unknown as ApiResponseTokenResponse
+          const tokenData = res.data as unknown as ApiResponseTokenResponse;
           if (tokenData.data?.accessToken && tokenData.data?.refreshToken) {
-            setTokens(tokenData.data.accessToken, tokenData.data.refreshToken)
-            queryClient.invalidateQueries({ queryKey: getGetMyInfoQueryKey() })
+            setTokens(tokenData.data.accessToken, tokenData.data.refreshToken);
+            queryClient.invalidateQueries({ queryKey: getGetMyInfoQueryKey() });
           }
-          onSuccess?.()
+          onSuccess?.();
         },
         onError: (error) => {
-          console.error("Login error:", error)
-          onError?.(error)
+          console.error("Login error:", error);
+          onError?.(error);
         },
-      }
-    )
-  }
+      },
+    );
+  };
 
   return (
     <div className="relative inline-block">
@@ -63,7 +63,7 @@ function GoogleLoginButton({
         />
       </div>
     </div>
-  )
+  );
 }
 
-export { GoogleLoginButton }
+export { GoogleLoginButton };
