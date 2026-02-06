@@ -74,15 +74,14 @@ function VoteOptionButton({
   const showDark = status === "ended" ? isTie || isWinner : isSelected;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-[8px]">
+    <div
+      className={cn(
+        "relative w-full overflow-hidden rounded-[8px] border",
+        showDark ? "border-gray-300" : "border-transparent",
+      )}
+    >
       {/* 배경 레이어 */}
-      <div
-        className={cn(
-          "absolute inset-0",
-          "border bg-gray-0",
-          showDark ? "border-gray-300" : "border-transparent",
-        )}
-      />
+      <div className="absolute inset-0 bg-gray-0" />
 
       {/* 비율 채움 바 */}
       <div
