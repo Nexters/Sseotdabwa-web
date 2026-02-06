@@ -55,66 +55,77 @@ function VoteOptionButton({
     setAnimatedWidth(0);
   }, [status, percentage]);
 
-  // Default 상태: 투표 전
-  if (status === "default") {
-    return (
-      <button
-        type="button"
-        onClick={() => onVote?.(option.id)}
-        className="w-full cursor-pointer rounded-[8px] border border-gray-300 bg-gray-0 px-[15px] py-[14px] text-left transition-colors hover:bg-gray-100"
-      >
-        <Typography variant="s3-semibold" className="text-gray-900">
-          {option.label}
-        </Typography>
-      </button>
-    );
-  }
+  const isDefault = status === "default";
+  const showDark = isDefault
+    ? false
+    : status === "ended"
+      ? isTie || isWinner
+      : isSelected;
 
-  // voted / ended 상태: 검은 bg 표시 여부
-  const showDark = status === "ended" ? isTie || isWinner : isSelected;
+  const Wrapper = isDefault ? "button" : "div";
 
   return (
-    <div
+    <Wrapper
+      {...(isDefault
+        ? {
+            type: "button" as const,
+            onClick: () => onVote?.(option.id),
+          }
+        : {})}
       className={cn(
-        "relative w-full overflow-hidden rounded-[8px] border",
-        showDark ? "border-gray-300" : "border-transparent",
+        "relative w-full overflow-hidden rounded-[8px] border text-left",
+        isDefault
+          ? "cursor-pointer border-gray-300 bg-gray-0 transition-colors hover:bg-gray-100"
+          : showDark
+            ? "border-gray-300"
+            : "border-transparent",
       )}
     >
       {/* 배경 레이어 */}
-      <div className="absolute inset-0 bg-gray-0" />
+      {!isDefault && <div className="absolute inset-0 bg-gray-0" />}
 
       {/* 비율 채움 바 */}
-      <div
-        className={cn(
-          "absolute inset-y-0 left-0 rounded-l-[8px] transition-[width] duration-700 ease-out",
-          showDark ? "bg-gray-900" : "bg-gray-400",
-        )}
-        style={{ width: `${animatedWidth}%` }}
-      />
+      {!isDefault && (
+        <div
+          className={cn(
+            "absolute inset-y-0 left-0 rounded-l-[8px] transition-[width] duration-700 ease-out",
+            showDark ? "bg-gray-900" : "bg-gray-400",
+          )}
+          style={{ width: `${animatedWidth}%` }}
+        />
+      )}
 
-      {/* 기본 콘텐츠 (바 아래 영역 텍스트) */}
+      {/* 기본 콘텐츠 */}
       <div className="relative flex items-center justify-between px-[15px] py-[14px]">
         <Typography
           variant="s3-semibold"
-          className={showDark ? "text-gray-900" : "text-gray-700"}
+          className={
+            isDefault
+              ? "text-gray-900"
+              : showDark
+                ? "text-gray-900"
+                : "text-gray-700"
+          }
         >
           {option.label}
         </Typography>
-        <Group gap={6} align="center">
-          {isSelected && status === "voted" && (
-            <Icon icon="my-solid" size={15} className="text-gray-600" />
-          )}
-          <Typography
-            variant="s3-semibold"
-            className={showDark ? "text-gray-900" : "text-gray-700"}
-          >
-            {percentage}%
-          </Typography>
-        </Group>
+        {!isDefault && (
+          <Group gap={6} align="center">
+            {isSelected && status === "voted" && (
+              <Icon icon="my-solid" size={15} className="text-gray-600" />
+            )}
+            <Typography
+              variant="s3-semibold"
+              className={showDark ? "text-gray-900" : "text-gray-700"}
+            >
+              {percentage}%
+            </Typography>
+          </Group>
+        )}
       </div>
 
       {/* 흰색 텍스트 레이어 (검은 바 위에 clip) */}
-      {showDark && (
+      {!isDefault && showDark && (
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-between px-[15px] py-[14px] transition-[clip-path] duration-700 ease-out"
           style={{
@@ -135,7 +146,7 @@ function VoteOptionButton({
           </Group>
         </div>
       )}
-    </div>
+    </Wrapper>
   );
 }
 
