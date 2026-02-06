@@ -79,7 +79,8 @@ function VoteOptionButton({
       <div
         className={cn(
           "absolute inset-0",
-          showDark ? "border border-gray-300 bg-gray-0" : "bg-gray-0",
+          "border bg-gray-0",
+          showDark ? "border-gray-300" : "border-transparent",
         )}
       />
 
