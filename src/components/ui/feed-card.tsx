@@ -49,7 +49,7 @@ function VoteOptionButton({
 
   React.useEffect(() => {
     if (status !== "default") {
-      const timer = setTimeout(() => setAnimatedWidth(percentage), 5000);
+      const timer = setTimeout(() => setAnimatedWidth(percentage), 50);
       return () => clearTimeout(timer);
     }
     setAnimatedWidth(0);

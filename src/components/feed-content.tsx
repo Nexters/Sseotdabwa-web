@@ -33,8 +33,8 @@ const mockFeeds = [
     image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400",
     price: 89000,
     voteOptions: [
-      { id: "1", label: "갖고 싶으면 사!" },
-      { id: "2", label: "좀 더 생각해봐" },
+      { id: "1", label: "갖고 싶으면 사!", percentage: 62 },
+      { id: "2", label: "좀 더 생각해봐", percentage: 38 },
     ],
     voteCount: 156,
     isVoting: true,
@@ -63,8 +63,8 @@ const mockFeeds = [
     timeAgo: "3시간 전",
     content: "오마카세 처음 가보려는데 이 가격대면 괜찮은 건가요?",
     voteOptions: [
-      { id: "1", label: "가격 대비 좋아보여" },
-      { id: "2", label: "좀 비싼 것 같아" },
+      { id: "1", label: "가격 대비 좋아보여", percentage: 71 },
+      { id: "2", label: "좀 비싼 것 같아", percentage: 29 },
     ],
     voteCount: 67,
     isVoting: true,
@@ -87,10 +87,38 @@ const mockFeeds = [
     isVoting: false,
     selectedVoteId: "1",
   },
+  {
+    id: "6",
+    username: "집순이",
+    category: "인테리어·가구",
+    timeAgo: "30분 전",
+    content: "원룸에 공기청정기 필요할까요? 환기를 잘 못해서 고민이에요.",
+    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400",
+    price: 248000,
+    voteOptions: [
+      { id: "1", label: "건강이 최고! 사!", percentage: 74 },
+      { id: "2", label: "환기로 충분해", percentage: 26 },
+    ],
+    voteCount: 42,
+    isVoting: true,
+  },
 ];
 
 function FeedContent() {
   const [selectedFilter, setSelectedFilter] = useState("all");
+  const [votes, setVotes] = useState<Record<string, string>>(() => {
+    const initial: Record<string, string> = {};
+    for (const feed of mockFeeds) {
+      if (feed.selectedVoteId) {
+        initial[feed.id] = feed.selectedVoteId;
+      }
+    }
+    return initial;
+  });
+
+  const handleVote = (feedId: string, optionId: string) => {
+    setVotes((prev) => ({ ...prev, [feedId]: optionId }));
+  };
 
   return (
     <div
@@ -134,8 +162,8 @@ function FeedContent() {
             voteOptions={feed.voteOptions}
             voteCount={feed.voteCount}
             isVoting={feed.isVoting}
-            selectedVoteId={feed.selectedVoteId}
-            onVote={(id) => console.log("Voted:", feed.id, id)}
+            selectedVoteId={votes[feed.id]}
+            onVote={(optionId) => handleVote(feed.id, optionId)}
             onMoreClick={() => console.log("More clicked:", feed.id)}
           />
           {index < mockFeeds.length - 1 && (
