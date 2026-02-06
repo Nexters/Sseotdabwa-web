@@ -358,8 +358,25 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-gray-50 text-foreground overflow-hidden;
+}
+
+body {
+  background-color: #fbfbfc;
+  color: #1a1c20;
+  overflow: hidden;
+  color-scheme: light only;
+}
+
+/* App layout - 1052px 기준 */
+@media (min-width: 1052px) {
+  .app-layout {
+    gap: 40px;
+    padding: 0 20px;
+  }
+
+  .app-bridge {
+    display: flex;
+    align-items: center;
   }
 }
 

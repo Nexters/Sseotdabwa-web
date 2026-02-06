@@ -20,4 +20,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://dev.buy-or-not.com',
+        changeOrigin: true,
+        secure: false,
+        headers: {
+          Origin: 'https://dev.buy-or-not.com',
+        },
+      },
+    },
+  },
 })

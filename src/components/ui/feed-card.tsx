@@ -8,7 +8,10 @@ import { Typography } from "@/components/ui/typography";
 interface VoteOption {
   id: string;
   label: string;
+  percentage?: number;
 }
+
+type VoteStatus = "default" | "voted" | "ended";
 
 interface FeedCardProps extends React.HTMLAttributes<HTMLDivElement> {
   profileImage?: string;
@@ -24,6 +27,116 @@ interface FeedCardProps extends React.HTMLAttributes<HTMLDivElement> {
   selectedVoteId?: string;
   onVote?: (optionId: string) => void;
   onMoreClick?: () => void;
+}
+
+function VoteOptionButton({
+  option,
+  status,
+  isSelected,
+  isWinner,
+  isTie,
+  onVote,
+}: {
+  option: VoteOption;
+  status: VoteStatus;
+  isSelected: boolean;
+  isWinner: boolean;
+  isTie: boolean;
+  onVote?: (optionId: string) => void;
+}) {
+  const percentage = option.percentage ?? 0;
+  const [animatedWidth, setAnimatedWidth] = React.useState(0);
+
+  React.useEffect(() => {
+    if (status !== "default") {
+      const timer = setTimeout(() => setAnimatedWidth(percentage), 5000);
+      return () => clearTimeout(timer);
+    }
+    setAnimatedWidth(0);
+  }, [status, percentage]);
+
+  // Default 상태: 투표 전
+  if (status === "default") {
+    return (
+      <button
+        type="button"
+        onClick={() => onVote?.(option.id)}
+        className="w-full cursor-pointer rounded-[8px] border border-gray-300 bg-gray-0 px-[15px] py-[14px] text-left transition-colors hover:bg-gray-100"
+      >
+        <Typography variant="s3-semibold" className="text-gray-900">
+          {option.label}
+        </Typography>
+      </button>
+    );
+  }
+
+  // voted / ended 상태: 검은 bg 표시 여부
+  const showDark = status === "ended" ? isTie || isWinner : isSelected;
+
+  return (
+    <div className="relative w-full overflow-hidden rounded-[8px]">
+      {/* 배경 레이어 */}
+      <div
+        className={cn(
+          "absolute inset-0",
+          showDark ? "border border-gray-300 bg-gray-0" : "bg-gray-0",
+        )}
+      />
+
+      {/* 비율 채움 바 */}
+      <div
+        className={cn(
+          "absolute inset-y-0 left-0 rounded-l-[8px] transition-[width] duration-700 ease-out",
+          showDark ? "bg-gray-900" : "bg-gray-400",
+        )}
+        style={{ width: `${animatedWidth}%` }}
+      />
+
+      {/* 기본 콘텐츠 (바 아래 영역 텍스트) */}
+      <div className="relative flex items-center justify-between px-[15px] py-[14px]">
+        <Typography
+          variant="s3-semibold"
+          className={showDark ? "text-gray-900" : "text-gray-700"}
+        >
+          {option.label}
+        </Typography>
+        <Group gap={6} align="center">
+          {isSelected && status === "voted" && (
+            <Icon icon="my-solid" size={15} className="text-gray-600" />
+          )}
+          <Typography
+            variant="s3-semibold"
+            className={showDark ? "text-gray-900" : "text-gray-700"}
+          >
+            {percentage}%
+          </Typography>
+        </Group>
+      </div>
+
+      {/* 흰색 텍스트 레이어 (검은 바 위에 clip) */}
+      {showDark && (
+        <div
+          className="pointer-events-none absolute inset-0 flex items-center justify-between px-[15px] py-[14px] transition-[clip-path] duration-700 ease-out"
+          style={{
+            clipPath: `inset(0 ${100 - animatedWidth}% 0 0)`,
+          }}
+          aria-hidden="true"
+        >
+          <Typography variant="s3-semibold" className="text-gray-0">
+            {option.label}
+          </Typography>
+          <Group gap={6} align="center">
+            {isSelected && status === "voted" && (
+              <Icon icon="my-solid" size={15} className="text-gray-0" />
+            )}
+            <Typography variant="s3-semibold" className="text-gray-0">
+              {percentage}%
+            </Typography>
+          </Group>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function FeedCard({
@@ -43,6 +156,23 @@ function FeedCard({
   className,
   ...props
 }: FeedCardProps) {
+  const hasVoted = selectedVoteId !== undefined;
+  const status: VoteStatus = hasVoted
+    ? isVoting
+      ? "voted"
+      : "ended"
+    : isVoting
+      ? "default"
+      : "ended";
+
+  const maxPercentage = Math.max(...voteOptions.map((o) => o.percentage ?? 0));
+  const winnersCount = voteOptions.filter(
+    (o) => (o.percentage ?? 0) === maxPercentage,
+  ).length;
+  const isTie = winnersCount > 1 && maxPercentage > 0;
+
+  const statusLabel = isVoting ? "진행중" : "최종결과";
+
   return (
     <div
       data-slot="feed-card"
@@ -53,8 +183,7 @@ function FeedCard({
         {/* Header */}
         <Group align="center" justify="between">
           <Group gap={10} align="center">
-            {/* Profile Image */}
-            <div className="size-[32px] rounded-full bg-gray-300 overflow-hidden shrink-0">
+            <div className="size-[32px] shrink-0 overflow-hidden rounded-full bg-gray-300">
               {profileImage && (
                 <img
                   src={profileImage}
@@ -64,7 +193,6 @@ function FeedCard({
               )}
             </div>
 
-            {/* User Info */}
             <Stack gap={3}>
               <Group gap={4} align="center">
                 <Typography variant="b6-medium" className="text-gray-800">
@@ -85,21 +213,18 @@ function FeedCard({
             </Stack>
           </Group>
 
-          {/* More Button */}
           <button type="button" onClick={onMoreClick} className="p-1">
             <Icon icon="dots-solid" size={20} className="text-gray-600" />
           </button>
         </Group>
 
-        <Stack gap={12} className="bg-gray-100 rounded-2xl px-4 py-3.5">
-          {/* Content */}
+        <Stack gap={12} className="rounded-2xl bg-gray-100 px-4 py-3.5">
           <Typography variant="p4-medium" className="text-gray-900">
             {content}
           </Typography>
 
-          {/* Image with Price */}
           {image && (
-            <div className="relative w-full aspect-square rounded-[12px] overflow-hidden">
+            <div className="relative aspect-square w-full overflow-hidden rounded-[12px]">
               <img
                 src={image}
                 alt="Feed content"
@@ -109,7 +234,7 @@ function FeedCard({
                 <Group
                   gap={4}
                   align="center"
-                  className="absolute left-[16px] bottom-[16px]"
+                  className="absolute bottom-[16px] left-[16px]"
                 >
                   <Icon icon="krw" size={18} className="text-white" />
                   <Typography variant="t1-bold" className="text-white">
@@ -121,37 +246,32 @@ function FeedCard({
           )}
 
           <Stack gap={10}>
-            {/* Vote Options */}
             <Stack gap={8}>
               {voteOptions.map((option) => {
                 const isSelected = selectedVoteId === option.id;
+                const isWinner =
+                  (option.percentage ?? 0) === maxPercentage &&
+                  maxPercentage > 0;
+
                 return (
-                  <button
+                  <VoteOptionButton
                     key={option.id}
-                    type="button"
-                    onClick={() => onVote?.(option.id)}
-                    className={cn(
-                      "w-full px-[14px] py-[12px] rounded-[8px] text-left transition-colors",
-                      isSelected
-                        ? "bg-gray-900"
-                        : "bg-gray-100 hover:bg-gray-200",
-                    )}
-                  >
-                    <Typography
-                      variant="s3-semibold"
-                      className={isSelected ? "text-white" : "text-gray-900"}
-                    >
-                      {option.label}
-                    </Typography>
-                  </button>
+                    option={option}
+                    status={status}
+                    isSelected={isSelected}
+                    isWinner={isWinner}
+                    isTie={isTie}
+                    onVote={onVote}
+                  />
                 );
               })}
             </Stack>
 
-            {/* Vote Status */}
-            <Typography variant="b7-medium" className="text-gray-600">
-              {voteCount}명이 투표했어요 · {isVoting ? "진행중" : "종료"}
-            </Typography>
+            {voteCount > 0 && (
+              <Typography variant="b7-medium" className="text-gray-600">
+                {voteCount}명이 투표했어요 · {statusLabel}
+              </Typography>
+            )}
           </Stack>
         </Stack>
       </Stack>

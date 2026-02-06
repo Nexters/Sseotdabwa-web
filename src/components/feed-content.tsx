@@ -17,8 +17,8 @@ const mockFeeds = [
     image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400",
     price: 31900,
     voteOptions: [
-      { id: "1", label: "사! 가즈아!" },
-      { id: "2", label: "애매하긴 해.." },
+      { id: "1", label: "사! 가즈아!", percentage: 80 },
+      { id: "2", label: "애매하긴 해..", percentage: 20 },
     ],
     voteCount: 89,
     isVoting: true,
@@ -44,12 +44,13 @@ const mockFeeds = [
     username: "테크덕후",
     category: "전자기기",
     timeAgo: "1일 전",
-    content: "새 키보드 살까 말까 고민중입니다. 기계식 키보드 처음인데 괜찮을까요?",
+    content:
+      "새 키보드 살까 말까 고민중입니다. 기계식 키보드 처음인데 괜찮을까요?",
     image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400",
     price: 159000,
     voteOptions: [
-      { id: "1", label: "기계식 좋아! 사!" },
-      { id: "2", label: "멤브레인도 괜찮아" },
+      { id: "1", label: "기계식 좋아! 사!", percentage: 90 },
+      { id: "2", label: "멤브레인도 괜찮아", percentage: 10 },
     ],
     voteCount: 234,
     isVoting: false,
@@ -68,13 +69,34 @@ const mockFeeds = [
     voteCount: 67,
     isVoting: true,
   },
+  {
+    id: "5",
+    username: "동점테스트",
+    category: "기타",
+    timeAgo: "5시간 전",
+    content: "동점 결과 테스트입니다.",
+    voteOptions: [
+      {
+        id: "1",
+        label: "사! 가즈아!사! 가즈아!사! 가즈아!사! 가즈아!사!",
+        percentage: 30,
+      },
+      { id: "2", label: "애매하긴 해...", percentage: 20 },
+    ],
+    voteCount: 89,
+    isVoting: false,
+    selectedVoteId: "1",
+  },
 ];
 
 function FeedContent() {
   const [selectedFilter, setSelectedFilter] = useState("all");
 
   return (
-    <div data-slot="feed-content" className="flex flex-col gap-[20px] px-[20px] pt-[20px] pb-[60px]">
+    <div
+      data-slot="feed-content"
+      className="flex flex-col gap-[20px] px-[20px] pt-[20px] pb-[60px]"
+    >
       <Group gap={8}>
         <Chip
           checked={selectedFilter === "all"}
@@ -117,7 +139,11 @@ function FeedContent() {
             onMoreClick={() => console.log("More clicked:", feed.id)}
           />
           {index < mockFeeds.length - 1 && (
-            <Divider key={`divider-${feed.id}`} size="small" className="bg-gray-100" />
+            <Divider
+              key={`divider-${feed.id}`}
+              size="small"
+              className="bg-gray-100"
+            />
           )}
         </>
       ))}
