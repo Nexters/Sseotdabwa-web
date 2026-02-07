@@ -77,7 +77,7 @@ function Typography<E extends React.ElementType = "span">({
   children,
   ...props
 }: TypographyProps<E>) {
-  const Component = as || "span";
+  const Component: React.ElementType = as || "span";
 
   return (
     <Component
