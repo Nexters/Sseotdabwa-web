@@ -235,11 +235,11 @@ function FeedCard({
           </Typography>
 
           {image && (
-            <div className="relative aspect-square w-full overflow-hidden rounded-[12px]">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[12px]">
               <img
                 src={image}
                 alt="Feed content"
-                className="size-full object-cover"
+                className="size-full object-cover transition-transform duration-300 ease-out hover:scale-105"
               />
               {price !== undefined && (
                 <Group

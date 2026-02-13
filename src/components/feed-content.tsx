@@ -1,10 +1,8 @@
 import { useState } from "react";
 
-import { Chip } from "@/components/ui/chip";
 import { ConsumptionCard } from "@/components/ui/consumption-card";
 import { Divider } from "@/components/ui/divider";
 import { FeedCard } from "@/components/ui/feed-card";
-import { Group } from "@/components/ui/flex";
 
 const mockFeeds = [
   {
@@ -105,7 +103,6 @@ const mockFeeds = [
 ];
 
 function FeedContent() {
-  const [selectedFilter, setSelectedFilter] = useState("all");
   const [votes, setVotes] = useState<Record<string, string>>(() => {
     const initial: Record<string, string> = {};
     for (const feed of mockFeeds) {
@@ -125,26 +122,6 @@ function FeedContent() {
       data-slot="feed-content"
       className="flex flex-col gap-[20px] px-[20px] pt-[20px] pb-[60px]"
     >
-      <Group gap={8}>
-        <Chip
-          checked={selectedFilter === "all"}
-          onClick={() => setSelectedFilter("all")}
-        >
-          전체
-        </Chip>
-        <Chip
-          checked={selectedFilter === "ongoing"}
-          onClick={() => setSelectedFilter("ongoing")}
-        >
-          진행중 투표
-        </Chip>
-        <Chip
-          checked={selectedFilter === "closed"}
-          onClick={() => setSelectedFilter("closed")}
-        >
-          마감된 투표
-        </Chip>
-      </Group>
       <ConsumptionCard
         onClose={() => console.log("ConsumptionCard closed")}
         onButtonClick={() => console.log("ConsumptionCard button clicked")}
