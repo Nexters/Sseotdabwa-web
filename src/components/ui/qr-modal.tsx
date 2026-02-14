@@ -32,7 +32,7 @@ const DEFAULT_QR_IMAGE =
   );
 const QR_MODAL_TITLE = "스토어에서 앱을 다운로드 해보세요!";
 const QR_MODAL_BUTTON_LABEL = "링크 연결";
-const QR_MODAL_LINK_URL = "https://sseotdabwa.com";
+const QR_MODAL_LINK_URL = "/app";
 
 const QRModalContext = React.createContext<QRModalContextType | null>(null);
 
@@ -70,7 +70,7 @@ function QRModalProvider({ children }: QRModalProviderProps) {
   }, [data]);
 
   const handleAction = React.useCallback(() => {
-    window.open(QR_MODAL_LINK_URL, "_blank", "noopener,noreferrer");
+    window.location.assign(QR_MODAL_LINK_URL);
     setIsOpen(false);
   }, []);
 
