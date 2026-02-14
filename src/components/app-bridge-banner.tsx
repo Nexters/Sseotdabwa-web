@@ -96,7 +96,7 @@ function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
           icon={<GooglePlayLogo className="text-gray-900" />}
           className="flex-1"
         >
-          Google Store
+          Google Play
         </PushButton>
       </div>
     </div>
