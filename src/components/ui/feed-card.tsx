@@ -1,9 +1,10 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import { Group, Stack } from "@/components/ui/flex";
 import { Icon } from "@/components/ui/icon";
+import { useOpenImageModal } from "@/components/ui/image-modal";
 import { Typography } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 
 interface VoteOption {
   id: string;
@@ -167,6 +168,8 @@ function FeedCard({
   className,
   ...props
 }: FeedCardProps) {
+  const { open: openImageModal } = useOpenImageModal();
+
   const hasVoted = selectedVoteId !== undefined;
   const status: VoteStatus = hasVoted
     ? isVoting
@@ -237,6 +240,14 @@ function FeedCard({
                 alt="Feed content"
                 className="size-full object-cover transition-transform duration-300 ease-out hover:scale-105"
               />
+              <button
+                type="button"
+                aria-label="이미지 확대"
+                onClick={() => openImageModal(image, "Feed content enlarged")}
+                className="absolute right-[12px] top-[12px] inline-flex size-[30px] items-center justify-center rounded-[8px] bg-gray-1000/50 text-gray-300 transition-colors hover:bg-gray-1000/65"
+              >
+                <Icon icon="expand" size={18} className="text-gray-300" />
+              </button>
               {price !== undefined && (
                 <Group
                   gap={4}

@@ -16,6 +16,7 @@ import Krw from "./icons/krw.svg?react";
 import MySolid from "./icons/my-solid.svg?react";
 import ProductSolid from "./icons/product-solid.svg?react";
 import CircleCheckedSolid from "./icons/circle-checked-solid.svg?react";
+import Expand from "./icons/expand.svg?react";
 
 const icons = {
   noti: Noti,
@@ -33,6 +34,7 @@ const icons = {
   "my-solid": MySolid,
   "product-solid": ProductSolid,
   "circle-checked-solid": CircleCheckedSolid,
+  expand: Expand,
 } as const;
 
 export type IconName = keyof typeof icons;
