@@ -31,8 +31,8 @@ const mockFeeds = [
     image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400",
     price: 89000,
     voteOptions: [
-      { id: "1", label: "갖고 싶으면 사!", percentage: 62 },
-      { id: "2", label: "좀 더 생각해봐", percentage: 38 },
+      { id: "1", label: "사! 가즈아!", percentage: 62 },
+      { id: "2", label: "애매하긴 해..", percentage: 38 },
     ],
     voteCount: 156,
     isVoting: true,
@@ -47,8 +47,8 @@ const mockFeeds = [
     image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400",
     price: 159000,
     voteOptions: [
-      { id: "1", label: "기계식 좋아! 사!", percentage: 90 },
-      { id: "2", label: "멤브레인도 괜찮아", percentage: 10 },
+      { id: "1", label: "사! 가즈아!", percentage: 90 },
+      { id: "2", label: "애매하긴 해..", percentage: 10 },
     ],
     voteCount: 234,
     isVoting: false,
@@ -61,8 +61,8 @@ const mockFeeds = [
     timeAgo: "3시간 전",
     content: "오마카세 처음 가보려는데 이 가격대면 괜찮은 건가요?",
     voteOptions: [
-      { id: "1", label: "가격 대비 좋아보여", percentage: 71 },
-      { id: "2", label: "좀 비싼 것 같아", percentage: 29 },
+      { id: "1", label: "사! 가즈아!", percentage: 71 },
+      { id: "2", label: "애매하긴 해..", percentage: 29 },
     ],
     voteCount: 67,
     isVoting: true,
@@ -76,7 +76,7 @@ const mockFeeds = [
     voteOptions: [
       {
         id: "1",
-        label: "사! 가즈아!사! 가즈아!사! 가즈아!사! 가즈아!사!",
+        label: "사! 가즈아!",
         percentage: 30,
       },
       { id: "2", label: "애매하긴 해...", percentage: 20 },
@@ -94,8 +94,8 @@ const mockFeeds = [
     image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400",
     price: 248000,
     voteOptions: [
-      { id: "1", label: "건강이 최고! 사!", percentage: 74 },
-      { id: "2", label: "환기로 충분해", percentage: 26 },
+      { id: "1", label: "사! 가즈아!", percentage: 74 },
+      { id: "2", label: "애매하긴 해..", percentage: 26 },
     ],
     voteCount: 42,
     isVoting: true,
@@ -122,10 +122,10 @@ function FeedContent() {
       data-slot="feed-content"
       className="flex flex-col gap-[20px] px-[20px] pt-[20px] pb-[60px]"
     >
-      <ConsumptionCard
+      {/* <ConsumptionCard
         onClose={() => console.log("ConsumptionCard closed")}
         onButtonClick={() => console.log("ConsumptionCard button clicked")}
-      />
+      /> */}
       {mockFeeds.map((feed, index) => (
         <>
           <FeedCard

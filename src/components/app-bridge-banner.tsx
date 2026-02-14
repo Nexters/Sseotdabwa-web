@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
 import { BrandAssetBox } from "@/components/ui/brand-asset";
 import { PushButton } from "@/components/ui/push-button";
+import { Flex } from "./ui/flex";
 
 function AppStoreLogo(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -35,7 +36,9 @@ interface AppBridgeBannerProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
   return (
-    <div
+    <Flex
+      direction="col"
+      gap={16}
       data-slot="app-bridge-banner"
       className={cn(
         "flex w-full flex-col items-start bg-transparent px-[20px] pb-[40px] pt-[60px]",
@@ -43,49 +46,50 @@ function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
       )}
       {...props}
     >
-      {/* 로고 (150x36) */}
-      <div className="mb-[40px]">
-        <Logo className="text-gray-900" width={150} height={36} />
-      </div>
+      <Flex direction="col" gap={40}>
+        {/* 로고 (150x36) */}
 
-      {/* 타이틀 */}
-      <p
-        className="mb-[16px] text-gray-900"
-        style={{
-          fontSize: 26,
-          fontWeight: 700,
-          lineHeight: "150%",
-        }}
-      >
-        가치있고 현명한 소비를 위한
-        <br />
-        집단지성의 비교 방법
-      </p>
+        <Logo className="text-gray-900" width={150} height={36} />
+
+        {/* 타이틀 */}
+        <p
+          className="text-gray-900"
+          style={{
+            fontSize: 26,
+            fontWeight: 700,
+            lineHeight: "150%",
+          }}
+        >
+          가치있고 현명한 소비를 위한
+          <br />
+          집단지성의 비교 방법
+        </p>
+      </Flex>
 
       {/* 브랜드 에셋 이미지 */}
-      <div className="mb-[16px] flex h-[240px] w-full max-w-[412px] items-center justify-center">
+      <div className="flex h-[240px] w-full max-w-[412px] items-center justify-center">
         <BrandAssetBox
           asset="socks"
           iconSize={60}
-          className="z-0 -mr-[8px]"
+          className="z-0 -mr-[8px] rounded-[32px]"
           style={{ width: 108, height: 125, transform: "rotate(16.98deg)" }}
         />
         <BrandAssetBox
           asset="tshirt"
           iconSize={60}
-          className="z-10"
+          className="z-10 rounded-[32px]"
           style={{ width: 108, height: 125, transform: "rotate(-18.01deg)" }}
         />
         <BrandAssetBox
           asset="pants"
           iconSize={60}
-          className="z-0 -ml-[8px]"
+          className="z-0 -ml-[8px] rounded-[32px]"
           style={{ width: 108, height: 125, transform: "rotate(12.76deg)" }}
         />
       </div>
 
       {/* 스토어 버튼 */}
-      <div className="flex w-full max-w-[412px] gap-[16px]">
+      <Flex direction="row" gap={16} className="max-w-[412px]">
         <PushButton
           icon={<AppStoreLogo className="text-gray-900" />}
           className="flex-1"
@@ -98,8 +102,8 @@ function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
         >
           Google Play
         </PushButton>
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   );
 }
 

@@ -29,9 +29,6 @@ function App() {
               <TabsTrigger value="vote-feed" className="px-[4px] py-[12px]">
                 투표 피드
               </TabsTrigger>
-              <TabsTrigger value="product-review" className="px-[4px] py-[12px]">
-                상품 리뷰
-              </TabsTrigger>
             </TabsList>
             <Divider size="small" className="bg-gray-100" />
             <Group gap={8} className="px-[20px] pt-[16px] pb-[4px]">
@@ -57,9 +54,6 @@ function App() {
           </div>
           <TabsContent value="vote-feed">
             <FeedContent />
-          </TabsContent>
-          <TabsContent value="product-review">
-            <ExamplePage />
           </TabsContent>
         </Tabs>
         <FAB className="sticky bottom-[20px] float-right mr-[20px]" />

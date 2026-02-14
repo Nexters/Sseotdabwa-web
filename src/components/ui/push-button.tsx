@@ -23,7 +23,8 @@ const pushButtonVariants = cva(
 );
 
 interface PushButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof pushButtonVariants> {
   icon?: React.ReactNode;
 }
@@ -38,7 +39,11 @@ function PushButton({
   return (
     <button
       data-slot="push-button"
-      className={cn(pushButtonVariants({ variant }), className)}
+      className={cn(
+        pushButtonVariants({ variant }),
+        "rounded-[12px] py-4",
+        className,
+      )}
       {...props}
     >
       {icon}

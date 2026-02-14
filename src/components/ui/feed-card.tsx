@@ -223,10 +223,6 @@ function FeedCard({
               </Typography>
             </Stack>
           </Group>
-
-          <button type="button" onClick={onMoreClick} className="p-1">
-            <Icon icon="dots-solid" size={20} className="text-gray-600" />
-          </button>
         </Group>
 
         <Stack gap={12} className="rounded-2xl bg-gray-100 px-4 py-3.5">
@@ -235,7 +231,7 @@ function FeedCard({
           </Typography>
 
           {image && (
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[12px]">
+            <div className="relative aspect-[1] w-full overflow-hidden rounded-[12px]">
               <img
                 src={image}
                 alt="Feed content"
