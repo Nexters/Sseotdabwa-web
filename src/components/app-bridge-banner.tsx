@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
 import { BrandAssetBox } from "@/components/ui/brand-asset";
 import { PushButton } from "@/components/ui/push-button";
+import { useOpenQRModal } from "@/components/ui/qr-modal";
 import { Flex } from "./ui/flex";
 
 function AppStoreLogo(props: React.SVGProps<SVGSVGElement>) {
@@ -35,6 +36,8 @@ function GooglePlayLogo(props: React.SVGProps<SVGSVGElement>) {
 interface AppBridgeBannerProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
+  const { open: openQRModal } = useOpenQRModal();
+
   return (
     <Flex
       direction="col"
@@ -93,12 +96,26 @@ function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
         <PushButton
           icon={<AppStoreLogo className="text-gray-900" />}
           className="flex-1"
+          onClick={() =>
+            openQRModal({
+              title: "스토어에서 앱을 다운로드 해보세요!",
+              buttonLabel: "App Store 연결",
+              linkUrl: "https://apps.apple.com",
+            })
+          }
         >
           App Store
         </PushButton>
         <PushButton
           icon={<GooglePlayLogo className="text-gray-900" />}
           className="flex-1"
+          onClick={() =>
+            openQRModal({
+              title: "스토어에서 앱을 다운로드 해보세요!",
+              buttonLabel: "Google Play 연결",
+              linkUrl: "https://play.google.com/store",
+            })
+          }
         >
           Google Play
         </PushButton>
