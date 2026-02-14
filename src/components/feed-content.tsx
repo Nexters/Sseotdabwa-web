@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { ConsumptionCard } from "@/components/ui/consumption-card";
 import { Divider } from "@/components/ui/divider";
 import { FeedCard } from "@/components/ui/feed-card";
 

@@ -19,7 +19,7 @@ interface OpenQRModalOptions {
 }
 
 interface QRModalContextType {
-  open: (options: OpenQRModalOptions) => void;
+  open: (options?: OpenQRModalOptions) => void;
   close: () => void;
 }
 
@@ -61,13 +61,16 @@ function QRModalProvider({ children }: QRModalProviderProps) {
     setIsOpen(true);
   }, []);
 
-  const onOpenChange = React.useCallback((nextOpen: boolean) => {
-    setIsOpen(nextOpen);
-    if (!nextOpen) {
-      data?.onClose?.();
-      setData(null);
-    }
-  }, [data]);
+  const onOpenChange = React.useCallback(
+    (nextOpen: boolean) => {
+      setIsOpen(nextOpen);
+      if (!nextOpen) {
+        data?.onClose?.();
+        setData(null);
+      }
+    },
+    [data],
+  );
 
   const handleAction = React.useCallback(() => {
     window.location.assign(QR_MODAL_LINK_URL);
