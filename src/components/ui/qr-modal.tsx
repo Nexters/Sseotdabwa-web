@@ -15,10 +15,7 @@ import { Flex } from "./flex";
 
 interface OpenQRModalOptions {
   qrImageSrc?: string;
-  title?: string;
-  buttonLabel?: string;
-  linkUrl?: string;
-  onButtonClick?: () => void;
+  onClose?: () => void;
 }
 
 interface QRModalContextType {
@@ -33,6 +30,9 @@ const DEFAULT_QR_IMAGE =
   encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" fill="none"><rect width="180" height="180" fill="#DDDEE4"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#565D6D">QR 이미지</text></svg>`,
   );
+const QR_MODAL_TITLE = "스토어에서 앱을 다운로드 해보세요!";
+const QR_MODAL_BUTTON_LABEL = "링크 연결";
+const QR_MODAL_LINK_URL = "https://sseotdabwa.com";
 
 const QRModalContext = React.createContext<QRModalContextType | null>(null);
 
@@ -56,30 +56,23 @@ function QRModalProvider({ children }: QRModalProviderProps) {
     setIsOpen(false);
   }, []);
 
-  const open = React.useCallback((options: OpenQRModalOptions) => {
-    setData(options);
+  const open = React.useCallback((options?: OpenQRModalOptions) => {
+    setData(options ?? {});
     setIsOpen(true);
   }, []);
 
   const onOpenChange = React.useCallback((nextOpen: boolean) => {
     setIsOpen(nextOpen);
     if (!nextOpen) {
+      data?.onClose?.();
       setData(null);
     }
-  }, []);
+  }, [data]);
 
   const handleAction = React.useCallback(() => {
-    if (!data) return;
-
-    if (data.onButtonClick) {
-      data.onButtonClick();
-      return;
-    }
-
-    if (data.linkUrl) {
-      window.open(data.linkUrl, "_blank", "noopener,noreferrer");
-    }
-  }, [data]);
+    window.open(QR_MODAL_LINK_URL, "_blank", "noopener,noreferrer");
+    setIsOpen(false);
+  }, []);
 
   const contextValue = React.useMemo(() => ({ open, close }), [open, close]);
 
@@ -115,7 +108,7 @@ function QRModalProvider({ children }: QRModalProviderProps) {
                       variant="h3-bold"
                       className="w-full text-gray-900 text-center"
                     >
-                      {data.title ?? "스토어에서 앱을 다운로드 해보세요!"}
+                      {QR_MODAL_TITLE}
                     </Typography>
 
                     <img
@@ -131,7 +124,7 @@ function QRModalProvider({ children }: QRModalProviderProps) {
                     fullWidth
                     onClick={handleAction}
                   >
-                    {data.buttonLabel ?? "링크 연결"}
+                    {QR_MODAL_BUTTON_LABEL}
                   </Button>
                 </Flex>
               </div>

@@ -2,22 +2,19 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icon";
+import { useOpenQRModal } from "@/components/ui/qr-modal";
 
-interface FABProps extends Omit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "onChange"
-> {
-  onChange?: (isOpen: boolean) => void;
-}
+interface FABProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-function FAB({ onChange, className, onClick, ...props }: FABProps) {
+function FAB({ className, ...props }: FABProps) {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { open: openQRModal } = useOpenQRModal();
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const nextState = !isOpen;
-    setIsOpen(nextState);
-    onChange?.(nextState);
-    onClick?.(e);
+  const handleClick = () => {
+    setIsOpen(true);
+    openQRModal({
+      onClose: () => setIsOpen(false),
+    });
   };
 
   return (

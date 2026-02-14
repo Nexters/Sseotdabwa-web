@@ -96,26 +96,14 @@ function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
         <PushButton
           icon={<AppStoreLogo className="text-gray-900" />}
           className="flex-1"
-          onClick={() =>
-            openQRModal({
-              title: "스토어에서 앱을 다운로드 해보세요!",
-              buttonLabel: "App Store 연결",
-              linkUrl: "https://apps.apple.com",
-            })
-          }
+          onClick={() => openQRModal()}
         >
           App Store
         </PushButton>
         <PushButton
           icon={<GooglePlayLogo className="text-gray-900" />}
           className="flex-1"
-          onClick={() =>
-            openQRModal({
-              title: "스토어에서 앱을 다운로드 해보세요!",
-              buttonLabel: "Google Play 연결",
-              linkUrl: "https://play.google.com/store",
-            })
-          }
+          onClick={() => openQRModal()}
         >
           Google Play
         </PushButton>

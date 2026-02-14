@@ -7,13 +7,11 @@ import { Chip } from "./components/ui/chip";
 import { Divider } from "./components/ui/divider";
 import { FAB } from "./components/ui/fab";
 import { Group } from "./components/ui/flex";
-import { useOpenQRModal } from "./components/ui/qr-modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import ExamplePage from "./pages/example/page";
 
 function App() {
   const [selectedFilter, setSelectedFilter] = useState("all");
-  const { open: openQRModal } = useOpenQRModal();
 
   return (
     <div className="app-layout flex h-screen w-full justify-center">
@@ -58,16 +56,7 @@ function App() {
             <FeedContent />
           </TabsContent>
         </Tabs>
-        <FAB
-          className="sticky bottom-[20px] float-right mr-[20px]"
-          onClick={() =>
-            openQRModal({
-              title: "스토어에서 앱을 다운로드 해보세요!",
-              buttonLabel: "링크 연결",
-              linkUrl: "https://sseotdabwa.com",
-            })
-          }
-        />
+        <FAB className="sticky bottom-[20px] float-right mr-[20px]" />
       </div>
     </div>
   );
