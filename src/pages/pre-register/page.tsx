@@ -35,7 +35,7 @@ function PreRegisterPage() {
 
         <Typography
           variant="t1-bold"
-          className="absolute bottom-[48px] left-1/2 -translate-x-1/2 text-gray-0"
+          className="absolute bottom-[48px] left-1/2 -translate-x-1/2 text-gray-0 animate-bounce [animation-duration:1.8s]"
         >
           궁금하면 스크롤!!
         </Typography>
