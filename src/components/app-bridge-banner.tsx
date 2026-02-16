@@ -64,7 +64,7 @@ function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
       <a
         href="https://docs.google.com/forms/d/e/1FAIpQLScG0GStvzog1HVZjAP9OpHl85azcez2OdAr7YwrI7rvCqInsg/viewform?pli=1"
         target="_blank"
-        rel="noreferrer"
+        rel="noreferrer noopener nofollow noindex"
         className="flex w-full max-w-[412px] items-center justify-center gap-[8px] rounded-[12px] bg-gray-200 px-5 py-[20px] text-gray-900 transition-all duration-200 active:scale-95"
       >
         <SadFaceIcon />
