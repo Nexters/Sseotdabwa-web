@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
-import { BrandAssetBox } from "@/components/ui/brand-asset";
 import { Flex } from "./ui/flex";
 
 function SadFaceIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -56,26 +55,11 @@ function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
       </Flex>
 
       {/* 브랜드 에셋 이미지 */}
-      <div className="flex h-[240px] w-full max-w-[412px] items-center justify-center">
-        <BrandAssetBox
-          asset="socks"
-          iconSize={60}
-          className="z-0 -mr-[8px] rounded-[32px]"
-          style={{ width: 108, height: 125, transform: "rotate(16.98deg)" }}
-        />
-        <BrandAssetBox
-          asset="tshirt"
-          iconSize={60}
-          className="z-10 rounded-[32px]"
-          style={{ width: 108, height: 125, transform: "rotate(-18.01deg)" }}
-        />
-        <BrandAssetBox
-          asset="pants"
-          iconSize={60}
-          className="z-0 -ml-[8px] rounded-[32px]"
-          style={{ width: 108, height: 125, transform: "rotate(12.76deg)" }}
-        />
-      </div>
+      <img
+        src="/bridge-assetes.png"
+        alt="브랜드 에셋"
+        className="h-[240px] w-full max-w-[412px] object-contain"
+      />
 
       <a
         href="https://docs.google.com/forms/d/e/1FAIpQLScG0GStvzog1HVZjAP9OpHl85azcez2OdAr7YwrI7rvCqInsg/viewform?pli=1"
