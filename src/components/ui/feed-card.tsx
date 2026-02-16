@@ -16,14 +16,14 @@ type VoteStatus = "default" | "voted" | "ended";
 
 interface FeedCardProps extends React.HTMLAttributes<HTMLDivElement> {
   profileImage?: string;
-  username: string;
+  username?: string;
   category?: string;
-  timeAgo: string;
-  content: string;
+  timeAgo?: string;
+  content?: string;
   image?: string;
   price?: number;
   voteOptions: VoteOption[];
-  voteCount: number;
+  voteCount?: number;
   isVoting?: boolean;
   selectedVoteId?: string;
   onVote?: (optionId: string) => void;
@@ -196,42 +196,61 @@ function FeedCard({
       <Stack gap={16}>
         {/* Header */}
         <Group align="center" justify="between">
-          <Group gap={10} align="center">
-            <div className="size-[32px] shrink-0 overflow-hidden rounded-full bg-gray-300">
+          {(profileImage || username || category || timeAgo) && (
+            <Group gap={10} align="center">
               {profileImage && (
-                <img
-                  src={profileImage}
-                  alt={username}
-                  className="size-full object-cover"
-                />
+                <div className="size-[32px] shrink-0 overflow-hidden rounded-full bg-gray-300">
+                  {profileImage && (
+                    <img
+                      src={profileImage}
+                      alt={username}
+                      className="size-full object-cover"
+                    />
+                  )}
+                </div>
               )}
-            </div>
 
-            <Stack gap={3}>
-              <Group gap={4} align="center">
-                <Typography variant="b6-medium" className="text-gray-800">
-                  {username}
-                </Typography>
-                {category && (
-                  <>
-                    <Icon icon="right" size={12} className="text-gray-600" />
-                    <Typography variant="b6-medium" className="text-gray-600">
-                      {category}
-                    </Typography>
-                  </>
+              <Stack gap={3}>
+                {(username || category) && (
+                  <Group gap={4} align="center">
+                    {username && (
+                      <Typography variant="b6-medium" className="text-gray-800">
+                        {username}
+                      </Typography>
+                    )}
+                    {category && (
+                      <>
+                        <Icon
+                          icon="right"
+                          size={12}
+                          className="text-gray-600"
+                        />
+                        <Typography
+                          variant="b6-medium"
+                          className="text-gray-600"
+                        >
+                          {category}
+                        </Typography>
+                      </>
+                    )}
+                  </Group>
                 )}
-              </Group>
-              <Typography variant="b7-medium" className="text-gray-600">
-                {timeAgo}
-              </Typography>
-            </Stack>
-          </Group>
+                {timeAgo && (
+                  <Typography variant="b7-medium" className="text-gray-600">
+                    {timeAgo}
+                  </Typography>
+                )}
+              </Stack>
+            </Group>
+          )}
         </Group>
 
         <Stack gap={12} className="rounded-2xl bg-gray-100 px-4 py-3.5">
-          <Typography variant="p4-medium" className="text-gray-900">
-            {content}
-          </Typography>
+          {content && (
+            <Typography variant="p4-medium" className="text-gray-900">
+              {content}
+            </Typography>
+          )}
 
           {image && (
             <div className="relative aspect-[1] w-full overflow-hidden rounded-[12px]">
@@ -285,7 +304,7 @@ function FeedCard({
               })}
             </Stack>
 
-            {voteCount > 0 && (
+            {voteCount && voteCount > 0 && (
               <Typography variant="b7-medium" className="text-gray-600">
                 {voteCount}명이 투표했어요 · {statusLabel}
               </Typography>

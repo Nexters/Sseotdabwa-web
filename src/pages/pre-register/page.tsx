@@ -44,7 +44,8 @@ function SpeechBubble({
     <div
       className={`relative rounded-[16px] px-3 py-[7px] ${className ?? ""}`}
       style={{
-        background: "radial-gradient(circle at 30% 30%, #2A3038 0%, #77879E 100%)",
+        background:
+          "radial-gradient(circle at 30% 30%, #2A3038 0%, #77879E 100%)",
         ...style,
       }}
     >
@@ -113,7 +114,7 @@ function PreRegisterPage() {
   // UI 요소 위치 — 컨테이너 높이 비율
   const logoTop = containerHeight * 0.04;
   const bubble1Top = containerHeight * 0.16;
-  const bubble2Top = containerHeight * 0.30;
+  const bubble2Top = containerHeight * 0.3;
   const hintBottom = containerHeight * 0.06;
 
   // 투명도
@@ -189,7 +190,7 @@ function PreRegisterPage() {
         {/* z-[1]로 sticky 레이어 위를 덮으며 슬라이드 인 */}
         <div className="relative z-1 min-h-screen bg-gray-0 pb-10">
           {/* 말풍선 + 캐릭터 */}
-          <Stack align="center" gap={20} className="pt-[35px] pb-6">
+          <Stack align="center" gap={20} className="pt-[35px] mb-[-50px]">
             <SpeechBubble centerArrow>한 번 투표해볼래?</SpeechBubble>
             <img
               src="/tobong.png"
@@ -201,17 +202,13 @@ function PreRegisterPage() {
           {/* 피드 카드 */}
           <div className="px-5">
             <FeedCard
-              username="참새방앗간12456"
-              category="업무·공부 생산성"
-              timeAgo="6시간 전"
-              content="가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카"
+              content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
               image="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"
               price={31900}
               voteOptions={[
                 { id: "1", label: "사! 가즈아!", percentage: 80 },
                 { id: "2", label: "애매하긴 해..", percentage: 20 },
               ]}
-              voteCount={89}
               isVoting={true}
               selectedVoteId="1"
             />
