@@ -44,7 +44,7 @@ function SpeechBubble({
         ...style,
       }}
     >
-      <Typography variant="s5-semibold" className="text-gray-0 whitespace-nowrap">
+      <Typography variant="s5-semibold" className="text-gray-0">
         {children}
       </Typography>
       <div
@@ -97,18 +97,19 @@ function PreRegisterPage() {
   const charStartBottom = -containerHeight * 0.14; // 머리가 상단 14% 지점에 위치
   const charStartLeft = -containerWidth * 0.2;     // 왼쪽 20% 잘림
 
-  const charEndBottom = containerHeight * 0.20;    // 하단 20% 여백
+  const charEndHeightPct = 28;
+  const charEndBottom = containerHeight * (1 - charEndHeightPct / 100) / 2; // 수직 중앙
   const charEndLeft = containerWidth / 2;          // 수평 중앙
 
   const charBottom = lerp(charStartBottom, charEndBottom, ep);
   const charLeft = lerp(charStartLeft, charEndLeft, ep);
   const charTranslateX = lerp(0, -50, ep);
-  const charHeightPct = lerp(100, 28, ep);
+  const charHeightPct = lerp(100, charEndHeightPct, ep);
 
   // UI 요소 위치 — 컨테이너 높이 비율
   const logoTop = containerHeight * 0.04;
   const bubble1Top = containerHeight * 0.16;
-  const bubble2Top = containerHeight * 0.40;
+  const bubble2Top = containerHeight * 0.30; // 캐릭터 상단(36%) 위
   const hintBottom = containerHeight * 0.06;
 
   // 투명도
