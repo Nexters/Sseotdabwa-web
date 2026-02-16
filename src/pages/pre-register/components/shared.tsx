@@ -44,7 +44,7 @@ function FadeLayer({
   style,
 }: {
   opacity: number;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
 }) {
