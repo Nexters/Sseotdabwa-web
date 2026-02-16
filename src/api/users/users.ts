@@ -6,16 +6,20 @@
  * OpenAPI spec version: v1.0.0
  */
 import {
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
@@ -136,6 +140,213 @@ export function useGetMyInfo<TData = Awaited<ReturnType<typeof getMyInfo>>, TErr
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getGetMyInfoQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+/**
+ * 현재 로그인한 사용자의 계정을 삭제합니다.
+ * @summary 회원 탈퇴
+ */
+export type withdrawResponse200 = {
+  data: Blob
+  status: 200
+}
+
+export type withdrawResponse401 = {
+  data: Blob
+  status: 401
+}
+    
+export type withdrawResponseSuccess = (withdrawResponse200) & {
+  headers: Headers;
+};
+export type withdrawResponseError = (withdrawResponse401) & {
+  headers: Headers;
+};
+
+export type withdrawResponse = (withdrawResponseSuccess | withdrawResponseError)
+
+export const getWithdrawUrl = () => {
+
+
+  
+
+  return `/api/v1/users/me`
+}
+
+export const withdraw = async ( options?: RequestInit): Promise<withdrawResponse> => {
+  
+  return customFetch<withdrawResponse>(getWithdrawUrl(),
+  {      
+    ...options,
+    method: 'DELETE'
+    
+    
+  }
+);}
+
+
+
+
+export const getWithdrawMutationOptions = <TError = Blob,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof withdraw>>, TError,void, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof withdraw>>, TError,void, TContext> => {
+
+const mutationKey = ['withdraw'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof withdraw>>, void> = () => {
+          
+
+          return  withdraw(requestOptions)
+        }
+
+
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type WithdrawMutationResult = NonNullable<Awaited<ReturnType<typeof withdraw>>>
+    
+    export type WithdrawMutationError = Blob
+
+    /**
+ * @summary 회원 탈퇴
+ */
+export const useWithdraw = <TError = Blob,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof withdraw>>, TError,void, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof withdraw>>,
+        TError,
+        void,
+        TContext
+      > => {
+      return useMutation(getWithdrawMutationOptions(options), queryClient);
+    }
+    /**
+ * 현재 로그인한 사용자가 작성한 피드 목록을 조회합니다.
+ * @summary 내가 작성한 피드 조회
+ */
+export type getMyFeedsResponse200 = {
+  data: Blob
+  status: 200
+}
+
+export type getMyFeedsResponse401 = {
+  data: Blob
+  status: 401
+}
+    
+export type getMyFeedsResponseSuccess = (getMyFeedsResponse200) & {
+  headers: Headers;
+};
+export type getMyFeedsResponseError = (getMyFeedsResponse401) & {
+  headers: Headers;
+};
+
+export type getMyFeedsResponse = (getMyFeedsResponseSuccess | getMyFeedsResponseError)
+
+export const getGetMyFeedsUrl = () => {
+
+
+  
+
+  return `/api/v1/users/me/feeds`
+}
+
+export const getMyFeeds = async ( options?: RequestInit): Promise<getMyFeedsResponse> => {
+  
+  return customFetch<getMyFeedsResponse>(getGetMyFeedsUrl(),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+);}
+
+
+
+
+
+export const getGetMyFeedsQueryKey = () => {
+    return [
+    `/api/v1/users/me/feeds`
+    ] as const;
+    }
+
+    
+export const getGetMyFeedsQueryOptions = <TData = Awaited<ReturnType<typeof getMyFeeds>>, TError = Blob>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyFeeds>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyFeedsQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyFeeds>>> = ({ signal }) => getMyFeeds({ signal, ...requestOptions });
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMyFeeds>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyFeedsQueryResult = NonNullable<Awaited<ReturnType<typeof getMyFeeds>>>
+export type GetMyFeedsQueryError = Blob
+
+
+export function useGetMyFeeds<TData = Awaited<ReturnType<typeof getMyFeeds>>, TError = Blob>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyFeeds>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyFeeds>>,
+          TError,
+          Awaited<ReturnType<typeof getMyFeeds>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyFeeds<TData = Awaited<ReturnType<typeof getMyFeeds>>, TError = Blob>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyFeeds>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyFeeds>>,
+          TError,
+          Awaited<ReturnType<typeof getMyFeeds>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyFeeds<TData = Awaited<ReturnType<typeof getMyFeeds>>, TError = Blob>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyFeeds>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary 내가 작성한 피드 조회
+ */
+
+export function useGetMyFeeds<TData = Awaited<ReturnType<typeof getMyFeeds>>, TError = Blob>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyFeeds>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyFeedsQueryOptions(options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

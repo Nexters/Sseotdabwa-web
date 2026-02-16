@@ -5,12 +5,9 @@
  * Sseotdabwa Project
  * OpenAPI spec version: v1.0.0
  */
-import type { UserResponseSocialAccount } from './userResponseSocialAccount';
 
-export interface UserResponse {
-  id?: number;
+export interface FeedAuthorResponse {
+  userId?: number;
   nickname?: string;
   profileImage?: string;
-  socialAccount?: UserResponseSocialAccount;
-  email?: string;
 }
