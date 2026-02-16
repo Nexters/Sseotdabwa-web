@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { FeedCard } from "@/components/ui/feed-card";
+import { Stack } from "@/components/ui/flex";
 import { Logo } from "@/components/ui/logo";
 import { Typography } from "@/components/ui/typography";
 
@@ -31,10 +33,12 @@ function SpeechBubble({
   children,
   className,
   style,
+  centerArrow = false,
 }: {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  centerArrow?: boolean;
 }) {
   return (
     <div
@@ -48,7 +52,7 @@ function SpeechBubble({
         {children}
       </Typography>
       <div
-        className="absolute -bottom-[7px] left-4"
+        className={`absolute -bottom-[7px] ${centerArrow ? "left-1/2 -translate-x-1/2" : "left-4"}`}
         style={{
           width: 0,
           height: 0,
@@ -94,12 +98,12 @@ function PreRegisterPage() {
   const ep = easeInOut(progress);
 
   // 캐릭터 시작/끝 위치 — 모두 컨테이너 비율 기반
-  const charStartBottom = -containerHeight * 0.14; // 머리가 상단 14% 지점에 위치
-  const charStartLeft = -containerWidth * 0.2;     // 왼쪽 20% 잘림
+  const charStartBottom = -containerHeight * 0.14;
+  const charStartLeft = -containerWidth * 0.2;
 
   const charEndHeightPct = 28;
-  const charEndBottom = containerHeight * (1 - charEndHeightPct / 100) / 2; // 수직 중앙
-  const charEndLeft = containerWidth / 2;          // 수평 중앙
+  const charEndBottom = (containerHeight * (1 - charEndHeightPct / 100)) / 2; // 수직 중앙
+  const charEndLeft = containerWidth / 2;
 
   const charBottom = lerp(charStartBottom, charEndBottom, ep);
   const charLeft = lerp(charStartLeft, charEndLeft, ep);
@@ -109,7 +113,7 @@ function PreRegisterPage() {
   // UI 요소 위치 — 컨테이너 높이 비율
   const logoTop = containerHeight * 0.04;
   const bubble1Top = containerHeight * 0.16;
-  const bubble2Top = containerHeight * 0.30; // 캐릭터 상단(36%) 위
+  const bubble2Top = containerHeight * 0.30;
   const hintBottom = containerHeight * 0.06;
 
   // 투명도
@@ -118,6 +122,9 @@ function PreRegisterPage() {
   const bubble1Opacity = mapRange(progress, 0.35, 0.55, 1, 0);
   const bubble2Opacity = mapRange(progress, 0.7, 0.9, 0, 1);
 
+  // 섹션 2 캐릭터 크기
+  const section2CharHeight = containerHeight * 0.15;
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div
@@ -125,7 +132,7 @@ function PreRegisterPage() {
         className="relative mx-auto h-screen w-full max-w-[540px] overflow-y-scroll bg-gray-0"
         style={{ scrollbarWidth: "none" } as React.CSSProperties}
       >
-        {/* sticky 시각 레이어 */}
+        {/* ── 섹션 1: 스크롤 애니메이션 ── */}
         <div className="sticky top-0 h-screen overflow-hidden">
           {/* 살까말까 로고 */}
           <div
@@ -177,6 +184,39 @@ function PreRegisterPage() {
 
         {/* 스크롤 공간 */}
         <div aria-hidden style={{ height: `${SCROLL_DISTANCE}px` }} />
+
+        {/* ── 섹션 2: 피드 카드 ── */}
+        {/* z-[1]로 sticky 레이어 위를 덮으며 슬라이드 인 */}
+        <div className="relative z-1 min-h-screen bg-gray-0 pb-10">
+          {/* 말풍선 + 캐릭터 */}
+          <Stack align="center" gap={20} className="pt-[35px] pb-6">
+            <SpeechBubble centerArrow>한 번 투표해볼래?</SpeechBubble>
+            <img
+              src="/tobong.png"
+              alt="토봉 캐릭터"
+              style={{ height: section2CharHeight, width: "auto" }}
+            />
+          </Stack>
+
+          {/* 피드 카드 */}
+          <div className="px-5">
+            <FeedCard
+              username="참새방앗간12456"
+              category="업무·공부 생산성"
+              timeAgo="6시간 전"
+              content="가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카"
+              image="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"
+              price={31900}
+              voteOptions={[
+                { id: "1", label: "사! 가즈아!", percentage: 80 },
+                { id: "2", label: "애매하긴 해..", percentage: 20 },
+              ]}
+              voteCount={89}
+              isVoting={true}
+              selectedVoteId="1"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
