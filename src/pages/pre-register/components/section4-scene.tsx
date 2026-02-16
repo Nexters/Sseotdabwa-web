@@ -33,7 +33,7 @@ function Section4Scene({
           style={{ pointerEvents: isSection5Visible ? "none" : "auto" }}
         >
           <div className="flex w-full max-w-[375px] flex-col items-center gap-[10px] px-5">
-            <SpeechBubble centerArrow animate>
+            <SpeechBubble centerArrow animate isVisible={promptOpacity > 0.01}>
               혹시 너도 살까말까 고민해본적 있어?
             </SpeechBubble>
 
@@ -108,7 +108,7 @@ function Section4Scene({
           style={{ pointerEvents: isSection5Visible ? "auto" : "none" }}
         >
           <Stack className="w-full items-center gap-[24px] px-5">
-            <SpeechBubble centerArrow animate>
+            <SpeechBubble centerArrow animate isVisible={resultOpacity > 0.01}>
               {section4VoteId === "yes"
                 ? "여기서 고민을 해결해보면 어때?"
                 : "소비 정보에도 참고되니 놀러와줘~!"}

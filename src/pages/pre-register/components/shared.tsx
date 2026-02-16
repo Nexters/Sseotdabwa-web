@@ -8,23 +8,31 @@ function SpeechBubble({
   style,
   centerArrow = false,
   animate = false,
+  isVisible = true,
 }: {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   centerArrow?: boolean;
   animate?: boolean;
+  isVisible?: boolean;
 }) {
   const popRef = useRef<HTMLDivElement>(null);
+  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
-    if (!animate) return;
+    if (!animate || !isVisible) {
+      hasAnimatedRef.current = false;
+      return;
+    }
+    if (hasAnimatedRef.current) return;
 
     const el = popRef.current;
     if (!el) return;
 
     const motionReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (motionReduce.matches) return;
+    hasAnimatedRef.current = true;
 
     const baseTransform = el.style.transform?.trim() ?? "";
     const withBase = (suffix: string) =>
@@ -41,7 +49,7 @@ function SpeechBubble({
         fill: "both",
       },
     );
-  }, [animate]);
+  }, [animate, isVisible]);
 
   return (
     <div
