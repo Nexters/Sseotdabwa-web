@@ -179,6 +179,12 @@ function PreRegisterPage() {
           >
             궁금하면 스크롤!!
           </Typography>
+
+          {/* 섹션1 fade-out: 애니메이션 끝날 때 흰 화면으로 덮음 */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gray-0"
+            style={{ opacity: mapRange(progress, 0.85, 1.0, 0, 1) }}
+          />
         </div>
 
         {/* 섹션 1 스크롤 공간 */}
