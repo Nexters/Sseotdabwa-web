@@ -1,156 +1,129 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
+import { useGetFeedList } from "@/api/feeds/feeds";
+import type { FeedResponse } from "@/api/model";
 import { Divider } from "@/components/ui/divider";
 import { FeedCard } from "@/components/ui/feed-card";
 
-const mockFeeds = [
-  {
-    id: "1",
-    username: "참새방앗간12456",
-    category: "업무·공부 생산성",
-    timeAgo: "6시간 전",
-    content:
-      "가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카가나다라마바사아자차카",
-    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400",
-    price: 31900,
-    voteOptions: [
-      { id: "1", label: "사! 가즈아!", percentage: 80 },
-      { id: "2", label: "애매하긴 해..", percentage: 20 },
-    ],
-    voteCount: 89,
-    isVoting: true,
-    selectedVoteId: "1",
-  },
-  {
-    id: "2",
-    username: "쇼핑러버",
-    category: "패션·의류",
-    timeAgo: "2시간 전",
-    content: "이 가방 너무 이쁜데 가격이 좀 나가네요.. 어떻게 생각하세요?",
-    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400",
-    price: 89000,
-    voteOptions: [
-      { id: "1", label: "사! 가즈아!", percentage: 62 },
-      { id: "2", label: "애매하긴 해..", percentage: 38 },
-    ],
-    voteCount: 156,
-    isVoting: true,
-  },
-  {
-    id: "3",
-    username: "테크덕후",
-    category: "전자기기",
-    timeAgo: "1일 전",
-    content:
-      "새 키보드 살까 말까 고민중입니다. 기계식 키보드 처음인데 괜찮을까요?",
-    image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400",
-    price: 159000,
-    voteOptions: [
-      { id: "1", label: "사! 가즈아!", percentage: 90 },
-      { id: "2", label: "애매하긴 해..", percentage: 10 },
-    ],
-    voteCount: 234,
-    isVoting: false,
-    selectedVoteId: "1",
-  },
-  {
-    id: "4",
-    username: "맛집탐험가",
-    category: "음식·맛집",
-    timeAgo: "3시간 전",
-    content: "오마카세 처음 가보려는데 이 가격대면 괜찮은 건가요?",
-    voteOptions: [
-      { id: "1", label: "사! 가즈아!", percentage: 71 },
-      { id: "2", label: "애매하긴 해..", percentage: 29 },
-    ],
-    voteCount: 67,
-    isVoting: true,
-  },
-  {
-    id: "5",
-    username: "동점테스트",
-    category: "기타",
-    timeAgo: "5시간 전",
-    content: "동점 결과 테스트입니다.",
-    voteOptions: [
-      {
-        id: "1",
-        label: "사! 가즈아!",
-        percentage: 30,
-      },
-      { id: "2", label: "애매하긴 해...", percentage: 20 },
-    ],
-    voteCount: 89,
-    isVoting: false,
-    selectedVoteId: "1",
-  },
-  {
-    id: "6",
-    username: "집순이",
-    category: "인테리어·가구",
-    timeAgo: "30분 전",
-    content: "원룸에 공기청정기 필요할까요? 환기를 잘 못해서 고민이에요.",
-    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400",
-    price: 248000,
-    voteOptions: [
-      { id: "1", label: "사! 가즈아!", percentage: 74 },
-      { id: "2", label: "애매하긴 해..", percentage: 26 },
-    ],
-    voteCount: 42,
-    isVoting: true,
-  },
-];
+function formatTimeAgo(createdAt?: string) {
+  if (!createdAt) return undefined;
+
+  const created = new Date(createdAt);
+  if (Number.isNaN(created.getTime())) return undefined;
+
+  const diffMs = Date.now() - created.getTime();
+  const diffMin = Math.max(0, Math.floor(diffMs / (1000 * 60)));
+
+  if (diffMin < 1) return "방금 전";
+  if (diffMin < 60) return `${diffMin}분 전`;
+
+  const diffHour = Math.floor(diffMin / 60);
+  if (diffHour < 24) return `${diffHour}시간 전`;
+
+  const diffDay = Math.floor(diffHour / 24);
+  return `${diffDay}일 전`;
+}
+
+function mapCategory(category?: string) {
+  if (!category) return undefined;
+
+  const categoryMap: Record<string, string> = {
+    LUXURY: "명품",
+    FASHION: "패션",
+    BEAUTY: "뷰티",
+    FOOD: "음식",
+    ELECTRONICS: "전자기기",
+    TRAVEL: "여행",
+    HEALTH: "건강",
+    BOOK: "도서",
+    ETC: "기타",
+  };
+
+  return categoryMap[category] ?? category;
+}
+
+function toImageUrl(s3ObjectKey?: string) {
+  if (!s3ObjectKey) return undefined;
+  if (s3ObjectKey.startsWith("http://") || s3ObjectKey.startsWith("https://")) {
+    return s3ObjectKey;
+  }
+  return undefined;
+}
 
 function FeedContent() {
-  const [votes, setVotes] = useState<Record<string, string>>(() => {
-    const initial: Record<string, string> = {};
-    for (const feed of mockFeeds) {
-      if (feed.selectedVoteId) {
-        initial[feed.id] = feed.selectedVoteId;
-      }
-    }
-    return initial;
-  });
+  const [votes, setVotes] = useState<Record<string, string>>({});
+  const { data, isLoading, isError } = useGetFeedList();
+
+  const feeds = useMemo(() => {
+    const raw = data as unknown as { data?: { data?: FeedResponse[] } };
+    return raw?.data?.data ?? [];
+  }, [data]);
 
   const handleVote = (feedId: string, optionId: string) => {
     setVotes((prev) => ({ ...prev, [feedId]: optionId }));
   };
+
+  if (isLoading) {
+    return (
+      <div data-slot="feed-content" className="px-[20px] py-[24px] text-gray-600">
+        피드를 불러오는 중...
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div data-slot="feed-content" className="px-[20px] py-[24px] text-gray-600">
+        피드를 불러오지 못했어요.
+      </div>
+    );
+  }
 
   return (
     <div
       data-slot="feed-content"
       className="flex flex-col gap-[20px] px-[20px] pt-[20px] pb-[60px]"
     >
-      {/* <ConsumptionCard
-        onClose={() => console.log("ConsumptionCard closed")}
-        onButtonClick={() => console.log("ConsumptionCard button clicked")}
-      /> */}
-      {mockFeeds.map((feed, index) => (
-        <>
-          <FeedCard
-            key={feed.id}
-            username={feed.username}
-            category={feed.category}
-            timeAgo={feed.timeAgo}
-            content={feed.content}
-            image={feed.image}
-            price={feed.price}
-            voteOptions={feed.voteOptions}
-            voteCount={feed.voteCount}
-            isVoting={feed.isVoting}
-            selectedVoteId={votes[feed.id]}
-            onVote={(optionId) => handleVote(feed.id, optionId)}
-            onMoreClick={() => console.log("More clicked:", feed.id)}
-          />
-          {index < mockFeeds.length - 1 && (
-            <Divider
-              key={`divider-${feed.id}`}
-              size="small"
-              className="bg-gray-100"
+      {feeds.map((feed, index) => {
+        const id = String(feed.feedId ?? index);
+        const yes = feed.yesCount ?? 0;
+        const no = feed.noCount ?? 0;
+        const total = yes + no;
+
+        const voteOptions = [
+          {
+            id: "yes",
+            label: "사! 가즈아!",
+            percentage: total > 0 ? Math.round((yes / total) * 100) : 0,
+          },
+          {
+            id: "no",
+            label: "애매하긴 해..",
+            percentage: total > 0 ? Math.round((no / total) * 100) : 0,
+          },
+        ];
+
+        return (
+          <div key={id}>
+            <FeedCard
+              username={feed.author?.nickname}
+              profileImage={feed.author?.profileImage}
+              category={mapCategory(feed.category)}
+              timeAgo={formatTimeAgo(feed.createdAt)}
+              content={feed.content}
+              image={toImageUrl(feed.s3ObjectKey)}
+              price={feed.price}
+              voteOptions={voteOptions}
+              voteCount={total}
+              isVoting={feed.feedStatus !== "CLOSED"}
+              selectedVoteId={votes[id]}
+              onVote={(optionId) => handleVote(id, optionId)}
+              onMoreClick={() => console.log("More clicked:", id)}
             />
-          )}
-        </>
-      ))}
+            {index < feeds.length - 1 && <Divider size="small" className="bg-gray-100" />}
+          </div>
+        );
+      })}
     </div>
   );
 }
