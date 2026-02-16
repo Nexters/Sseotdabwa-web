@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function HomePage() {
   const [selectedFilter, setSelectedFilter] = useState("all");
+  const [hasFeedError, setHasFeedError] = useState(false);
 
   return (
     <div className="app-layout flex h-screen w-full justify-center">
@@ -50,10 +51,10 @@ function HomePage() {
             </Chip>
           </Group>
           <TabsContent value="vote-feed">
-            <FeedContent />
+            <FeedContent onErrorChange={setHasFeedError} />
           </TabsContent>
         </Tabs>
-        <FAB className="sticky bottom-[20px] float-right mr-[20px]" />
+        {!hasFeedError && <FAB className="sticky bottom-[20px] float-right mr-[20px]" />}
       </div>
     </div>
   );

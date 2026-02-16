@@ -1,4 +1,11 @@
-import { Component, type ErrorInfo, type ReactNode, useMemo, useState } from "react";
+import {
+  Component,
+  type ErrorInfo,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import { useGetFeedList } from "@/api/feeds/feeds";
 import type { FeedResponse } from "@/api/model";
@@ -81,10 +88,10 @@ function FeedContentErrorFallback({ onRetry }: { onRetry: () => void }) {
 }
 
 class FeedContentErrorBoundary extends Component<
-  { children: ReactNode },
+  { children: ReactNode; onErrorChange?: (hasError: boolean) => void },
   { hasError: boolean }
 > {
-  constructor(props: { children: ReactNode }) {
+  constructor(props: { children: ReactNode; onErrorChange?: (hasError: boolean) => void }) {
     super(props);
     this.state = { hasError: false };
   }
@@ -94,10 +101,12 @@ class FeedContentErrorBoundary extends Component<
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    this.props.onErrorChange?.(true);
     console.error("FeedContent render error", error, errorInfo);
   }
 
   handleRetry = () => {
+    this.props.onErrorChange?.(false);
     this.setState({ hasError: false });
     window.location.reload();
   };
@@ -183,9 +192,17 @@ function FeedContentBody() {
   );
 }
 
-function FeedContent() {
+interface FeedContentProps {
+  onErrorChange?: (hasError: boolean) => void;
+}
+
+function FeedContent({ onErrorChange }: FeedContentProps) {
+  useEffect(() => {
+    onErrorChange?.(false);
+  }, [onErrorChange]);
+
   return (
-    <FeedContentErrorBoundary>
+    <FeedContentErrorBoundary onErrorChange={onErrorChange}>
       <FeedContentBody />
     </FeedContentErrorBoundary>
   );
