@@ -144,9 +144,9 @@ function PreRegisterPage() {
   const charHeightPct = lerp(100, charEndHeightPct, ep);
 
   const logoTop = containerHeight * 0.04;
-  const bubble1Top = containerHeight * 0.16;
+  const bubble1Top = 60;
   const bubble2Top = containerHeight * 0.3;
-  const bubble1Right = containerWidth * 0.11;
+  const bubble1Right = 40;
   const bubble2Right = containerWidth * 0.11;
   const hintBottom = containerHeight * 0.06;
 
