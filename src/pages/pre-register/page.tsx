@@ -146,7 +146,6 @@ function PreRegisterPage() {
   const logoTop = containerHeight * 0.04;
   const bubble1Top = 60;
   const bubble2Top = containerHeight * 0.3;
-  const bubble1Right = 40;
   const bubble2Right = containerWidth * 0.11;
   const hintBottom = containerHeight * 0.06;
 
@@ -225,8 +224,8 @@ function PreRegisterPage() {
 
           <SpeechBubble
             centerArrow
-            className="absolute"
-            style={{ top: bubble1Top, right: bubble1Right, opacity: bubble1Opacity }}
+            className="absolute right-[40px]"
+            style={{ top: bubble1Top, opacity: bubble1Opacity }}
           >
             궁금하면 스크롤해줘!
           </SpeechBubble>
