@@ -200,7 +200,7 @@ function PreRegisterPage() {
         {/* ── 섹션 2: 피드 카드 ──
             z-1 + bg-gray-0 → 아래서 올라오며 섹션 1을 흰 화면으로 덮음
             콘텐츠는 섹션2가 뷰포트를 꽉 채울 때(section2Entry 90~100%) fade-in */}
-        <div className="relative z-1 min-h-screen bg-gray-0 pb-20">
+        <div className="relative z-1 h-screen overflow-hidden bg-gray-0">
           <div
             style={{
               opacity: section2ContentOpacity,
