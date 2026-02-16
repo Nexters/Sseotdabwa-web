@@ -175,7 +175,6 @@ function PreRegisterPage() {
       : section2IntroOpacity;
   const section2WhiteOpacity = section2Phase === "white" ? 1 : 0;
   const section3ContentOpacity = section2Phase === "section3" ? 1 : 0;
-  const section3BubbleTop = containerHeight * 0.34;
 
   const handleVote = (optionId: string) => {
     if (selectedVoteId) return;
@@ -295,26 +294,18 @@ function PreRegisterPage() {
             opacity={section3ContentOpacity}
             className="pointer-events-none absolute inset-0"
           >
-            <SpeechBubble
-              centerArrow
-              className="absolute left-1/2 -translate-x-1/2"
-              style={{ top: section3BubbleTop }}
+            <Stack
+              align="center"
+              gap={100}
+              className="absolute bottom-[135px] left-1/2 -translate-x-1/2"
             >
-              의견줘서 고마워~~!
-            </SpeechBubble>
-
-            <img
-              src="/tobong.png"
-              alt="토봉 캐릭터 감사 인사"
-              className="absolute max-w-none"
-              style={{
-                bottom: charEndBottom,
-                left: charEndLeft,
-                height: `${charEndHeightPct}%`,
-                width: "auto",
-                transform: "translateX(-50%)",
-              }}
-            />
+              <SpeechBubble centerArrow>의견줘서 고마워~~!</SpeechBubble>
+              <img
+                src="/tobong.png"
+                alt="토봉 캐릭터 감사 인사"
+                style={{ width: 210, height: "auto" }}
+              />
+            </Stack>
           </FadeLayer>
         </div>
       </div>
