@@ -3,32 +3,20 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
 import { BrandAssetBox } from "@/components/ui/brand-asset";
-import { PushButton } from "@/components/ui/push-button";
-import { useOpenQRModal } from "@/components/ui/qr-modal";
 import { Flex } from "./ui/flex";
 
-function AppStoreLogo(props: React.SVGProps<SVGSVGElement>) {
+function SadFaceIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...props}>
+      <circle cx="10" cy="10" r="10" fill="#2A3038" />
+      <circle cx="7.2" cy="8.1" r="1.1" fill="#F4F5F6" />
+      <circle cx="12.8" cy="8.1" r="1.1" fill="#F4F5F6" />
       <path
-        d="M14.94 10.56c-.02-2.27 1.85-3.36 1.94-3.42-1.06-1.55-2.7-1.76-3.28-1.78-1.4-.14-2.73.82-3.44.82-.71 0-1.81-.8-2.98-.78-1.53.02-2.95.89-3.74 2.27-1.59 2.76-.41 6.86 1.15 9.1.76 1.1 1.66 2.33 2.85 2.29 1.14-.05 1.57-.74 2.95-.74 1.38 0 1.77.74 2.97.71 1.23-.02 2-1.12 2.76-2.22.87-1.28 1.23-2.51 1.25-2.58-.03-.01-2.4-.92-2.43-3.67Z"
-        fill="currentColor"
+        d="M6.2 14.4C6.7 12.9 8.1 12 10 12c1.9 0 3.3.9 3.8 2.4"
+        stroke="#F4F5F6"
+        strokeWidth="1.4"
+        strokeLinecap="round"
       />
-      <path
-        d="M12.63 3.72c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.59.68-1.1 1.77-.96 2.81 1.01.08 2.05-.51 2.68-1.29Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-function GooglePlayLogo(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...props}>
-      <path d="M4 3.5v13l7.5-6.5L4 3.5Z" fill="currentColor" />
-      <path d="M11.5 10 4 3.5 14.5 9l-3 1Z" fill="currentColor" />
-      <path d="M11.5 10l3 1L4 16.5l7.5-6.5Z" fill="currentColor" />
-      <path d="M14.5 9l2 1.5-2 1-3-1.5 3-1Z" fill="currentColor" />
     </svg>
   );
 }
@@ -36,8 +24,6 @@ function GooglePlayLogo(props: React.SVGProps<SVGSVGElement>) {
 interface AppBridgeBannerProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
-  const { open: openQRModal } = useOpenQRModal();
-
   return (
     <Flex
       direction="col"
@@ -91,23 +77,15 @@ function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
         />
       </div>
 
-      {/* 스토어 버튼 */}
-      <Flex direction="row" gap={16} className="max-w-[412px]">
-        <PushButton
-          icon={<AppStoreLogo className="text-gray-900" />}
-          className="flex-1"
-          onClick={() => openQRModal()}
-        >
-          App Store
-        </PushButton>
-        <PushButton
-          icon={<GooglePlayLogo className="text-gray-900" />}
-          className="flex-1"
-          onClick={() => openQRModal()}
-        >
-          Google Play
-        </PushButton>
-      </Flex>
+      <a
+        href="https://docs.google.com/forms/d/e/1FAIpQLScG0GStvzog1HVZjAP9OpHl85azcez2OdAr7YwrI7rvCqInsg/viewform?pli=1"
+        target="_blank"
+        rel="noreferrer"
+        className="flex h-[76px] w-full max-w-[412px] items-center justify-center gap-[8px] rounded-[16px] bg-gray-100 px-5 text-gray-900 transition-colors hover:bg-gray-200"
+      >
+        <SadFaceIcon />
+        <span className="text-t2-bold text-gray-900">불편한 점이 있으신가요?</span>
+      </a>
     </Flex>
   );
 }
