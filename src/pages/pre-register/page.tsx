@@ -224,16 +224,24 @@ function PreRegisterPage() {
 
           <SpeechBubble
             centerArrow
-            className="absolute right-[40px]"
-            style={{ top: bubble1Top, opacity: bubble1Opacity }}
+            style={{
+              position: "absolute",
+              top: bubble1Top,
+              right: 40,
+              opacity: bubble1Opacity,
+            }}
           >
             궁금하면 스크롤해줘!
           </SpeechBubble>
 
           <SpeechBubble
             centerArrow
-            className="absolute"
-            style={{ top: bubble2Top, right: bubble2Right, opacity: bubble2Opacity }}
+            style={{
+              position: "absolute",
+              top: bubble2Top,
+              right: bubble2Right,
+              opacity: bubble2Opacity,
+            }}
           >
             살지 말지 고민되는 상품이 있어...
           </SpeechBubble>
