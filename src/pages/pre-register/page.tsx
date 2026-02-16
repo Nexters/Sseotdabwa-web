@@ -9,7 +9,7 @@ import { Typography } from "@/components/ui/typography";
 const SCROLL_DISTANCE = 1200;
 const SECTION2_WAIT_MS = 1000;
 const SECTION2_WHITE_MS = 1400;
-const SECTION3_HOLD_MS = 1400;
+const SECTION3_HOLD_MS = 2000;
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -97,6 +97,7 @@ function PreRegisterPage() {
   const [containerWidth, setContainerWidth] = useState(375);
   const [containerHeight, setContainerHeight] = useState(667);
   const [selectedVoteId, setSelectedVoteId] = useState<string>();
+  const [section4VoteId, setSection4VoteId] = useState<string>();
   const [section2Phase, setSection2Phase] = useState<
     "default" | "wait" | "white" | "section3" | "section4"
   >("default");
@@ -339,7 +340,7 @@ function PreRegisterPage() {
                 <div className="flex h-[240px] w-full max-w-[412px] items-center justify-center">
                   <div
                     style={{
-                      animation: "brandAssetFloat 1.8s ease-in-out infinite",
+                      animation: "brandAssetFloatStep 3s ease-in-out infinite",
                       animationDelay: "0s",
                     }}
                   >
@@ -352,8 +353,8 @@ function PreRegisterPage() {
                   </div>
                   <div
                     style={{
-                      animation: "brandAssetFloat 1.8s ease-in-out infinite",
-                      animationDelay: "0.2s",
+                      animation: "brandAssetFloatStep 3s ease-in-out infinite",
+                      animationDelay: "1s",
                     }}
                   >
                     <BrandAssetBox
@@ -365,8 +366,8 @@ function PreRegisterPage() {
                   </div>
                   <div
                     style={{
-                      animation: "brandAssetFloat 1.8s ease-in-out infinite",
-                      animationDelay: "0.4s",
+                      animation: "brandAssetFloatStep 3s ease-in-out infinite",
+                      animationDelay: "2s",
                     }}
                   >
                     <BrandAssetBox
@@ -381,7 +382,12 @@ function PreRegisterPage() {
                 <div className="flex w-full flex-col gap-[10px]">
                   <button
                     type="button"
-                    className="h-[62px] w-full rounded-[15px] border border-gray-300 bg-gray-100 px-4 text-left"
+                    onClick={() => setSection4VoteId("yes")}
+                    className={`h-[62px] w-full rounded-[15px] border px-4 text-left transition-colors ${
+                      section4VoteId === "yes"
+                        ? "border-gray-900 bg-gray-300"
+                        : "border-gray-300 bg-gray-100"
+                    }`}
                   >
                     <Typography variant="s2-semibold" className="text-gray-900">
                       응!
@@ -389,7 +395,12 @@ function PreRegisterPage() {
                   </button>
                   <button
                     type="button"
-                    className="h-[62px] w-full rounded-[15px] border border-gray-300 bg-gray-100 px-4 text-left"
+                    onClick={() => setSection4VoteId("no")}
+                    className={`h-[62px] w-full rounded-[15px] border px-4 text-left transition-colors ${
+                      section4VoteId === "no"
+                        ? "border-gray-900 bg-gray-300"
+                        : "border-gray-300 bg-gray-100"
+                    }`}
                   >
                     <Typography variant="s2-semibold" className="text-gray-900">
                       아니..
@@ -402,9 +413,10 @@ function PreRegisterPage() {
         </div>
       </div>
       <style>{`
-        @keyframes brandAssetFloat {
+        @keyframes brandAssetFloatStep {
           0% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
+          15% { transform: translateY(-10px); }
+          30% { transform: translateY(0); }
           100% { transform: translateY(0); }
         }
       `}</style>
