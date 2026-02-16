@@ -6,6 +6,8 @@ import { Logo } from "@/components/ui/logo";
 import { Typography } from "@/components/ui/typography";
 
 const SCROLL_DISTANCE = 1200;
+const SECTION2_WAIT_MS = 1000;
+const SECTION2_WHITE_MS = 1400;
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -42,7 +44,7 @@ function SpeechBubble({
 }) {
   return (
     <div
-      className={`relative rounded-[16px] px-3 py-[7px] ${className ?? ""}`}
+      className={`relative inline-flex w-fit items-center rounded-[16px] px-3 py-[7px] ${className ?? ""}`}
       style={{
         background:
           "radial-gradient(circle at 30% 30%, #2A3038 0%, #77879E 100%)",
@@ -66,11 +68,37 @@ function SpeechBubble({
   );
 }
 
+function FadeLayer({
+  opacity,
+  children,
+  className,
+  style,
+}: {
+  opacity: number;
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div
+      className={className}
+      style={{ opacity, transition: "opacity 0.2s ease-out", ...style }}
+    >
+      {children}
+    </div>
+  );
+}
+
 function PreRegisterPage() {
   const [scrollTop, setScrollTop] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(375);
   const [containerHeight, setContainerHeight] = useState(667);
+  const [selectedVoteId, setSelectedVoteId] = useState<string>();
+  const [section2Phase, setSection2Phase] = useState<
+    "default" | "wait" | "white" | "section3"
+  >("default");
+  const section2TimersRef = useRef<number[]>([]);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -91,6 +119,12 @@ function PreRegisterPage() {
     return () => {
       el.removeEventListener("scroll", onScroll);
       resizeObserver.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      section2TimersRef.current.forEach((timer) => window.clearTimeout(timer));
     };
   }, []);
 
@@ -130,11 +164,34 @@ function PreRegisterPage() {
   const section1FadeOut = mapRange(scrollTop, fadeOutStart, fadeOutEnd, 0, 1);
 
   // section2Entry: 0 = 섹션2 하단에 걸침, 1 = 뷰포트 꽉 채움
-  const section2Entry = clamp01(
-    (scrollTop - TOTAL_SPACER) / containerHeight,
-  );
+  const section2Entry = clamp01((scrollTop - TOTAL_SPACER) / containerHeight);
   // 완전히 채워진 순간(90~100%)에만 콘텐츠 fade-in
-  const section2ContentOpacity = mapRange(section2Entry, 0.9, 1.0, 0, 1);
+  const section2IntroOpacity = mapRange(section2Entry, 0.9, 1.0, 0, 1);
+
+  // ── 섹션 2 → 3 전환 (vote 이후, 시간 기반) ──
+  const section2ContentOpacity =
+    section2Phase === "white" || section2Phase === "section3"
+      ? 0
+      : section2IntroOpacity;
+  const section2WhiteOpacity = section2Phase === "white" ? 1 : 0;
+  const section3ContentOpacity = section2Phase === "section3" ? 1 : 0;
+  const section3BubbleTop = containerHeight * 0.34;
+
+  const handleVote = (optionId: string) => {
+    if (selectedVoteId) return;
+    setSelectedVoteId(optionId);
+    setSection2Phase("wait");
+
+    const whiteTimer = window.setTimeout(() => {
+      setSection2Phase("white");
+    }, SECTION2_WAIT_MS);
+
+    const section3Timer = window.setTimeout(() => {
+      setSection2Phase("section3");
+    }, SECTION2_WAIT_MS + SECTION2_WHITE_MS);
+
+    section2TimersRef.current = [whiteTimer, section3Timer];
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -166,6 +223,7 @@ function PreRegisterPage() {
           />
 
           <SpeechBubble
+            centerArrow
             className="absolute right-5"
             style={{ top: bubble1Top, opacity: bubble1Opacity }}
           >
@@ -173,6 +231,7 @@ function PreRegisterPage() {
           </SpeechBubble>
 
           <SpeechBubble
+            centerArrow
             className="absolute right-5"
             style={{ top: bubble2Top, opacity: bubble2Opacity }}
           >
@@ -188,9 +247,9 @@ function PreRegisterPage() {
           </Typography>
 
           {/* 섹션1 fade-out: 애니메이션 끝날 때 흰 화면으로 덮음 */}
-          <div
+          <FadeLayer
+            opacity={section1FadeOut}
             className="pointer-events-none absolute inset-0 bg-gray-0"
-            style={{ opacity: section1FadeOut }}
           />
         </div>
 
@@ -201,12 +260,7 @@ function PreRegisterPage() {
             z-1 + bg-gray-0 → 아래서 올라오며 섹션 1을 흰 화면으로 덮음
             콘텐츠는 섹션2가 뷰포트를 꽉 채울 때(section2Entry 90~100%) fade-in */}
         <div className="relative z-1 mx-auto h-screen max-w-[335px] overflow-hidden bg-gray-0">
-          <div
-            style={{
-              opacity: section2ContentOpacity,
-              transition: "opacity 0.15s ease-out",
-            }}
-          >
+          <FadeLayer opacity={section2ContentOpacity}>
             {/* 말풍선 + 캐릭터: top 35px, 간격 20px, 토봉이 z-10 */}
             <Stack align="center" gap={20} className="relative pt-[35px]">
               <SpeechBubble centerArrow>한 번 투표해볼래?</SpeechBubble>
@@ -227,12 +281,41 @@ function PreRegisterPage() {
                   { id: "1", label: "사! 가즈아!", percentage: 80 },
                   { id: "2", label: "애매하긴 해..", percentage: 20 },
                 ]}
-                voteCount={89}
-                isVoting={true}
-                selectedVoteId="1"
+                selectedVoteId={selectedVoteId}
+                onVote={handleVote}
               />
             </div>
-          </div>
+          </FadeLayer>
+
+          <FadeLayer
+            opacity={section2WhiteOpacity}
+            className="pointer-events-none absolute inset-0 bg-gray-0"
+          />
+          <FadeLayer
+            opacity={section3ContentOpacity}
+            className="pointer-events-none absolute inset-0"
+          >
+            <SpeechBubble
+              centerArrow
+              className="absolute left-1/2 -translate-x-1/2"
+              style={{ top: section3BubbleTop }}
+            >
+              의견줘서 고마워~~!
+            </SpeechBubble>
+
+            <img
+              src="/tobong.png"
+              alt="토봉 캐릭터 감사 인사"
+              className="absolute max-w-none"
+              style={{
+                bottom: charEndBottom,
+                left: charEndLeft,
+                height: `${charEndHeightPct}%`,
+                width: "auto",
+                transform: "translateX(-50%)",
+              }}
+            />
+          </FadeLayer>
         </div>
       </div>
     </div>
