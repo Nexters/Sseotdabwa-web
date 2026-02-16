@@ -146,6 +146,8 @@ function PreRegisterPage() {
   const logoTop = containerHeight * 0.04;
   const bubble1Top = containerHeight * 0.16;
   const bubble2Top = containerHeight * 0.3;
+  const bubble1Right = containerWidth * 0.11;
+  const bubble2Right = containerWidth * 0.11;
   const hintBottom = containerHeight * 0.06;
 
   const titleOpacity = mapRange(progress, 0, 0.35, 1, 0);
@@ -223,16 +225,16 @@ function PreRegisterPage() {
 
           <SpeechBubble
             centerArrow
-            className="absolute right-5"
-            style={{ top: bubble1Top, opacity: bubble1Opacity }}
+            className="absolute"
+            style={{ top: bubble1Top, right: bubble1Right, opacity: bubble1Opacity }}
           >
             궁금하면 스크롤해줘!
           </SpeechBubble>
 
           <SpeechBubble
             centerArrow
-            className="absolute right-5"
-            style={{ top: bubble2Top, opacity: bubble2Opacity }}
+            className="absolute"
+            style={{ top: bubble2Top, right: bubble2Right, opacity: bubble2Opacity }}
           >
             살지 말지 고민되는 상품이 있어...
           </SpeechBubble>
