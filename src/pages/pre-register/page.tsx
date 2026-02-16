@@ -134,6 +134,8 @@ function PreRegisterPage() {
 
   const charStartBottom = -containerHeight * 0.14;
   const charStartLeft = -containerWidth * 0.2;
+  const charStartWidth = containerWidth * 1.35;
+  const charEndWidth = 300;
   const charEndHeightPct = 28;
   const charEndBottom = (containerHeight * (1 - charEndHeightPct / 100)) / 2;
   const charEndLeft = containerWidth / 2;
@@ -141,7 +143,7 @@ function PreRegisterPage() {
   const charBottom = lerp(charStartBottom, charEndBottom, ep);
   const charLeft = lerp(charStartLeft, charEndLeft, ep);
   const charTranslateX = lerp(0, -50, ep);
-  const charHeightPct = lerp(100, charEndHeightPct, ep);
+  const charWidth = lerp(charStartWidth, charEndWidth, ep);
 
   const logoTop = containerHeight * 0.04;
   const bubble1Top = containerHeight * 0.16;
@@ -215,8 +217,8 @@ function PreRegisterPage() {
             style={{
               bottom: charBottom,
               left: charLeft,
-              height: `${charHeightPct}%`,
-              width: "auto",
+              width: `${charWidth}px`,
+              height: "auto",
               transform: `translateX(${charTranslateX}%)`,
             }}
           />
