@@ -89,6 +89,9 @@ function Section1Scene({
 
       <SpeechBubble
         centerArrow
+        animateOn="inView"
+        isVisible={bubble1Opacity > 0.01}
+        animateDelayMs={300}
         style={{
           position: "absolute",
           top: bubble1Top,
@@ -101,6 +104,9 @@ function Section1Scene({
 
       <SpeechBubble
         centerArrow
+        animateOn="inView"
+        isVisible={bubble2Opacity > 0.01}
+        animateDelayMs={300}
         className="whitespace-nowrap"
         style={{
           position: "absolute",

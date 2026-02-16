@@ -9,6 +9,7 @@ function SpeechBubble({
   centerArrow = false,
   animateOn,
   isVisible = true,
+  animateDelayMs = 0,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -16,6 +17,7 @@ function SpeechBubble({
   centerArrow?: boolean;
   animateOn?: "mount" | "visible" | "inView";
   isVisible?: boolean;
+  animateDelayMs?: number;
 }) {
   const popRef = useRef<HTMLDivElement>(null);
   const hasToggleAnimatedRef = useRef(false);
@@ -73,18 +75,22 @@ function SpeechBubble({
     const withBase = (suffix: string) =>
       baseTransform ? `${baseTransform} ${suffix}` : suffix;
 
-    el.animate(
-      [
-        { transform: withBase("translateY(6px) scale(0.88)") },
-        { transform: withBase("translateY(0) scale(1)") },
-      ],
-      {
-        duration: 260,
-        easing: "cubic-bezier(0.2, 0.85, 0.25, 1)",
-        fill: "both",
-      },
-    );
-  }, [animateOn, isVisible, isInView]);
+    const timerId = window.setTimeout(() => {
+      el.animate(
+        [
+          { transform: withBase("translateY(6px) scale(0.88)") },
+          { transform: withBase("translateY(0) scale(1)") },
+        ],
+        {
+          duration: 260,
+          easing: "cubic-bezier(0.2, 0.85, 0.25, 1)",
+          fill: "both",
+        },
+      );
+    }, Math.max(0, animateDelayMs));
+
+    return () => window.clearTimeout(timerId);
+  }, [animateDelayMs, animateOn, isVisible, isInView]);
 
   return (
     <div
