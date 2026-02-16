@@ -87,7 +87,7 @@ function Section1Scene({
         <Typography variant="t1-bold" className="text-gray-0">
           궁금하면 스크롤!!
         </Typography>
-        <Icon icon="down" size={16} className="text-gray-0" />
+        <Icon icon="down" size={12} className="text-gray-0" />
       </div>
 
       <FadeLayer
