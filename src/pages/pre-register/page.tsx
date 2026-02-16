@@ -31,10 +31,6 @@ function mapRange(
   return lerp(outMin, outMax, clamp01((value - inMin) / (inMax - inMin)));
 }
 
-function easeInOut(t: number): number {
-  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-}
-
 function PreRegisterPage() {
   const [scrollTop, setScrollTop] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -85,35 +81,8 @@ function PreRegisterPage() {
     };
   }, []);
 
-  const progress = clamp01(scrollTop / SCROLL_DISTANCE);
-  const ep = easeInOut(progress);
-
-  const charStartBottom = -containerHeight * 0.14;
-  const charStartLeft = -containerWidth * 0.2;
-  const charEndHeightPct = 28;
-  const charEndBottom = (containerHeight * (1 - charEndHeightPct / 100)) / 2;
-  const charEndLeft = containerWidth / 2;
-
-  const charBottom = lerp(charStartBottom, charEndBottom, ep);
-  const charLeft = lerp(charStartLeft, charEndLeft, ep);
-  const charTranslateX = lerp(0, -50, ep);
-  const charHeightPct = lerp(100, charEndHeightPct, ep);
-
-  const logoTop = containerHeight * 0.04;
-  const bubble1Top = 60;
-  const bubble2Top = containerHeight * 0.3;
-  const hintBottom = containerHeight * 0.06;
-
-  const titleOpacity = mapRange(progress, 0, 0.35, 1, 0);
-  const hintOpacity = mapRange(progress, 0, 0.25, 1, 0);
-  const bubble1Opacity = mapRange(progress, 0.35, 0.55, 1, 0);
-  const bubble2Opacity = mapRange(progress, 0.7, 0.9, 0, 1);
-
   const holdDistance = containerHeight;
   const totalSpacer = SCROLL_DISTANCE + holdDistance;
-  const fadeOutStart = SCROLL_DISTANCE + holdDistance * 0.7;
-  const fadeOutEnd = SCROLL_DISTANCE + holdDistance;
-  const section1FadeOut = mapRange(scrollTop, fadeOutStart, fadeOutEnd, 0, 1);
 
   const section2Entry = clamp01((scrollTop - totalSpacer) / containerHeight);
   const section2IntroOpacity = mapRange(section2Entry, 0.9, 1.0, 0, 1);
@@ -189,19 +158,10 @@ function PreRegisterPage() {
         style={{ scrollbarWidth: "none" } as React.CSSProperties}
       >
         <Section1Scene
-          logoTop={logoTop}
-          titleOpacity={titleOpacity}
-          charBottom={charBottom}
-          charLeft={charLeft}
-          charHeightPct={charHeightPct}
-          charTranslateX={charTranslateX}
-          bubble1Top={bubble1Top}
-          bubble1Opacity={bubble1Opacity}
-          bubble2Top={bubble2Top}
-          bubble2Opacity={bubble2Opacity}
-          hintBottom={hintBottom}
-          hintOpacity={hintOpacity}
-          section1FadeOut={section1FadeOut}
+          scrollTop={scrollTop}
+          containerWidth={containerWidth}
+          containerHeight={containerHeight}
+          scrollDistance={SCROLL_DISTANCE}
         />
 
         <div aria-hidden style={{ height: totalSpacer }} />
