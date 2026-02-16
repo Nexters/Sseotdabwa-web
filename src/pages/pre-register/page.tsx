@@ -10,6 +10,8 @@ const SECTION2_WAIT_MS = 1000;
 const SECTION2_WHITE_MS = 1400;
 const SECTION3_HOLD_MS = 2000;
 const SECTION4_TO_5_FADE_MS = 260;
+const SECTION3_TO_4_FADE_OUT_MS = 320;
+const SECTION3_TO_4_FADE_IN_MS = 340;
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -43,7 +45,13 @@ function PreRegisterPage() {
   const [isSection4FadingOut, setIsSection4FadingOut] = useState(false);
   const [isSection5Visible, setIsSection5Visible] = useState(false);
   const [section2Phase, setSection2Phase] = useState<
-    "default" | "wait" | "white" | "section3" | "section3-to-4" | "section4"
+    | "default"
+    | "wait"
+    | "white"
+    | "section3"
+    | "section3-fadeout"
+    | "section4-fadein"
+    | "section4"
   >("default");
   const section2TimersRef = useRef<number[]>([]);
   const section4TimersRef = useRef<number[]>([]);
@@ -113,15 +121,16 @@ function PreRegisterPage() {
   const section2ContentOpacity =
     section2Phase === "white" ||
     section2Phase === "section3" ||
-    section2Phase === "section3-to-4" ||
+    section2Phase === "section3-fadeout" ||
+    section2Phase === "section4-fadein" ||
     section2Phase === "section4"
       ? 0
       : section2IntroOpacity;
   const section2WhiteOpacity = section2Phase === "white" ? 1 : 0;
   const section3ContentOpacity =
-    section2Phase === "section3" ? 1 : section2Phase === "section3-to-4" ? 0 : 0;
+    section2Phase === "section3" ? 1 : section2Phase === "section3-fadeout" ? 0 : 0;
   const section4ContentOpacity =
-    section2Phase === "section3-to-4" || section2Phase === "section4" ? 1 : 0;
+    section2Phase === "section4-fadein" || section2Phase === "section4" ? 1 : 0;
   const section4PromptOpacity = isSection4FadingOut ? 0 : 1;
   const section5ContentOpacity = isSection5Visible ? 1 : 0;
 
@@ -138,18 +147,23 @@ function PreRegisterPage() {
       setSection2Phase("section3");
     }, SECTION2_WAIT_MS + SECTION2_WHITE_MS);
 
-    const section3To4Timer = window.setTimeout(() => {
-      setSection2Phase("section3-to-4");
+    const section3FadeOutTimer = window.setTimeout(() => {
+      setSection2Phase("section3-fadeout");
     }, SECTION2_WAIT_MS + SECTION2_WHITE_MS + SECTION3_HOLD_MS);
+
+    const section4FadeInTimer = window.setTimeout(() => {
+      setSection2Phase("section4-fadein");
+    }, SECTION2_WAIT_MS + SECTION2_WHITE_MS + SECTION3_HOLD_MS + SECTION3_TO_4_FADE_OUT_MS);
 
     const section4Timer = window.setTimeout(() => {
       setSection2Phase("section4");
-    }, SECTION2_WAIT_MS + SECTION2_WHITE_MS + SECTION3_HOLD_MS + 220);
+    }, SECTION2_WAIT_MS + SECTION2_WHITE_MS + SECTION3_HOLD_MS + SECTION3_TO_4_FADE_OUT_MS + SECTION3_TO_4_FADE_IN_MS);
 
     section2TimersRef.current = [
       whiteTimer,
       section3Timer,
-      section3To4Timer,
+      section3FadeOutTimer,
+      section4FadeInTimer,
       section4Timer,
     ];
   };
@@ -200,9 +214,11 @@ function PreRegisterPage() {
             onVote={handleVote}
           />
 
-          <Section3Scene opacity={section3ContentOpacity} />
+          <Section3Scene opacity={section3ContentOpacity} transitionMs={SECTION3_TO_4_FADE_OUT_MS} />
 
-          {(section2Phase === "section3-to-4" || section2Phase === "section4") && (
+          {(section2Phase === "section3-fadeout" ||
+            section2Phase === "section4-fadein" ||
+            section2Phase === "section4") && (
             <Section4Scene
               opacity={section4ContentOpacity}
               promptOpacity={section4PromptOpacity}
@@ -210,6 +226,7 @@ function PreRegisterPage() {
               section4VoteId={section4VoteId}
               isSection5Visible={isSection5Visible}
               onVote={handleSection4Vote}
+              transitionMs={SECTION3_TO_4_FADE_IN_MS}
             />
           )}
         </div>

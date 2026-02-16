@@ -12,6 +12,7 @@ interface Section4SceneProps {
   section4VoteId?: string;
   isSection5Visible: boolean;
   onVote: (voteId: string) => void;
+  transitionMs?: number;
 }
 
 function Section4Scene({
@@ -21,9 +22,10 @@ function Section4Scene({
   section4VoteId,
   isSection5Visible,
   onVote,
+  transitionMs = 340,
 }: Section4SceneProps) {
   return (
-    <FadeLayer opacity={opacity} className="absolute inset-0">
+    <FadeLayer opacity={opacity} transitionMs={transitionMs} className="absolute inset-0">
       <div className="absolute inset-0 flex items-center justify-center">
         <FadeLayer
           opacity={promptOpacity}

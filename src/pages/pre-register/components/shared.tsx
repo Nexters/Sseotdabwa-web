@@ -42,16 +42,18 @@ function FadeLayer({
   children,
   className,
   style,
+  transitionMs = 200,
 }: {
   opacity: number;
   children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  transitionMs?: number;
 }) {
   return (
     <div
       className={className}
-      style={{ opacity, transition: "opacity 0.2s ease-out", ...style }}
+      style={{ opacity, transition: `opacity ${transitionMs}ms ease-out`, ...style }}
     >
       {children}
     </div>

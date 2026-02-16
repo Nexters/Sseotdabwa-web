@@ -4,11 +4,16 @@ import { FadeLayer, SpeechBubble } from "./shared";
 
 interface Section3SceneProps {
   opacity: number;
+  transitionMs?: number;
 }
 
-function Section3Scene({ opacity }: Section3SceneProps) {
+function Section3Scene({ opacity, transitionMs = 340 }: Section3SceneProps) {
   return (
-    <FadeLayer opacity={opacity} className="pointer-events-none absolute inset-0">
+    <FadeLayer
+      opacity={opacity}
+      transitionMs={transitionMs}
+      className="pointer-events-none absolute inset-0"
+    >
       <Stack
         align="center"
         gap={100}
