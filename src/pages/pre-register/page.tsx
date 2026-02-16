@@ -195,9 +195,12 @@ function PreRegisterPage() {
       setSection2Phase("section3");
     }, SECTION2_WAIT_MS + SECTION2_WHITE_MS);
 
-    const section4Timer = window.setTimeout(() => {
-      setSection2Phase("section4");
-    }, SECTION2_WAIT_MS + SECTION2_WHITE_MS + SECTION3_HOLD_MS);
+    const section4Timer = window.setTimeout(
+      () => {
+        setSection2Phase("section4");
+      },
+      SECTION2_WAIT_MS + SECTION2_WHITE_MS + SECTION3_HOLD_MS,
+    );
 
     section2TimersRef.current = [whiteTimer, section3Timer, section4Timer];
   };
@@ -278,7 +281,7 @@ function PreRegisterPage() {
         {/* ── 섹션 2: 피드 카드 ──
             z-1 + bg-gray-0 → 아래서 올라오며 섹션 1을 흰 화면으로 덮음
             콘텐츠는 섹션2가 뷰포트를 꽉 채울 때(section2Entry 90~100%) fade-in */}
-        <div className="relative z-1 mx-auto h-screen max-w-[335px] overflow-hidden bg-gray-0">
+        <div className="relative z-1 mx-auto h-screen overflow-hidden bg-gray-0">
           <FadeLayer opacity={section2ContentOpacity}>
             {/* 말풍선 + 캐릭터: top 35px, 간격 20px, 토봉이 z-10 */}
             <Stack align="center" gap={20} className="relative pt-[35px]">
@@ -331,83 +334,145 @@ function PreRegisterPage() {
           <FadeLayer
             opacity={section4ContentOpacity}
             className="absolute inset-0"
-            style={{ pointerEvents: section2Phase === "section4" ? "auto" : "none" }}
+            style={{
+              pointerEvents: section2Phase === "section4" ? "auto" : "none",
+            }}
           >
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="flex w-full max-w-[375px] flex-col items-center gap-[10px] px-5">
-                <SpeechBubble centerArrow>혹시 너도 살까말까 고민해본적 있어?</SpeechBubble>
+              {!section4VoteId ? (
+                <div className="flex w-full max-w-[375px] flex-col items-center gap-[10px] px-5">
+                  <SpeechBubble centerArrow>
+                    혹시 너도 살까말까 고민해본적 있어?
+                  </SpeechBubble>
 
-                <div className="flex h-[240px] w-full max-w-[412px] items-center justify-center">
-                  <div
-                    style={{
-                      animation: "brandAssetFloatStep 3s ease-in-out infinite",
-                      animationDelay: "0s",
-                    }}
-                  >
-                    <BrandAssetBox
-                      asset="socks"
-                      iconSize={60}
-                      className="z-0 -mr-[8px] rounded-[32px]"
-                      style={{ width: 108, height: 125, transform: "rotate(16.98deg)" }}
-                    />
+                  <div className="flex h-[240px] w-full max-w-[412px] items-center justify-center">
+                    <div
+                      style={{
+                        animation:
+                          "brandAssetFloatStep 3s ease-in-out infinite",
+                        animationDelay: "0s",
+                      }}
+                    >
+                      <BrandAssetBox
+                        asset="socks"
+                        iconSize={60}
+                        className="z-0 -mr-[8px] rounded-[32px]"
+                        style={{
+                          width: 108,
+                          height: 125,
+                          transform: "rotate(16.98deg)",
+                        }}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        animation:
+                          "brandAssetFloatStep 3s ease-in-out infinite",
+                        animationDelay: "1s",
+                      }}
+                    >
+                      <BrandAssetBox
+                        asset="tshirt"
+                        iconSize={60}
+                        className="z-10 rounded-[32px]"
+                        style={{
+                          width: 108,
+                          height: 125,
+                          transform: "rotate(-18.01deg)",
+                        }}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        animation:
+                          "brandAssetFloatStep 3s ease-in-out infinite",
+                        animationDelay: "2s",
+                      }}
+                    >
+                      <BrandAssetBox
+                        asset="pants"
+                        iconSize={60}
+                        className="z-0 -ml-[8px] rounded-[32px]"
+                        style={{
+                          width: 108,
+                          height: 125,
+                          transform: "rotate(12.76deg)",
+                        }}
+                      />
+                    </div>
                   </div>
-                  <div
-                    style={{
-                      animation: "brandAssetFloatStep 3s ease-in-out infinite",
-                      animationDelay: "1s",
-                    }}
-                  >
-                    <BrandAssetBox
-                      asset="tshirt"
-                      iconSize={60}
-                      className="z-10 rounded-[32px]"
-                      style={{ width: 108, height: 125, transform: "rotate(-18.01deg)" }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      animation: "brandAssetFloatStep 3s ease-in-out infinite",
-                      animationDelay: "2s",
-                    }}
-                  >
-                    <BrandAssetBox
-                      asset="pants"
-                      iconSize={60}
-                      className="z-0 -ml-[8px] rounded-[32px]"
-                      style={{ width: 108, height: 125, transform: "rotate(12.76deg)" }}
-                    />
+
+                  <div className="flex w-full flex-col gap-[10px]">
+                    <button
+                      type="button"
+                      onClick={() => setSection4VoteId("yes")}
+                      className="h-[62px] w-full rounded-[15px] border border-gray-300 bg-gray-100 px-4 text-left"
+                    >
+                      <Typography
+                        variant="s2-semibold"
+                        className="text-gray-900"
+                      >
+                        예
+                      </Typography>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSection4VoteId("no")}
+                      className="h-[62px] w-full rounded-[15px] border border-gray-300 bg-gray-100 px-4 text-left"
+                    >
+                      <Typography
+                        variant="s2-semibold"
+                        className="text-gray-900"
+                      >
+                        아니오
+                      </Typography>
+                    </button>
                   </div>
                 </div>
+              ) : (
+                <Stack className="w-full items-center gap-[24px] px-5">
+                  <SpeechBubble centerArrow>
+                    {section4VoteId === "yes"
+                      ? "여기서 고민을 해결해보면 어때?"
+                      : "소비 정보에도 참고되니 놀러와줘~!"}
+                  </SpeechBubble>
 
-                <div className="flex w-full flex-col gap-[10px]">
-                  <button
-                    type="button"
-                    onClick={() => setSection4VoteId("yes")}
-                    className={`h-[62px] w-full rounded-[15px] border px-4 text-left transition-colors ${
-                      section4VoteId === "yes"
-                        ? "border-gray-900 bg-gray-300"
-                        : "border-gray-300 bg-gray-100"
-                    }`}
-                  >
-                    <Typography variant="s2-semibold" className="text-gray-900">
-                      응!
-                    </Typography>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setSection4VoteId("no")}
-                    className={`h-[62px] w-full rounded-[15px] border px-4 text-left transition-colors ${
-                      section4VoteId === "no"
-                        ? "border-gray-900 bg-gray-300"
-                        : "border-gray-300 bg-gray-100"
-                    }`}
-                  >
-                    <Typography variant="s2-semibold" className="text-gray-900">
-                      아니..
-                    </Typography>
-                  </button>
-                </div>
-              </div>
+                  <div className="relative w-[220px] -mb-[60px]">
+                    <img
+                      src="/example.png"
+                      alt="살까말까 예시 화면"
+                      className="h-auto w-full"
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-x-0 bottom-0 h-[96px]"
+                      style={{
+                        background:
+                          "linear-gradient(180deg, rgba(255,255,255,0) 0%, #FFFFFF 100%)",
+                      }}
+                    />
+                  </div>
+
+                  <div className="relative w-full pt-[12px]">
+                    <img
+                      src="/tobong.png"
+                      alt="토봉 캐릭터"
+                      className="absolute z-0"
+                      style={{ width: 96, right: 15, bottom: 34 }}
+                    />
+                    <button
+                      type="button"
+                      className="relative z-10 py-[18px] w-full rounded-[18px] bg-gray-100 px-6 text-gray-800 border border-gray-100"
+                      style={{
+                        boxShadow: "0 4px 60px 0 rgba(52, 71, 99, 0.2)",
+                      }}
+                    >
+                      <Typography variant="t1-bold" className="text-gray-900">
+                        '살까말까' 바로가기
+                      </Typography>
+                    </button>
+                  </div>
+                </Stack>
+              )}
             </div>
           </FadeLayer>
         </div>
