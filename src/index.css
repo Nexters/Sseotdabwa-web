@@ -374,7 +374,7 @@ body {
 /* App layout - 1052px 기준 */
 @media (min-width: 1052px) {
   .app-layout {
-    gap: 40px;
+    gap: 60px;
     padding: 0 20px;
   }
 
