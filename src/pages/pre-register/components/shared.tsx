@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Typography } from "@/components/ui/typography";
 
@@ -7,32 +7,67 @@ function SpeechBubble({
   className,
   style,
   centerArrow = false,
-  animate = false,
+  animateOn,
   isVisible = true,
 }: {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   centerArrow?: boolean;
-  animate?: boolean;
+  animateOn?: "mount" | "visible" | "inView";
   isVisible?: boolean;
 }) {
   const popRef = useRef<HTMLDivElement>(null);
-  const hasAnimatedRef = useRef(false);
+  const hasToggleAnimatedRef = useRef(false);
+  const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
-    if (!animate || !isVisible) {
-      hasAnimatedRef.current = false;
+    if (animateOn !== "inView") return;
+
+    const el = popRef.current;
+    if (!el) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      setIsInView(true);
       return;
     }
-    if (hasAnimatedRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsInView(entry?.isIntersecting ?? false);
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, [animateOn]);
+
+  useEffect(() => {
+    const shouldAnimate =
+      animateOn === "mount" || (animateOn === "visible" && isVisible);
+    const shouldAnimateInView =
+      animateOn === "inView" && isVisible && isInView;
+    const shouldPlay = shouldAnimate || shouldAnimateInView;
+    if (!shouldPlay) {
+      if (animateOn === "visible" || animateOn === "inView") {
+        hasToggleAnimatedRef.current = false;
+      }
+      return;
+    }
+    if ((animateOn === "visible" || animateOn === "inView") && hasToggleAnimatedRef.current)
+      return;
 
     const el = popRef.current;
     if (!el) return;
 
     const motionReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (motionReduce.matches) return;
-    hasAnimatedRef.current = true;
+    if (animateOn === "visible" || animateOn === "inView") {
+      hasToggleAnimatedRef.current = true;
+    }
 
     const baseTransform = el.style.transform?.trim() ?? "";
     const withBase = (suffix: string) =>
@@ -49,7 +84,7 @@ function SpeechBubble({
         fill: "both",
       },
     );
-  }, [animate, isVisible]);
+  }, [animateOn, isVisible, isInView]);
 
   return (
     <div

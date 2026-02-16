@@ -20,7 +20,7 @@ function Section2Scene({
     <>
       <FadeLayer opacity={contentOpacity}>
         <Stack align="center" gap={20} className="relative pt-[35px]">
-          <SpeechBubble centerArrow animate isVisible={contentOpacity > 0.01}>
+          <SpeechBubble centerArrow animateOn="inView" isVisible={contentOpacity > 0.01}>
             한 번 투표해볼래?
           </SpeechBubble>
           <img
