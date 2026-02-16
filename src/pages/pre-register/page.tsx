@@ -146,7 +146,6 @@ function PreRegisterPage() {
   const logoTop = containerHeight * 0.04;
   const bubble1Top = 60;
   const bubble2Top = containerHeight * 0.3;
-  const bubble2Right = containerWidth * 0.11;
   const hintBottom = containerHeight * 0.06;
 
   const titleOpacity = mapRange(progress, 0, 0.35, 1, 0);
@@ -239,7 +238,8 @@ function PreRegisterPage() {
             style={{
               position: "absolute",
               top: bubble2Top,
-              right: bubble2Right,
+              left: "50%",
+              transform: "translateX(-50%)",
               opacity: bubble2Opacity,
             }}
           >
