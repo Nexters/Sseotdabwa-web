@@ -20,7 +20,9 @@ function Section2Scene({
     <>
       <FadeLayer opacity={contentOpacity}>
         <Stack align="center" gap={20} className="relative pt-[35px]">
-          <SpeechBubble centerArrow>한 번 투표해볼래?</SpeechBubble>
+          <SpeechBubble centerArrow animate>
+            한 번 투표해볼래?
+          </SpeechBubble>
           <img
             src="/tobong.png"
             alt="토봉 캐릭터"

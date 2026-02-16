@@ -7,25 +7,33 @@ function SpeechBubble({
   className,
   style,
   centerArrow = false,
+  animate = false,
 }: {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   centerArrow?: boolean;
+  animate?: boolean;
 }) {
   const popRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!animate) return;
+
     const el = popRef.current;
     if (!el) return;
 
     const motionReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (motionReduce.matches) return;
 
+    const baseTransform = el.style.transform?.trim() ?? "";
+    const withBase = (suffix: string) =>
+      baseTransform ? `${baseTransform} ${suffix}` : suffix;
+
     el.animate(
       [
-        { transform: "translateY(6px) scale(0.88)" },
-        { transform: "translateY(0) scale(1)" },
+        { transform: withBase("translateY(6px) scale(0.88)") },
+        { transform: withBase("translateY(0) scale(1)") },
       ],
       {
         duration: 260,
@@ -33,7 +41,7 @@ function SpeechBubble({
         fill: "both",
       },
     );
-  }, []);
+  }, [animate]);
 
   return (
     <div
