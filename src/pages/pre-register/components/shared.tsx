@@ -37,6 +37,7 @@ function SpeechBubble({
 
   return (
     <div
+      ref={popRef}
       className={`relative inline-flex w-fit items-center rounded-[10px] px-3 py-[7px] ${className ?? ""}`}
       style={{
         background:
@@ -44,21 +45,19 @@ function SpeechBubble({
         ...style,
       }}
     >
-      <div ref={popRef}>
-        <Typography variant="s5-semibold" className="text-gray-0">
-          {children}
-        </Typography>
-        <div
-          className={`absolute -bottom-[7px] ${centerArrow ? "left-1/2 -translate-x-1/2" : "left-4"}`}
-          style={{
-            width: 0,
-            height: 0,
-            borderLeft: "6px solid transparent",
-            borderRight: "6px solid transparent",
-            borderTop: "8px solid #2A3038",
-          }}
-        />
-      </div>
+      <Typography variant="s5-semibold" className="text-gray-0">
+        {children}
+      </Typography>
+      <div
+        className={`absolute -bottom-[7px] ${centerArrow ? "left-1/2 -translate-x-1/2" : "left-4"}`}
+        style={{
+          width: 0,
+          height: 0,
+          borderLeft: "6px solid transparent",
+          borderRight: "6px solid transparent",
+          borderTop: "8px solid #2A3038",
+        }}
+      />
     </div>
   );
 }
