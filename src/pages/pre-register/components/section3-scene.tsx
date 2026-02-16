@@ -19,7 +19,7 @@ function Section3Scene({ opacity, transitionMs = 340 }: Section3SceneProps) {
         gap={100}
         className="absolute bottom-[135px] left-1/2 -translate-x-1/2"
       >
-        <SpeechBubble centerArrow animateOn="inView" isVisible={opacity > 0.01}>
+        <SpeechBubble centerArrow animateOn="visible" isVisible={opacity > 0.01}>
           의견줘서 고마워~~!
         </SpeechBubble>
         <img

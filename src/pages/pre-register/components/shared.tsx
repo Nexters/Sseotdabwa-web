@@ -22,6 +22,7 @@ function SpeechBubble({
   const popRef = useRef<HTMLDivElement>(null);
   const hasToggleAnimatedRef = useRef(false);
   const [isInView, setIsInView] = useState(false);
+  const [isPendingAnimation, setIsPendingAnimation] = useState(false);
 
   useEffect(() => {
     if (animateOn !== "inView") return;
@@ -54,6 +55,7 @@ function SpeechBubble({
       animateOn === "inView" && isVisible && isInView;
     const shouldPlay = shouldAnimate || shouldAnimateInView;
     if (!shouldPlay) {
+      setIsPendingAnimation(false);
       if (animateOn === "visible" || animateOn === "inView") {
         hasToggleAnimatedRef.current = false;
       }
@@ -66,7 +68,10 @@ function SpeechBubble({
     if (!el) return;
 
     const motionReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (motionReduce.matches) return;
+    if (motionReduce.matches) {
+      setIsPendingAnimation(false);
+      return;
+    }
     if (animateOn === "visible" || animateOn === "inView") {
       hasToggleAnimatedRef.current = true;
     }
@@ -75,14 +80,17 @@ function SpeechBubble({
     const withBase = (suffix: string) =>
       baseTransform ? `${baseTransform} ${suffix}` : suffix;
 
+    setIsPendingAnimation(true);
     const timerId = window.setTimeout(() => {
+      setIsPendingAnimation(false);
       el.animate(
         [
-          { transform: withBase("translateY(6px) scale(0.88)") },
-          { transform: withBase("translateY(0) scale(1)") },
+          { transform: withBase("translateY(4px) scale(0.12)"), opacity: 0 },
+          { transform: withBase("translateY(0) scale(1.04)"), opacity: 1, offset: 0.75 },
+          { transform: withBase("translateY(0) scale(1)"), opacity: 1 },
         ],
         {
-          duration: 260,
+          duration: 320,
           easing: "cubic-bezier(0.2, 0.85, 0.25, 1)",
           fill: "both",
         },
@@ -99,6 +107,7 @@ function SpeechBubble({
       style={{
         background:
           "radial-gradient(circle at 30% 30%, #2A3038 0%, #77879E 100%)",
+        visibility: isPendingAnimation ? "hidden" : "visible",
         ...style,
       }}
     >

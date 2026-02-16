@@ -35,7 +35,7 @@ function Section4Scene({
           <div className="flex w-full max-w-[375px] flex-col items-center gap-[10px] px-5">
             <SpeechBubble
               centerArrow
-              animateOn="inView"
+              animateOn="visible"
               isVisible={promptOpacity > 0.01}
             >
               혹시 너도 살까말까 고민해본적 있어?
@@ -114,7 +114,7 @@ function Section4Scene({
           <Stack className="w-full items-center gap-[24px] px-5">
             <SpeechBubble
               centerArrow
-              animateOn="inView"
+              animateOn="visible"
               isVisible={resultOpacity > 0.01}
             >
               {section4VoteId === "yes"
