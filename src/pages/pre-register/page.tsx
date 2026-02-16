@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
+import { BrandAssetBox } from "@/components/ui/brand-asset";
 import { FeedCard } from "@/components/ui/feed-card";
 import { Stack } from "@/components/ui/flex";
 import { Logo } from "@/components/ui/logo";
@@ -8,6 +9,7 @@ import { Typography } from "@/components/ui/typography";
 const SCROLL_DISTANCE = 1200;
 const SECTION2_WAIT_MS = 1000;
 const SECTION2_WHITE_MS = 1400;
+const SECTION3_HOLD_MS = 1400;
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -96,7 +98,7 @@ function PreRegisterPage() {
   const [containerHeight, setContainerHeight] = useState(667);
   const [selectedVoteId, setSelectedVoteId] = useState<string>();
   const [section2Phase, setSection2Phase] = useState<
-    "default" | "wait" | "white" | "section3"
+    "default" | "wait" | "white" | "section3" | "section4"
   >("default");
   const section2TimersRef = useRef<number[]>([]);
 
@@ -170,11 +172,14 @@ function PreRegisterPage() {
 
   // ── 섹션 2 → 3 전환 (vote 이후, 시간 기반) ──
   const section2ContentOpacity =
-    section2Phase === "white" || section2Phase === "section3"
+    section2Phase === "white" ||
+    section2Phase === "section3" ||
+    section2Phase === "section4"
       ? 0
       : section2IntroOpacity;
   const section2WhiteOpacity = section2Phase === "white" ? 1 : 0;
   const section3ContentOpacity = section2Phase === "section3" ? 1 : 0;
+  const section4ContentOpacity = section2Phase === "section4" ? 1 : 0;
 
   const handleVote = (optionId: string) => {
     if (selectedVoteId) return;
@@ -189,7 +194,11 @@ function PreRegisterPage() {
       setSection2Phase("section3");
     }, SECTION2_WAIT_MS + SECTION2_WHITE_MS);
 
-    section2TimersRef.current = [whiteTimer, section3Timer];
+    const section4Timer = window.setTimeout(() => {
+      setSection2Phase("section4");
+    }, SECTION2_WAIT_MS + SECTION2_WHITE_MS + SECTION3_HOLD_MS);
+
+    section2TimersRef.current = [whiteTimer, section3Timer, section4Timer];
   };
 
   return (
@@ -316,8 +325,84 @@ function PreRegisterPage() {
               />
             </Stack>
           </FadeLayer>
+
+          <FadeLayer opacity={section4ContentOpacity} className="absolute inset-0">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="flex w-full max-w-[375px] flex-col items-center gap-[10px] px-5">
+                <SpeechBubble centerArrow>혹시 너도 살까말까 고민해본적 있어?</SpeechBubble>
+
+                <div className="flex h-[240px] w-full max-w-[412px] items-center justify-center">
+                  <div
+                    style={{
+                      animation: "brandAssetFloat 1.8s ease-in-out infinite",
+                      animationDelay: "0s",
+                    }}
+                  >
+                    <BrandAssetBox
+                      asset="socks"
+                      iconSize={60}
+                      className="z-0 -mr-[8px] rounded-[32px]"
+                      style={{ width: 108, height: 125, transform: "rotate(16.98deg)" }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      animation: "brandAssetFloat 1.8s ease-in-out infinite",
+                      animationDelay: "0.2s",
+                    }}
+                  >
+                    <BrandAssetBox
+                      asset="tshirt"
+                      iconSize={60}
+                      className="z-10 rounded-[32px]"
+                      style={{ width: 108, height: 125, transform: "rotate(-18.01deg)" }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      animation: "brandAssetFloat 1.8s ease-in-out infinite",
+                      animationDelay: "0.4s",
+                    }}
+                  >
+                    <BrandAssetBox
+                      asset="pants"
+                      iconSize={60}
+                      className="z-0 -ml-[8px] rounded-[32px]"
+                      style={{ width: 108, height: 125, transform: "rotate(12.76deg)" }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex w-full flex-col gap-[10px]">
+                  <button
+                    type="button"
+                    className="h-[62px] w-full rounded-[15px] border border-gray-300 bg-gray-100 px-4 text-left"
+                  >
+                    <Typography variant="s2-semibold" className="text-gray-900">
+                      응!
+                    </Typography>
+                  </button>
+                  <button
+                    type="button"
+                    className="h-[62px] w-full rounded-[15px] border border-gray-300 bg-gray-100 px-4 text-left"
+                  >
+                    <Typography variant="s2-semibold" className="text-gray-900">
+                      아니..
+                    </Typography>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </FadeLayer>
         </div>
       </div>
+      <style>{`
+        @keyframes brandAssetFloat {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
