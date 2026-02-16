@@ -46,7 +46,7 @@ function SpeechBubble({
 }) {
   return (
     <div
-      className={`relative inline-flex w-fit items-center rounded-[16px] px-3 py-[7px] ${className ?? ""}`}
+      className={`relative inline-flex w-fit items-center rounded-[10px] px-3 py-[7px] ${className ?? ""}`}
       style={{
         background:
           "radial-gradient(circle at 30% 30%, #2A3038 0%, #77879E 100%)",
@@ -379,16 +379,33 @@ function PreRegisterPage() {
                   </div>
                 </div>
 
-                <div className="w-full">
-                  <FeedCard
-                    className="bg-transparent"
-                    voteOptions={[
-                      { id: "yes", label: "응!" },
-                      { id: "no", label: "아니.." },
-                    ]}
-                    selectedVoteId={section4VoteId}
-                    onVote={setSection4VoteId}
-                  />
+                <div className="flex w-full flex-col gap-[10px]">
+                  <button
+                    type="button"
+                    onClick={() => setSection4VoteId("yes")}
+                    className={`h-[62px] w-full rounded-[15px] border px-4 text-left transition-colors ${
+                      section4VoteId === "yes"
+                        ? "border-gray-900 bg-gray-300"
+                        : "border-gray-300 bg-gray-100"
+                    }`}
+                  >
+                    <Typography variant="s2-semibold" className="text-gray-900">
+                      응!
+                    </Typography>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSection4VoteId("no")}
+                    className={`h-[62px] w-full rounded-[15px] border px-4 text-left transition-colors ${
+                      section4VoteId === "no"
+                        ? "border-gray-900 bg-gray-300"
+                        : "border-gray-300 bg-gray-100"
+                    }`}
+                  >
+                    <Typography variant="s2-semibold" className="text-gray-900">
+                      아니..
+                    </Typography>
+                  </button>
                 </div>
               </div>
             </div>

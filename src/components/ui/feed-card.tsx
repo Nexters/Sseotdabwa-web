@@ -184,7 +184,6 @@ function FeedCard({
     (o) => (o.percentage ?? 0) === maxPercentage,
   ).length;
   const isTie = winnersCount > 1 && maxPercentage > 0;
-  const hasHeader = Boolean(profileImage || username || category || timeAgo);
 
   const statusLabel = isVoting ? "진행중" : "최종결과";
 
@@ -196,8 +195,8 @@ function FeedCard({
     >
       <Stack gap={16}>
         {/* Header */}
-        {hasHeader && (
-          <Group align="center" justify="between">
+        <Group align="center" justify="between">
+          {(profileImage || username || category || timeAgo) && (
             <Group gap={10} align="center">
               {profileImage && (
                 <div className="size-[32px] shrink-0 overflow-hidden rounded-full bg-gray-300">
@@ -243,8 +242,8 @@ function FeedCard({
                 )}
               </Stack>
             </Group>
-          </Group>
-        )}
+          )}
+        </Group>
 
         <Stack gap={12} className="rounded-2xl bg-gray-100 px-4 py-3.5">
           {content && (
