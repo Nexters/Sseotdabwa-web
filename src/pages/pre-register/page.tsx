@@ -10,6 +10,7 @@ const SCROLL_DISTANCE = 1200;
 const SECTION2_WAIT_MS = 1000;
 const SECTION2_WHITE_MS = 1400;
 const SECTION3_HOLD_MS = 2000;
+const SECTION4_TO_5_FADE_MS = 260;
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -98,10 +99,13 @@ function PreRegisterPage() {
   const [containerHeight, setContainerHeight] = useState(667);
   const [selectedVoteId, setSelectedVoteId] = useState<string>();
   const [section4VoteId, setSection4VoteId] = useState<string>();
+  const [isSection4FadingOut, setIsSection4FadingOut] = useState(false);
+  const [isSection5Visible, setIsSection5Visible] = useState(false);
   const [section2Phase, setSection2Phase] = useState<
     "default" | "wait" | "white" | "section3" | "section4"
   >("default");
   const section2TimersRef = useRef<number[]>([]);
+  const section4TimersRef = useRef<number[]>([]);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -128,6 +132,7 @@ function PreRegisterPage() {
   useEffect(() => {
     return () => {
       section2TimersRef.current.forEach((timer) => window.clearTimeout(timer));
+      section4TimersRef.current.forEach((timer) => window.clearTimeout(timer));
     };
   }, []);
 
@@ -181,6 +186,8 @@ function PreRegisterPage() {
   const section2WhiteOpacity = section2Phase === "white" ? 1 : 0;
   const section3ContentOpacity = section2Phase === "section3" ? 1 : 0;
   const section4ContentOpacity = section2Phase === "section4" ? 1 : 0;
+  const section4PromptOpacity = isSection4FadingOut ? 0 : 1;
+  const section5ContentOpacity = isSection5Visible ? 1 : 0;
 
   const handleVote = (optionId: string) => {
     if (selectedVoteId) return;
@@ -203,6 +210,19 @@ function PreRegisterPage() {
     );
 
     section2TimersRef.current = [whiteTimer, section3Timer, section4Timer];
+  };
+
+  const handleSection4Vote = (voteId: string) => {
+    if (section4VoteId) return;
+
+    setSection4VoteId(voteId);
+    setIsSection4FadingOut(true);
+
+    const section5Timer = window.setTimeout(() => {
+      setIsSection5Visible(true);
+    }, SECTION4_TO_5_FADE_MS);
+
+    section4TimersRef.current = [section5Timer];
   };
 
   return (
@@ -339,7 +359,11 @@ function PreRegisterPage() {
             }}
           >
             <div className="absolute inset-0 flex items-center justify-center">
-              {!section4VoteId ? (
+              <FadeLayer
+                opacity={section4PromptOpacity}
+                className="absolute inset-0 flex items-center justify-center"
+                style={{ pointerEvents: isSection5Visible ? "none" : "auto" }}
+              >
                 <div className="flex w-full max-w-[375px] flex-col items-center gap-[10px] px-5">
                   <SpeechBubble centerArrow>
                     혹시 너도 살까말까 고민해본적 있어?
@@ -405,7 +429,7 @@ function PreRegisterPage() {
                   <div className="flex w-full flex-col gap-[10px]">
                     <button
                       type="button"
-                      onClick={() => setSection4VoteId("yes")}
+                      onClick={() => handleSection4Vote("yes")}
                       className="h-[62px] w-full rounded-[15px] border border-gray-300 bg-gray-100 px-4 text-left"
                     >
                       <Typography
@@ -417,7 +441,7 @@ function PreRegisterPage() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => setSection4VoteId("no")}
+                      onClick={() => handleSection4Vote("no")}
                       className="h-[62px] w-full rounded-[15px] border border-gray-300 bg-gray-100 px-4 text-left"
                     >
                       <Typography
@@ -429,7 +453,13 @@ function PreRegisterPage() {
                     </button>
                   </div>
                 </div>
-              ) : (
+              </FadeLayer>
+
+              <FadeLayer
+                opacity={section5ContentOpacity}
+                className="absolute inset-0 flex items-center justify-center"
+                style={{ pointerEvents: isSection5Visible ? "auto" : "none" }}
+              >
                 <Stack className="w-full items-center gap-[24px] px-5">
                   <SpeechBubble centerArrow>
                     {section4VoteId === "yes"
@@ -461,7 +491,7 @@ function PreRegisterPage() {
                     />
                     <button
                       type="button"
-                      className="relative z-10 py-[18px] w-full rounded-[18px] bg-gray-100 px-6 text-gray-800 border border-gray-100"
+                      className="relative z-10 w-full rounded-[18px] border border-gray-100 bg-gray-100 px-6 py-[18px] text-gray-800"
                       style={{
                         boxShadow: "0 4px 60px 0 rgba(52, 71, 99, 0.2)",
                       }}
@@ -472,7 +502,7 @@ function PreRegisterPage() {
                     </button>
                   </div>
                 </Stack>
-              )}
+              </FadeLayer>
             </div>
           </FadeLayer>
         </div>
