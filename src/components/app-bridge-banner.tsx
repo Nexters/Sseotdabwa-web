@@ -65,7 +65,7 @@ function AppBridgeBanner({ className, ...props }: AppBridgeBannerProps) {
         href="https://docs.google.com/forms/d/e/1FAIpQLScG0GStvzog1HVZjAP9OpHl85azcez2OdAr7YwrI7rvCqInsg/viewform?pli=1"
         target="_blank"
         rel="noreferrer"
-        className="flex w-full max-w-[412px] items-center justify-center gap-[8px] rounded-[16px] bg-gray-100 px-5 py-[20px] text-gray-900 transition-colors hover:bg-gray-200"
+        className="flex w-full max-w-[412px] items-center justify-center gap-[8px] rounded-[12px] bg-gray-200 px-5 py-[20px] text-gray-900 transition-all duration-200 active:scale-95"
       >
         <SadFaceIcon />
         <span className="text-t2-bold text-gray-900">불편한 점이 있으신가요?</span>
