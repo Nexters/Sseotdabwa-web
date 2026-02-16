@@ -127,8 +127,6 @@ function PreRegisterPage() {
   // 완전히 채워진 순간(90~100%)에만 콘텐츠 fade-in
   const section2ContentOpacity = mapRange(section2Entry, 0.9, 1.0, 0, 1);
 
-  const section2CharHeight = containerHeight * 0.15;
-
   return (
     <div className="min-h-screen bg-gray-100">
       <div
@@ -200,18 +198,18 @@ function PreRegisterPage() {
               transition: "opacity 0.15s ease-out",
             }}
           >
-            {/* 말풍선 + 캐릭터 */}
-            <Stack align="center" gap={20} className="pt-[35px] pb-6">
+            {/* 말풍선 + 캐릭터: top 35px, 간격 20px, 토봉이 z-10 */}
+            <Stack align="center" gap={20} className="relative z-10 pt-[35px]">
               <SpeechBubble centerArrow>한 번 투표해볼래?</SpeechBubble>
               <img
                 src="/tobong.png"
                 alt="토봉 캐릭터"
-                style={{ height: section2CharHeight, width: "auto" }}
+                style={{ width: 82, height: "auto" }}
               />
             </Stack>
 
-            {/* 피드 카드 */}
-            <div className="px-5">
+            {/* 피드 카드: 토봉이와 -50px 겹침 */}
+            <div className="relative z-0 -mt-[50px] px-5">
               <FeedCard
                 username="참새방앗간12456"
                 category="업무·공부 생산성"
