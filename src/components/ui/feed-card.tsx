@@ -304,7 +304,7 @@ function FeedCard({
               })}
             </Stack>
 
-            {voteCount && voteCount > 0 && (
+            {voteCount !== undefined && voteCount > 0 && (
               <Typography variant="b7-medium" className="text-gray-600">
                 {voteCount}명이 투표했어요 · {statusLabel}
               </Typography>
