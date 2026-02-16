@@ -86,9 +86,9 @@ function SpeechBubble({
       setIsPendingAnimation(false);
       el.animate(
         [
-          { transform: withBase("translateY(4px) scale(0.12)"), opacity: 0 },
-          { transform: withBase("translateY(0) scale(1.04)"), opacity: 1, offset: 0.75 },
-          { transform: withBase("translateY(0) scale(1)"), opacity: 1 },
+          { transform: withBase("translateY(4px) scale(0.12)") },
+          { transform: withBase("translateY(0) scale(1.04)"), offset: 0.75 },
+          { transform: withBase("translateY(0) scale(1)") },
         ],
         {
           duration: 320,
