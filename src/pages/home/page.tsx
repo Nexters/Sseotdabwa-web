@@ -28,27 +28,27 @@ function HomePage() {
               </TabsTrigger>
             </TabsList>
             <Divider size="small" className="bg-gray-100" />
-            <Group gap={8} className="px-[20px] pt-[16px] pb-[4px]">
-              <Chip
-                checked={selectedFilter === "all"}
-                onClick={() => setSelectedFilter("all")}
-              >
-                전체
-              </Chip>
-              <Chip
-                checked={selectedFilter === "ongoing"}
-                onClick={() => setSelectedFilter("ongoing")}
-              >
-                진행중 투표
-              </Chip>
-              <Chip
-                checked={selectedFilter === "closed"}
-                onClick={() => setSelectedFilter("closed")}
-              >
-                마감된 투표
-              </Chip>
-            </Group>
           </div>
+          <Group gap={8} className="px-[20px] pt-[16px] pb-[4px]">
+            <Chip
+              checked={selectedFilter === "all"}
+              onClick={() => setSelectedFilter("all")}
+            >
+              전체
+            </Chip>
+            <Chip
+              checked={selectedFilter === "ongoing"}
+              onClick={() => setSelectedFilter("ongoing")}
+            >
+              진행중 투표
+            </Chip>
+            <Chip
+              checked={selectedFilter === "closed"}
+              onClick={() => setSelectedFilter("closed")}
+            >
+              마감된 투표
+            </Chip>
+          </Group>
           <TabsContent value="vote-feed">
             <FeedContent />
           </TabsContent>
