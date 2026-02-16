@@ -68,12 +68,14 @@ function PreRegisterPage() {
   const [progress, setProgress] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(375);
+  const [containerHeight, setContainerHeight] = useState(667);
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
 
     setContainerWidth(el.offsetWidth);
+    setContainerHeight(el.offsetHeight);
 
     const onScroll = () => {
       setProgress(clamp01(el.scrollTop / SCROLL_DISTANCE));
@@ -85,11 +87,15 @@ function PreRegisterPage() {
 
   const ep = easeInOut(progress);
 
+  // 캐릭터 끝 위치: 화면 높이의 15% 여백으로 중앙에 배치
+  const charEndHeightPct = 55;
+  const charEndBottom = containerHeight * 0.15;
+
   // 캐릭터: 왼쪽 아래 크게 → 중앙 작게
-  const charBottom = lerp(-100, 20, ep);
+  const charBottom = lerp(-100, charEndBottom, ep);
   const charLeft = lerp(-100, containerWidth / 2, ep);
   const charTranslateX = lerp(0, -50, ep);
-  const charHeightPct = lerp(100, 60, ep);
+  const charHeightPct = lerp(100, charEndHeightPct, ep);
 
   // 타이틀 & 힌트: 스크롤 초반 페이드 아웃
   const titleOpacity = mapRange(progress, 0, 0.35, 1, 0);
@@ -100,6 +106,9 @@ function PreRegisterPage() {
 
   // 말풍선 2 ("살지 말지 고민되는 상품이 있어..."): 후반 페이드 인
   const bubble2Opacity = mapRange(progress, 0.7, 0.9, 0, 1);
+
+  // 말풍선 2 위치: 캐릭터 상단(30% 지점) 근처
+  const bubble2Top = containerHeight * 0.28;
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -142,8 +151,8 @@ function PreRegisterPage() {
 
           {/* 말풍선 2: 살지 말지 고민되는 상품이 있어... */}
           <SpeechBubble
-            className="absolute top-[150px] right-5"
-            style={{ opacity: bubble2Opacity }}
+            className="absolute right-5"
+            style={{ top: bubble2Top, opacity: bubble2Opacity }}
           >
             살지 말지 고민되는 상품이 있어...
           </SpeechBubble>
