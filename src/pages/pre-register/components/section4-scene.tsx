@@ -134,7 +134,7 @@ function Section4Scene({
               />
               <Link
                 to="/?from=pre-register"
-                className="relative z-10 w-full rounded-[18px] border border-gray-100 bg-gray-100 px-6 py-[18px] text-gray-800"
+                className="relative z-10 block w-full rounded-[18px] border border-gray-100 bg-gray-100 px-6 py-[18px] text-center text-gray-800"
                 style={{ boxShadow: "0 4px 60px 0 rgba(52, 71, 99, 0.2)" }}
               >
                 <span className="inline-flex items-center justify-center gap-[6px]">
