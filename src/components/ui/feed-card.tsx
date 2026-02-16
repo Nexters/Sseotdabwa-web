@@ -195,8 +195,8 @@ function FeedCard({
     >
       <Stack gap={16}>
         {/* Header */}
-        <Group align="center" justify="between">
-          {(profileImage || username || category || timeAgo) && (
+        {(profileImage || username || category || timeAgo) && (
+          <Group align="center" justify="between">
             <Group gap={10} align="center">
               {profileImage && (
                 <div className="size-[32px] shrink-0 overflow-hidden rounded-full bg-gray-300">
@@ -242,8 +242,8 @@ function FeedCard({
                 )}
               </Stack>
             </Group>
-          )}
-        </Group>
+          </Group>
+        )}
 
         <Stack gap={12} className="rounded-2xl bg-gray-100 px-4 py-3.5">
           {content && (
