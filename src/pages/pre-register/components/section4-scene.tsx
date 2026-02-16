@@ -36,7 +36,7 @@ function Section4Scene({
             <SpeechBubble
               centerArrow
               animateOn="visible"
-              isVisible={promptOpacity > 0.01}
+              isVisible={opacity > 0.01 && promptOpacity > 0.01}
             >
               혹시 너도 살까말까 고민해본적 있어?
             </SpeechBubble>
@@ -115,7 +115,7 @@ function Section4Scene({
             <SpeechBubble
               centerArrow
               animateOn="visible"
-              isVisible={resultOpacity > 0.01}
+              isVisible={opacity > 0.01 && resultOpacity > 0.01}
             >
               {section4VoteId === "yes"
                 ? "여기서 고민을 해결해보면 어때?"
