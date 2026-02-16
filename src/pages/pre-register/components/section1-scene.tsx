@@ -1,4 +1,5 @@
 import { Logo } from "@/components/ui/logo";
+import { Icon } from "@/components/ui/icon";
 import { Typography } from "@/components/ui/typography";
 
 import { FadeLayer, SpeechBubble } from "./shared";
@@ -79,13 +80,15 @@ function Section1Scene({
         살지 말지 고민되는 상품이 있어...
       </SpeechBubble>
 
-      <Typography
-        variant="t1-bold"
-        className="absolute left-1/2 -translate-x-1/2 text-gray-0 animate-bounce [animation-duration:1.8s]"
+      <div
+        className="absolute left-1/2 flex -translate-x-1/2 animate-bounce flex-col items-center gap-[4px] [animation-duration:1.8s]"
         style={{ bottom: hintBottom, opacity: hintOpacity }}
       >
-        궁금하면 스크롤!!
-      </Typography>
+        <Typography variant="t1-bold" className="text-gray-0">
+          궁금하면 스크롤!!
+        </Typography>
+        <Icon icon="down" size={16} className="text-gray-0" />
+      </div>
 
       <FadeLayer
         opacity={section1FadeOut}
