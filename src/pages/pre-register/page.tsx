@@ -67,7 +67,7 @@ function SpeechBubble({
 }
 
 function PreRegisterPage() {
-  const [progress, setProgress] = useState(0);
+  const [scrollTop, setScrollTop] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(375);
   const [containerHeight, setContainerHeight] = useState(667);
@@ -85,9 +85,7 @@ function PreRegisterPage() {
     const resizeObserver = new ResizeObserver(updateSize);
     resizeObserver.observe(el);
 
-    const onScroll = () => {
-      setProgress(clamp01(el.scrollTop / SCROLL_DISTANCE));
-    };
+    const onScroll = () => setScrollTop(el.scrollTop);
     el.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
@@ -96,14 +94,14 @@ function PreRegisterPage() {
     };
   }, []);
 
+  // ── 섹션 1: 캐릭터 축소 애니메이션 ──
+  const progress = clamp01(scrollTop / SCROLL_DISTANCE);
   const ep = easeInOut(progress);
 
-  // 캐릭터 시작/끝 위치 — 모두 컨테이너 비율 기반
   const charStartBottom = -containerHeight * 0.14;
   const charStartLeft = -containerWidth * 0.2;
-
   const charEndHeightPct = 28;
-  const charEndBottom = (containerHeight * (1 - charEndHeightPct / 100)) / 2; // 수직 중앙
+  const charEndBottom = (containerHeight * (1 - charEndHeightPct / 100)) / 2;
   const charEndLeft = containerWidth / 2;
 
   const charBottom = lerp(charStartBottom, charEndBottom, ep);
@@ -111,19 +109,24 @@ function PreRegisterPage() {
   const charTranslateX = lerp(0, -50, ep);
   const charHeightPct = lerp(100, charEndHeightPct, ep);
 
-  // UI 요소 위치 — 컨테이너 높이 비율
   const logoTop = containerHeight * 0.04;
   const bubble1Top = containerHeight * 0.16;
   const bubble2Top = containerHeight * 0.3;
   const hintBottom = containerHeight * 0.06;
 
-  // 투명도
   const titleOpacity = mapRange(progress, 0, 0.35, 1, 0);
   const hintOpacity = mapRange(progress, 0, 0.25, 1, 0);
   const bubble1Opacity = mapRange(progress, 0.35, 0.55, 1, 0);
   const bubble2Opacity = mapRange(progress, 0.7, 0.9, 0, 1);
 
-  // 섹션 2 캐릭터 크기
+  // ── 섹션 2: 슬라이드 인 & 콘텐츠 fade-in ──
+  // section2Entry: 0 = 섹션2 하단에 걸침, 1 = 뷰포트 꽉 채움
+  const section2Entry = clamp01(
+    (scrollTop - SCROLL_DISTANCE) / containerHeight,
+  );
+  // 완전히 채워진 순간(90~100%)에만 콘텐츠 fade-in
+  const section2ContentOpacity = mapRange(section2Entry, 0.9, 1.0, 0, 1);
+
   const section2CharHeight = containerHeight * 0.15;
 
   return (
@@ -135,7 +138,6 @@ function PreRegisterPage() {
       >
         {/* ── 섹션 1: 스크롤 애니메이션 ── */}
         <div className="sticky top-0 h-screen overflow-hidden">
-          {/* 살까말까 로고 */}
           <div
             className="absolute left-5"
             style={{ top: logoTop, opacity: titleOpacity }}
@@ -143,7 +145,6 @@ function PreRegisterPage() {
             <Logo />
           </div>
 
-          {/* 토봉 캐릭터 */}
           <img
             src="/tobong.png"
             alt="토봉 캐릭터 랜딩"
@@ -157,7 +158,6 @@ function PreRegisterPage() {
             }}
           />
 
-          {/* 말풍선 1: 궁금하면 스크롤해줘! */}
           <SpeechBubble
             className="absolute right-5"
             style={{ top: bubble1Top, opacity: bubble1Opacity }}
@@ -165,7 +165,6 @@ function PreRegisterPage() {
             궁금하면 스크롤해줘!
           </SpeechBubble>
 
-          {/* 말풍선 2: 살지 말지 고민되는 상품이 있어... */}
           <SpeechBubble
             className="absolute right-5"
             style={{ top: bubble2Top, opacity: bubble2Opacity }}
@@ -173,7 +172,6 @@ function PreRegisterPage() {
             살지 말지 고민되는 상품이 있어...
           </SpeechBubble>
 
-          {/* 하단 스크롤 힌트 */}
           <Typography
             variant="t1-bold"
             className="absolute left-1/2 -translate-x-1/2 text-gray-0 animate-bounce [animation-duration:1.8s]"
@@ -183,35 +181,47 @@ function PreRegisterPage() {
           </Typography>
         </div>
 
-        {/* 스크롤 공간 */}
+        {/* 섹션 1 스크롤 공간 */}
         <div aria-hidden style={{ height: `${SCROLL_DISTANCE}px` }} />
 
-        {/* ── 섹션 2: 피드 카드 ── */}
-        {/* z-[1]로 sticky 레이어 위를 덮으며 슬라이드 인 */}
-        <div className="relative z-1 min-h-screen bg-gray-0 pb-10">
-          {/* 말풍선 + 캐릭터 */}
-          <Stack align="center" gap={20} className="pt-[35px] mb-[-50px]">
-            <SpeechBubble centerArrow>한 번 투표해볼래?</SpeechBubble>
-            <img
-              src="/tobong.png"
-              alt="토봉 캐릭터"
-              style={{ height: section2CharHeight, width: "auto" }}
-            />
-          </Stack>
+        {/* ── 섹션 2: 피드 카드 ──
+            z-1 + bg-gray-0 → 아래서 올라오며 섹션 1을 흰 화면으로 덮음
+            콘텐츠는 섹션2가 뷰포트를 꽉 채울 때(section2Entry 90~100%) fade-in */}
+        <div className="relative z-1 min-h-screen bg-gray-0 pb-20">
+          <div
+            style={{
+              opacity: section2ContentOpacity,
+              transition: "opacity 0.15s ease-out",
+            }}
+          >
+            {/* 말풍선 + 캐릭터 */}
+            <Stack align="center" gap={20} className="pt-[35px] pb-6">
+              <SpeechBubble centerArrow>한 번 투표해볼래?</SpeechBubble>
+              <img
+                src="/tobong.png"
+                alt="토봉 캐릭터"
+                style={{ height: section2CharHeight, width: "auto" }}
+              />
+            </Stack>
 
-          {/* 피드 카드 */}
-          <div className="px-5">
-            <FeedCard
-              content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
-              image="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"
-              price={31900}
-              voteOptions={[
-                { id: "1", label: "사! 가즈아!", percentage: 80 },
-                { id: "2", label: "애매하긴 해..", percentage: 20 },
-              ]}
-              isVoting={true}
-              selectedVoteId="1"
-            />
+            {/* 피드 카드 */}
+            <div className="px-5">
+              <FeedCard
+                username="참새방앗간12456"
+                category="업무·공부 생산성"
+                timeAgo="6시간 전"
+                content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
+                image="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"
+                price={31900}
+                voteOptions={[
+                  { id: "1", label: "사! 가즈아!", percentage: 80 },
+                  { id: "2", label: "애매하긴 해..", percentage: 20 },
+                ]}
+                voteCount={89}
+                isVoting={true}
+                selectedVoteId="1"
+              />
+            </div>
           </div>
         </div>
       </div>
