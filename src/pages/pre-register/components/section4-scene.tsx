@@ -1,6 +1,7 @@
 import { BrandAssetBox } from "@/components/ui/brand-asset";
 import { Stack } from "@/components/ui/flex";
 import { Typography } from "@/components/ui/typography";
+import { Link } from "react-router-dom";
 
 import { FadeLayer, SpeechBubble } from "./shared";
 
@@ -131,8 +132,8 @@ function Section4Scene({
                 className="absolute z-0"
                 style={{ width: 96, right: 15, bottom: 34 }}
               />
-              <button
-                type="button"
+              <Link
+                to="/?from=pre-register"
                 className="relative z-10 w-full rounded-[18px] border border-gray-100 bg-gray-100 px-6 py-[18px] text-gray-800"
                 style={{ boxShadow: "0 4px 60px 0 rgba(52, 71, 99, 0.2)" }}
               >
@@ -162,7 +163,7 @@ function Section4Scene({
                     '살까말까' 바로가기
                   </Typography>
                 </span>
-              </button>
+              </Link>
             </div>
           </Stack>
         </FadeLayer>
