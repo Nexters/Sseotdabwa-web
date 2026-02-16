@@ -31,16 +31,14 @@ function SpeechBubble({
   children,
   className,
   style,
-  arrowLeft = "16px",
 }: {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
-  arrowLeft?: string;
 }) {
   return (
     <div
-      className={`rounded-[16px] px-3 py-[7px] ${className ?? ""}`}
+      className={`relative rounded-[16px] px-3 py-[7px] ${className ?? ""}`}
       style={{
         background: "radial-gradient(circle at 30% 30%, #2A3038 0%, #77879E 100%)",
         ...style,
@@ -50,9 +48,8 @@ function SpeechBubble({
         {children}
       </Typography>
       <div
-        className="absolute -bottom-[7px]"
+        className="absolute -bottom-[7px] left-4"
         style={{
-          left: arrowLeft,
           width: 0,
           height: 0,
           borderLeft: "6px solid transparent",
@@ -74,41 +71,51 @@ function PreRegisterPage() {
     const el = scrollRef.current;
     if (!el) return;
 
-    setContainerWidth(el.offsetWidth);
-    setContainerHeight(el.offsetHeight);
+    const updateSize = () => {
+      setContainerWidth(el.offsetWidth);
+      setContainerHeight(el.offsetHeight);
+    };
+    updateSize();
+
+    const resizeObserver = new ResizeObserver(updateSize);
+    resizeObserver.observe(el);
 
     const onScroll = () => {
       setProgress(clamp01(el.scrollTop / SCROLL_DISTANCE));
     };
-
     el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
+
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      resizeObserver.disconnect();
+    };
   }, []);
 
   const ep = easeInOut(progress);
 
-  // 캐릭터 끝 위치: 화면 높이의 15% 여백으로 중앙에 배치
-  const charEndHeightPct = 55;
-  const charEndBottom = containerHeight * 0.15;
+  // 캐릭터 시작/끝 위치 — 모두 컨테이너 비율 기반
+  const charStartBottom = -containerHeight * 0.14; // 머리가 상단 14% 지점에 위치
+  const charStartLeft = -containerWidth * 0.2;     // 왼쪽 20% 잘림
 
-  // 캐릭터: 왼쪽 아래 크게 → 중앙 작게
-  const charBottom = lerp(-100, charEndBottom, ep);
-  const charLeft = lerp(-100, containerWidth / 2, ep);
+  const charEndBottom = containerHeight * 0.15;    // 하단 15% 여백
+  const charEndLeft = containerWidth / 2;          // 수평 중앙
+
+  const charBottom = lerp(charStartBottom, charEndBottom, ep);
+  const charLeft = lerp(charStartLeft, charEndLeft, ep);
   const charTranslateX = lerp(0, -50, ep);
-  const charHeightPct = lerp(100, charEndHeightPct, ep);
+  const charHeightPct = lerp(100, 55, ep);
 
-  // 타이틀 & 힌트: 스크롤 초반 페이드 아웃
+  // UI 요소 위치 — 컨테이너 높이 비율
+  const logoTop = containerHeight * 0.04;
+  const bubble1Top = containerHeight * 0.16;
+  const bubble2Top = containerHeight * 0.28;
+  const hintBottom = containerHeight * 0.06;
+
+  // 투명도
   const titleOpacity = mapRange(progress, 0, 0.35, 1, 0);
   const hintOpacity = mapRange(progress, 0, 0.25, 1, 0);
-
-  // 말풍선 1 ("궁금하면 스크롤해줘!"): 초반 유지 → 중간 페이드 아웃
   const bubble1Opacity = mapRange(progress, 0.35, 0.55, 1, 0);
-
-  // 말풍선 2 ("살지 말지 고민되는 상품이 있어..."): 후반 페이드 인
   const bubble2Opacity = mapRange(progress, 0.7, 0.9, 0, 1);
-
-  // 말풍선 2 위치: 캐릭터 상단(30% 지점) 근처
-  const bubble2Top = containerHeight * 0.28;
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -121,8 +128,8 @@ function PreRegisterPage() {
         <div className="sticky top-0 h-screen overflow-hidden">
           {/* 살까말까 로고 */}
           <div
-            className="absolute top-7 left-5"
-            style={{ opacity: titleOpacity }}
+            className="absolute left-5"
+            style={{ top: logoTop, opacity: titleOpacity }}
           >
             <Logo />
           </div>
@@ -133,8 +140,8 @@ function PreRegisterPage() {
             alt="토봉 캐릭터 랜딩"
             className="absolute max-w-none"
             style={{
-              bottom: `${charBottom}px`,
-              left: `${charLeft}px`,
+              bottom: charBottom,
+              left: charLeft,
               height: `${charHeightPct}%`,
               width: "auto",
               transform: `translateX(${charTranslateX}%)`,
@@ -143,8 +150,8 @@ function PreRegisterPage() {
 
           {/* 말풍선 1: 궁금하면 스크롤해줘! */}
           <SpeechBubble
-            className="absolute top-[110px] right-5"
-            style={{ opacity: bubble1Opacity }}
+            className="absolute right-5"
+            style={{ top: bubble1Top, opacity: bubble1Opacity }}
           >
             궁금하면 스크롤해줘!
           </SpeechBubble>
@@ -160,8 +167,8 @@ function PreRegisterPage() {
           {/* 하단 스크롤 힌트 */}
           <Typography
             variant="t1-bold"
-            className="absolute bottom-12 left-1/2 -translate-x-1/2 text-gray-0 animate-bounce [animation-duration:1.8s]"
-            style={{ opacity: hintOpacity }}
+            className="absolute left-1/2 -translate-x-1/2 text-gray-0 animate-bounce [animation-duration:1.8s]"
+            style={{ bottom: hintBottom, opacity: hintOpacity }}
           >
             궁금하면 스크롤!!
           </Typography>
