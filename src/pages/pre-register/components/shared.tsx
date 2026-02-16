@@ -72,16 +72,17 @@ function SpeechBubble({
       setIsPendingAnimation(false);
       return;
     }
-    if (animateOn === "visible" || animateOn === "inView") {
-      hasToggleAnimatedRef.current = true;
-    }
-
     const baseTransform = el.style.transform?.trim() ?? "";
     const withBase = (suffix: string) =>
       baseTransform ? `${baseTransform} ${suffix}` : suffix;
 
+    let didRunAnimation = false;
     setIsPendingAnimation(true);
     const timerId = window.setTimeout(() => {
+      didRunAnimation = true;
+      if (animateOn === "visible" || animateOn === "inView") {
+        hasToggleAnimatedRef.current = true;
+      }
       setIsPendingAnimation(false);
       el.animate(
         [
@@ -97,7 +98,13 @@ function SpeechBubble({
       );
     }, Math.max(0, animateDelayMs));
 
-    return () => window.clearTimeout(timerId);
+    return () => {
+      window.clearTimeout(timerId);
+      setIsPendingAnimation(false);
+      if (!didRunAnimation && (animateOn === "visible" || animateOn === "inView")) {
+        hasToggleAnimatedRef.current = false;
+      }
+    };
   }, [animateDelayMs, animateOn, isVisible, isInView]);
 
   return (
