@@ -1,7 +1,11 @@
 import { getAccessToken } from "@/lib/token"
 
+const DEFAULT_API_BASE_URL = import.meta.env.DEV
+  ? "https://dev.buy-or-not.com"
+  : "https://api.buy-or-not.com"
+
 const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL ?? "https://api.buy-or-not.com"
+  import.meta.env.VITE_API_BASE_URL ?? DEFAULT_API_BASE_URL
 ).replace(/\/+$/, "")
 
 function resolveApiUrl(url: string): string {
