@@ -244,6 +244,7 @@ function PreRegisterPage() {
 
           <SpeechBubble
             centerArrow
+            className="whitespace-nowrap"
             style={{
               position: "absolute",
               top: bubble2Top,
@@ -326,7 +327,11 @@ function PreRegisterPage() {
             </Stack>
           </FadeLayer>
 
-          <FadeLayer opacity={section4ContentOpacity} className="absolute inset-0">
+          <FadeLayer
+            opacity={section4ContentOpacity}
+            className="absolute inset-0"
+            style={{ pointerEvents: section2Phase === "section4" ? "auto" : "none" }}
+          >
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="flex w-full max-w-[375px] flex-col items-center gap-[10px] px-5">
                 <SpeechBubble centerArrow>혹시 너도 살까말까 고민해본적 있어?</SpeechBubble>
