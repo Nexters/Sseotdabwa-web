@@ -2,8 +2,6 @@ import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import { trackPageView, isGAEnabled } from "@/lib/analytics"
 
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID
-
 /**
  * Google Analytics 4 컴포넌트
  * - GA4 스크립트를 동적으로 로드
@@ -26,10 +24,12 @@ function GoogleAnalytics() {
       return
     }
 
+    const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID
+
     // gtag.js 스크립트 동적 로드
     const script = document.createElement("script")
     script.async = true
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`
     document.head.appendChild(script)
 
     // dataLayer 초기화
@@ -41,9 +41,9 @@ function GoogleAnalytics() {
 
     // GA4 초기화
     window.gtag("js", new Date())
-    window.gtag("config", GA_MEASUREMENT_ID)
+    window.gtag("config", measurementId)
 
-    console.info(`[GA4] Initialized with ID: ${GA_MEASUREMENT_ID}`)
+    console.info(`[GA4] Initialized with ID: ${measurementId}`)
   }, [])
 
   // 라우트 변경 시 페이지뷰 추적

@@ -3,9 +3,6 @@
  * 페이지뷰 및 커스텀 이벤트 추적
  */
 
-// GA4 Measurement ID (환경 변수에서 가져옴)
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID
-
 /**
  * GA4가 로드되었는지 확인
  */
@@ -17,7 +14,8 @@ function isGALoaded(): boolean {
  * GA4 초기화 여부 확인
  */
 export function isGAEnabled(): boolean {
-  return Boolean(GA_MEASUREMENT_ID && GA_MEASUREMENT_ID !== "G-XXXXXXXXXX")
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID
+  return Boolean(measurementId && measurementId !== "G-XXXXXXXXXX")
 }
 
 /**
@@ -83,7 +81,7 @@ export function setUserProperties(properties: Record<string, unknown>) {
 export function setUserId(userId: string) {
   if (!isGAEnabled() || !isGALoaded()) return
 
-  window.gtag("config", GA_MEASUREMENT_ID, {
+  window.gtag("config", import.meta.env.VITE_GA_MEASUREMENT_ID, {
     user_id: userId,
   })
 }
