@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm add:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(pnpm run build:*)",
+      "Bash(npx vite build:*)",
+      "Bash(pnpm build:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(pnpm exec tailwindcss:*)",
+      "Bash(ls:*)",
+      "Bash(pnpm api:generate:*)",
+      "Bash(pnpm tsc:*)",
+      "Bash(grep:*)",
+      "WebFetch(domain:dev.buy-or-not.com)",
+      "Bash(npx tsc:*)",
+      "WebFetch(domain:www.figma.com)",
+      "Bash(./node_modules/.bin/tsc:*)",
+      "Bash(PATH=\"$HOME/.local/share/nvm/versions/node/v22.14.0/bin:$PATH\" npx tsc:*)",
+      "Bash(source:*)"
+    ]
+  }
+}

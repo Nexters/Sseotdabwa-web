@@ -92,8 +92,8 @@ export function setUserId(userId: string) {
 declare global {
   interface Window {
     gtag: (
-      command: "config" | "event" | "set",
-      targetOrAction: string,
+      command: "config" | "event" | "set" | "js",
+      targetOrAction: string | Date,
       params?: Record<string, unknown>
     ) => void
     dataLayer: unknown[]
