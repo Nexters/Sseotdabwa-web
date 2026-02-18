@@ -8,7 +8,13 @@ import { QRModalProvider } from "@/components/ui/qr-modal"
 import "./index.css"
 import App from "./App.tsx"
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+    },
+  },
+})
 
 const GOOGLE_CLIENT_ID =
   "364719359261-17n2pv8jajf3ub8t0fn6q69k2cu1u1i4.apps.googleusercontent.com"

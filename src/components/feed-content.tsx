@@ -8,6 +8,7 @@ import {
 } from "react";
 
 import { useGetFeedList } from "@/api/feeds/feeds";
+import { ApiError } from "@/api/api-error";
 import type { FeedResponse } from "@/api/model";
 import { Divider } from "@/components/ui/divider";
 import { FeedCard } from "@/components/ui/feed-card";
@@ -122,7 +123,7 @@ class FeedContentErrorBoundary extends Component<
 
 function FeedContentBody() {
   const [votes, setVotes] = useState<Record<string, string>>({});
-  const { data, isLoading, isError } = useGetFeedList();
+  const { data, isLoading, isError, error } = useGetFeedList();
 
   const feeds = useMemo(() => {
     const raw = data as unknown as { data?: { data?: FeedResponse[] } };
@@ -141,7 +142,7 @@ function FeedContentBody() {
     );
   }
 
-  if (isError) throw new Error("Failed to fetch feed list");
+  if (isError) throw ApiError.isApiError(error) ? error : new Error("Failed to fetch feed list");
 
   return (
     <div

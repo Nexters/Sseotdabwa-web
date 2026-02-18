@@ -1,3 +1,4 @@
+import { ApiError } from "@/api/api-error"
 import { getAccessToken } from "@/lib/token"
 
 const DEFAULT_API_BASE_URL = import.meta.env.DEV
@@ -30,6 +31,14 @@ export async function customFetch<T>(
   })
 
   const data = await response.json().catch(() => undefined)
+
+  if (data?.errorCode) {
+    throw new ApiError({
+      message: data.message ?? "Unknown error",
+      errorCode: data.errorCode,
+      status: response.status,
+    })
+  }
 
   return {
     data,
