@@ -314,7 +314,7 @@ function FeedCard({
             </Stack>
 
             {voteCount !== undefined && voteCount > 0 && (
-              <Typography variant="b7-medium" className="text-gray-600">
+              <Typography variant="b5-medium" className="text-gray-600">
                 {voteCount}명이 투표했어요 · {statusLabel}
               </Typography>
             )}
