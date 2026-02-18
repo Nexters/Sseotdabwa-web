@@ -259,6 +259,15 @@ function FeedCard({
                 alt="Feed content"
                 className="size-full object-cover transition-transform duration-300 ease-out hover:scale-105"
               />
+              {/* 상품 이미지 Dim */}
+              <div
+                className="pointer-events-none absolute inset-0 rounded-[12px]"
+                style={{
+                  background:
+                    "linear-gradient(180deg, #000000 0%, #191919 100%)",
+                  opacity: 0.36,
+                }}
+              />
               <button
                 type="button"
                 aria-label="이미지 확대"
