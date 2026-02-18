@@ -261,11 +261,11 @@ function FeedCard({
               />
               {/* 상품 이미지 Dim */}
               <div
-                className="pointer-events-none absolute inset-0 rounded-[12px]"
+                className="pointer-events-none absolute inset-x-0 bottom-0 rounded-b-[12px]"
                 style={{
+                  height: "36%",
                   background:
                     "linear-gradient(180deg, #000000 0%, #191919 100%)",
-                  opacity: 0.36,
                 }}
               />
               <button
@@ -281,6 +281,9 @@ function FeedCard({
                   gap={4}
                   align="center"
                   className="absolute bottom-[16px] left-[16px]"
+                  style={{
+                    filter: "drop-shadow(0px 4px 14px rgba(0, 0, 0, 0.30))",
+                  }}
                 >
                   <Icon icon="krw" size={18} className="text-white" />
                   <Typography variant="t1-bold" className="text-white">
