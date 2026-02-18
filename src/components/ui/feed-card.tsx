@@ -214,7 +214,7 @@ function FeedCard({
                 {(username || category) && (
                   <Group gap={4} align="center">
                     {username && (
-                      <Typography variant="b6-medium" className="text-gray-800">
+                      <Typography variant="b4-medium" className="text-gray-800">
                         {username}
                       </Typography>
                     )}
@@ -226,8 +226,8 @@ function FeedCard({
                           className="text-gray-600"
                         />
                         <Typography
-                          variant="b6-medium"
-                          className="text-gray-600"
+                          variant="b4-medium"
+                          className="text-gray-800"
                         >
                           {category}
                         </Typography>
@@ -236,7 +236,7 @@ function FeedCard({
                   </Group>
                 )}
                 {timeAgo && (
-                  <Typography variant="b7-medium" className="text-gray-600">
+                  <Typography variant="b6-medium" className="text-gray-600">
                     {timeAgo}
                   </Typography>
                 )}
