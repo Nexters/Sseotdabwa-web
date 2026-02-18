@@ -25,14 +25,18 @@ function Section4Scene({
   transitionMs = 340,
 }: Section4SceneProps) {
   return (
-    <FadeLayer opacity={opacity} transitionMs={transitionMs} className="absolute inset-0">
+    <FadeLayer
+      opacity={opacity}
+      transitionMs={transitionMs}
+      className="absolute inset-0"
+    >
       <div className="absolute inset-0 flex items-center justify-center">
         <FadeLayer
           opacity={promptOpacity}
           className="absolute inset-0 flex items-center justify-center"
           style={{ pointerEvents: isSection5Visible ? "none" : "auto" }}
         >
-          <div className="flex w-full max-w-[375px] flex-col items-center gap-[10px] px-5">
+          <div className="flex w-full px-[34px] flex-col items-center gap-[10px]">
             <SpeechBubble
               centerArrow
               animateOn="visible"
@@ -41,7 +45,7 @@ function Section4Scene({
               혹시 너도 살까말까 고민해본적 있어?
             </SpeechBubble>
 
-            <div className="flex h-[240px] w-full max-w-[412px] items-center justify-center">
+            <div className="flex h-[240px] w-full items-center justify-center">
               <div
                 style={{
                   animation: "brandAssetFloatStep 3s ease-in-out infinite",
@@ -52,7 +56,11 @@ function Section4Scene({
                   asset="socks"
                   iconSize={60}
                   className="z-0 -mr-[8px] rounded-[32px]"
-                  style={{ width: 108, height: 125, transform: "rotate(16.98deg)" }}
+                  style={{
+                    width: 108,
+                    height: 125,
+                    transform: "rotate(16.98deg)",
+                  }}
                 />
               </div>
               <div
@@ -65,7 +73,11 @@ function Section4Scene({
                   asset="tshirt"
                   iconSize={60}
                   className="z-10 rounded-[32px]"
-                  style={{ width: 108, height: 125, transform: "rotate(-18.01deg)" }}
+                  style={{
+                    width: 108,
+                    height: 125,
+                    transform: "rotate(-18.01deg)",
+                  }}
                 />
               </div>
               <div
@@ -78,7 +90,11 @@ function Section4Scene({
                   asset="pants"
                   iconSize={60}
                   className="z-0 -ml-[8px] rounded-[32px]"
-                  style={{ width: 108, height: 125, transform: "rotate(12.76deg)" }}
+                  style={{
+                    width: 108,
+                    height: 125,
+                    transform: "rotate(12.76deg)",
+                  }}
                 />
               </div>
             </div>
@@ -87,18 +103,18 @@ function Section4Scene({
               <button
                 type="button"
                 onClick={() => onVote("yes")}
-                className="h-[62px] w-full rounded-[15px] border border-gray-300 bg-gray-100 px-4 text-left"
+                className="w-full rounded-[15px] border border-gray-300 px-[15px] py-[14px] hover:bg-gray-100 text-left transition-all delay-200 active:scale-99"
               >
-                <Typography variant="s2-semibold" className="text-gray-900">
+                <Typography variant="s4-semibold" className="text-gray-900">
                   예
                 </Typography>
               </button>
               <button
                 type="button"
                 onClick={() => onVote("no")}
-                className="h-[62px] w-full rounded-[15px] border border-gray-300 bg-gray-100 px-4 text-left"
+                className="w-full rounded-[15px] border border-gray-300 px-[15px] py-[14px] hover:bg-gray-100 text-left transition-all delay-200 active:scale-99"
               >
-                <Typography variant="s2-semibold" className="text-gray-900">
+                <Typography variant="s4-semibold" className="text-gray-900">
                   아니오
                 </Typography>
               </button>
