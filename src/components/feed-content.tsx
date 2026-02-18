@@ -169,8 +169,9 @@ function FeedContentBody() {
         ];
 
         return (
-          <div key={id}>
+          <>
             <FeedCard
+              key={id}
               username={feed.author?.nickname}
               profileImage={feed.author?.profileImage}
               category={mapCategory(feed.category)}
@@ -185,8 +186,8 @@ function FeedContentBody() {
               onVote={(optionId) => handleVote(id, optionId)}
               onMoreClick={() => console.log("More clicked:", id)}
             />
-            {index < feeds.length - 1 && <Divider size="small" className="bg-gray-100" />}
-          </div>
+            {index < feeds.length - 1 && <Divider key={`divider-${id}`} size="small" className="bg-gray-100" />}
+          </>
         );
       })}
     </div>
