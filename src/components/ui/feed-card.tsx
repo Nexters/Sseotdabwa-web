@@ -265,7 +265,7 @@ function FeedCard({
                 style={{
                   height: "36%",
                   background:
-                    "linear-gradient(180deg, #000000 0%, #191919 100%)",
+                    "linear-gradient(180deg, transparent 0%, #191919 100%)",
                 }}
               />
               <button
