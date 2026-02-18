@@ -9,7 +9,7 @@ function NavBar() {
   return (
     <nav
       data-slot="nav-bar"
-      className="flex items-center justify-between pt-[10px] pr-[20px] pb-[10px] pl-[22px]"
+      className="flex items-center justify-between pt-[16px] pr-[20px] pb-[16px] pl-[22px]"
     >
       <Logo />
       <Button
