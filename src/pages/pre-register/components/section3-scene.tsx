@@ -1,4 +1,4 @@
-import Lottie from "react-lottie";
+import Lottie from "lottie-react";
 
 import { Stack } from "@/components/ui/flex";
 
@@ -30,9 +30,10 @@ function Section3Scene({ opacity, transitionMs = 340 }: Section3SceneProps) {
           의견줘서 고마워~~!
         </SpeechBubble>
         <Lottie
-          options={{ animationData: tobong3, loop: true, autoplay: true }}
-          isClickToPauseDisabled
-          width={210}
+          animationData={tobong3}
+          loop
+          autoplay
+          style={{ width: 210, height: "auto" }}
         />
       </Stack>
     </FadeLayer>

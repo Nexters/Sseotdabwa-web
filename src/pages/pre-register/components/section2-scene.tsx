@@ -1,4 +1,4 @@
-import Lottie from "react-lottie";
+import Lottie from "lottie-react";
 
 import { FeedCard } from "@/components/ui/feed-card";
 import { Stack } from "@/components/ui/flex";
@@ -31,9 +31,10 @@ function Section2Scene({
             한 번 투표해볼래?
           </SpeechBubble>
           <Lottie
-            options={{ animationData: tobong2, loop: true, autoplay: true }}
-            isClickToPauseDisabled
-            width={82}
+            animationData={tobong2}
+            loop
+            autoplay
+            style={{ width: 82, height: "auto" }}
           />
         </Stack>
 

@@ -1,4 +1,4 @@
-import Lottie from "react-lottie";
+import Lottie from "lottie-react";
 
 import { Logo } from "@/components/ui/logo";
 import { Icon } from "@/components/ui/icon";
@@ -81,10 +81,11 @@ function Section1Scene({
       </div>
 
       <Lottie
-        options={{ animationData: tobong1, loop: true, autoplay: true }}
-        isClickToPauseDisabled
+        animationData={tobong1}
+        loop
+        autoplay
+        className="absolute max-w-none"
         style={{
-          position: "absolute",
           bottom: charBottom,
           left: charLeft,
           height: `${charHeightPct}%`,

@@ -1,4 +1,4 @@
-import Lottie from "react-lottie";
+import Lottie from "lottie-react";
 import { Link } from "react-router-dom";
 
 import { Stack } from "@/components/ui/flex";
@@ -50,10 +50,10 @@ function Section4Scene({
 
             <div className="flex h-[240px] w-full items-center justify-center">
               <Lottie
-                options={{ animationData: productLottie, loop: true, autoplay: true }}
-                isClickToPauseDisabled
-                width="100%"
-                height={240}
+                animationData={productLottie}
+                loop
+                autoplay
+                style={{ width: "100%", height: 240 }}
               />
             </div>
 
@@ -112,13 +112,13 @@ function Section4Scene({
             </div>
 
             <div className="relative w-full pt-[12px]">
-              <div className="absolute z-0" style={{ right: 15, bottom: 34 }}>
-                <Lottie
-                  options={{ animationData: tobong4, loop: true, autoplay: true }}
-                  isClickToPauseDisabled
-                  width={96}
-                />
-              </div>
+              <Lottie
+                animationData={tobong4}
+                loop
+                autoplay
+                className="absolute z-0"
+                style={{ width: 96, right: 15, bottom: 34 }}
+              />
               <Link
                 to="/?from=pre-register"
                 className="relative z-10 block w-full rounded-[18px] border border-gray-100 bg-gray-100 px-6 py-[18px] text-center text-gray-800"
