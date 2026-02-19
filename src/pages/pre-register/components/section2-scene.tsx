@@ -1,4 +1,4 @@
-import Lottie from "lottie-react";
+import { Lottie } from "lottie-react";
 
 import { FeedCard } from "@/components/ui/feed-card";
 import { Stack } from "@/components/ui/flex";

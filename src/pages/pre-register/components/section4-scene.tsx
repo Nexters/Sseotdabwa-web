@@ -1,4 +1,4 @@
-import Lottie from "lottie-react";
+import { Lottie } from "lottie-react";
 import { Link } from "react-router-dom";
 
 import { Stack } from "@/components/ui/flex";

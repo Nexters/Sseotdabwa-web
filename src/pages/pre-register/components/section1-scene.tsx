@@ -1,4 +1,4 @@
-import Lottie from "lottie-react";
+import { Lottie } from "lottie-react";
 
 import { Logo } from "@/components/ui/logo";
 import { Icon } from "@/components/ui/icon";

@@ -1,4 +1,4 @@
-import Lottie from "lottie-react";
+import { Lottie } from "lottie-react";
 
 import { Stack } from "@/components/ui/flex";
 
