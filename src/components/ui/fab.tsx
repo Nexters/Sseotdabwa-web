@@ -2,19 +2,17 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icon";
-import { useOpenQRModal } from "@/components/ui/qr-modal";
+import { usePreRegister } from "@/pages/pre-register/components/pre-register-provider";
 
 interface FABProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 function FAB({ className, ...props }: FABProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { open: openQRModal } = useOpenQRModal();
+  const { open: openPreRegister } = usePreRegister();
 
   const handleClick = () => {
     setIsOpen(true);
-    openQRModal({
-      onClose: () => setIsOpen(false),
-    });
+    openPreRegister();
   };
 
   return (

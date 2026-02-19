@@ -245,7 +245,10 @@ function FeedCard({
           </Group>
         )}
 
-        <Stack gap={12} className="rounded-2xl bg-gray-100 px-4 py-3.5">
+        <Stack
+          gap={12}
+          className="overflow-hidden rounded-2xl bg-gray-100 px-4 py-3.5"
+        >
           {content && (
             <Typography variant="p4-medium" className="text-gray-900">
               {content}
@@ -261,9 +264,8 @@ function FeedCard({
               />
               {/* 상품 이미지 Dim */}
               <div
-                className="pointer-events-none absolute inset-x-0 bottom-0 rounded-b-[12px]"
+                className="pointer-events-none absolute inset-x-0 bottom-[-60%] h-full rounded-b-[12px]"
                 style={{
-                  height: "36%",
                   background:
                     "linear-gradient(180deg, transparent 0%, #191919 100%)",
                 }}
@@ -286,7 +288,7 @@ function FeedCard({
                   }}
                 >
                   <Icon icon="krw" size={18} className="text-white" />
-                  <Typography variant="t1-bold" className="text-white">
+                  <Typography variant="h2-bold" className="text-white">
                     {price.toLocaleString()}
                   </Typography>
                 </Group>

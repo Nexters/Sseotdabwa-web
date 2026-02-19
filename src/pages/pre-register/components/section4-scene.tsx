@@ -1,7 +1,6 @@
 import { useLottie } from "lottie-react";
 import { Link } from "react-router-dom";
 
-import { Stack } from "@/components/ui/flex";
 import { Typography } from "@/components/ui/typography";
 
 import productLottieData from "@/assets/lottie/상품로띠.json";
@@ -9,20 +8,32 @@ import tobong4Data from "@/assets/lottie/토봉4.json";
 import { FadeLayer, SpeechBubble } from "./shared";
 
 function ProductLottie() {
-  const { View } = useLottie({ animationData: productLottieData, loop: true, autoplay: true })
+  const { View } = useLottie({
+    animationData: productLottieData,
+    loop: true,
+    autoplay: true,
+  });
   return (
-    <div
-      className="rounded-[16px]"
-      style={{ width: 375, height: 242 }}
-    >
+    <div className="rounded-[16px]" style={{ width: 375, height: 242 }}>
       {View}
     </div>
-  )
+  );
 }
 
 function TobongLottie() {
-  const { View } = useLottie({ animationData: tobong4Data, loop: true, autoplay: true })
-  return <div className="absolute z-10" style={{ width: 97, height: 87, right: 6, bottom: 30 }}>{View}</div>
+  const { View } = useLottie({
+    animationData: tobong4Data,
+    loop: true,
+    autoplay: true,
+  });
+  return (
+    <div
+      className="absolute z-10"
+      style={{ width: 97, height: 87, right: 6, bottom: 30 }}
+    >
+      {View}
+    </div>
+  );
 }
 
 interface Section4SceneProps {
@@ -56,7 +67,10 @@ function Section4Scene({
           className="absolute inset-0 flex items-center justify-center"
           style={{ pointerEvents: isSection5Visible ? "none" : "auto" }}
         >
-          <div className="flex w-full flex-col items-center" style={{ paddingTop: 130, paddingBottom: 104 }}>
+          <div
+            className="flex w-full flex-col items-center"
+            style={{ paddingTop: 130, paddingBottom: 104 }}
+          >
             <SpeechBubble
               centerArrow
               animateOn="visible"
@@ -69,7 +83,10 @@ function Section4Scene({
               <ProductLottie />
             </div>
 
-            <div className="flex w-full flex-col gap-[10px] px-[20px]" style={{ marginTop: 7 }}>
+            <div
+              className="flex w-full flex-col gap-[10px] px-[20px]"
+              style={{ marginTop: 7 }}
+            >
               <button
                 type="button"
                 onClick={() => onVote("yes")}
@@ -97,7 +114,10 @@ function Section4Scene({
           className="absolute inset-0 flex items-center justify-center"
           style={{ pointerEvents: isSection5Visible ? "auto" : "none" }}
         >
-          <div className="flex w-full flex-col items-center px-5" style={{ paddingTop: 40, paddingBottom: 40 }}>
+          <div
+            className="flex w-full flex-col items-center px-5"
+            style={{ paddingTop: 40, paddingBottom: 40 }}
+          >
             <SpeechBubble
               centerArrow
               animateOn="visible"
@@ -108,7 +128,10 @@ function Section4Scene({
                 : "소비 정보에도 참고되니 놀러와줘~!"}
             </SpeechBubble>
 
-            <div className="relative w-[220px] -mb-[60px]" style={{ marginTop: 11 }}>
+            <div
+              className="relative w-[220px] -mb-[60px]"
+              style={{ marginTop: 11 }}
+            >
               <img
                 src="/example.png"
                 alt="살까말까 예시 화면"

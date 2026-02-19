@@ -1,0 +1,47 @@
+import * as React from "react";
+
+import { PreRegisterBottomSheet } from "./pre-register-bottom-sheet";
+
+interface PreRegisterContextValue {
+  open: () => void;
+  close: () => void;
+}
+
+const PreRegisterContext = React.createContext<PreRegisterContextValue | null>(
+  null,
+);
+
+function PreRegisterProvider({ children }: { children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const value = React.useMemo(
+    () => ({
+      open: () => setIsOpen(true),
+      close: () => setIsOpen(false),
+    }),
+    [],
+  );
+
+  return (
+    <PreRegisterContext.Provider value={value}>
+      {children}
+      <PreRegisterBottomSheet
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        onSubmit={(email) => {
+          console.log("pre-register email:", email);
+          setIsOpen(false);
+        }}
+      />
+    </PreRegisterContext.Provider>
+  );
+}
+
+function usePreRegister() {
+  const ctx = React.useContext(PreRegisterContext);
+  if (!ctx)
+    throw new Error("usePreRegister must be used within PreRegisterProvider");
+  return ctx;
+}
+
+export { PreRegisterProvider, usePreRegister };

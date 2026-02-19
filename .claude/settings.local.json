@@ -19,7 +19,8 @@
       "WebFetch(domain:www.figma.com)",
       "Bash(./node_modules/.bin/tsc:*)",
       "Bash(PATH=\"$HOME/.local/share/nvm/versions/node/v22.14.0/bin:$PATH\" npx tsc:*)",
-      "Bash(source:*)"
+      "Bash(source:*)",
+      "Bash(/opt/homebrew/bin/pnpm add:*)"
     ]
   }
 }
