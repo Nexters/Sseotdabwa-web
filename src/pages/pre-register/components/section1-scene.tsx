@@ -1,7 +1,10 @@
+import Lottie from "lottie-react";
+
 import { Logo } from "@/components/ui/logo";
 import { Icon } from "@/components/ui/icon";
 import { Typography } from "@/components/ui/typography";
 
+import tobong1 from "../../../../public/lottie/토봉1.json";
 import { FadeLayer, SpeechBubble } from "./shared";
 
 function lerp(a: number, b: number, t: number) {
@@ -74,9 +77,9 @@ function Section1Scene({
         <Logo />
       </div>
 
-      <img
-        src="/tobong.png"
-        alt="토봉 캐릭터 랜딩"
+      <Lottie
+        animationData={tobong1}
+        loop
         className="absolute max-w-none"
         style={{
           bottom: charBottom,

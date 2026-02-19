@@ -1,8 +1,11 @@
-import { BrandAssetBox } from "@/components/ui/brand-asset";
-import { Stack } from "@/components/ui/flex";
-import { Typography } from "@/components/ui/typography";
+import Lottie from "lottie-react";
 import { Link } from "react-router-dom";
 
+import { Stack } from "@/components/ui/flex";
+import { Typography } from "@/components/ui/typography";
+
+import productLottie from "../../../../public/lottie/상품로띠.json";
+import tobong4 from "../../../../public/lottie/토봉4.json";
 import { FadeLayer, SpeechBubble } from "./shared";
 
 interface Section4SceneProps {
@@ -46,57 +49,11 @@ function Section4Scene({
             </SpeechBubble>
 
             <div className="flex h-[240px] w-full items-center justify-center">
-              <div
-                style={{
-                  animation: "brandAssetFloatStep 3s ease-in-out infinite",
-                  animationDelay: "0s",
-                }}
-              >
-                <BrandAssetBox
-                  asset="socks"
-                  iconSize={60}
-                  className="z-0 -mr-[8px] rounded-[32px]"
-                  style={{
-                    width: 108,
-                    height: 125,
-                    transform: "rotate(16.98deg)",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  animation: "brandAssetFloatStep 3s ease-in-out infinite",
-                  animationDelay: "1s",
-                }}
-              >
-                <BrandAssetBox
-                  asset="tshirt"
-                  iconSize={60}
-                  className="z-10 rounded-[32px]"
-                  style={{
-                    width: 108,
-                    height: 125,
-                    transform: "rotate(-18.01deg)",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  animation: "brandAssetFloatStep 3s ease-in-out infinite",
-                  animationDelay: "2s",
-                }}
-              >
-                <BrandAssetBox
-                  asset="pants"
-                  iconSize={60}
-                  className="z-0 -ml-[8px] rounded-[32px]"
-                  style={{
-                    width: 108,
-                    height: 125,
-                    transform: "rotate(12.76deg)",
-                  }}
-                />
-              </div>
+              <Lottie
+                animationData={productLottie}
+                loop
+                style={{ width: "100%", height: 240 }}
+              />
             </div>
 
             <div className="flex w-full flex-col gap-[10px]">
@@ -154,9 +111,9 @@ function Section4Scene({
             </div>
 
             <div className="relative w-full pt-[12px]">
-              <img
-                src="/tobong.png"
-                alt="토봉 캐릭터"
+              <Lottie
+                animationData={tobong4}
+                loop
                 className="absolute z-0"
                 style={{ width: 96, right: 15, bottom: 34 }}
               />

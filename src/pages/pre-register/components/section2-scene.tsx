@@ -1,6 +1,9 @@
+import Lottie from "lottie-react";
+
 import { FeedCard } from "@/components/ui/feed-card";
 import { Stack } from "@/components/ui/flex";
 
+import tobong2 from "../../../../public/lottie/토봉2.json";
 import { FadeLayer, SpeechBubble } from "./shared";
 
 interface Section2SceneProps {
@@ -23,9 +26,9 @@ function Section2Scene({
           <SpeechBubble centerArrow animateOn="visible" isVisible={contentOpacity > 0.01}>
             한 번 투표해볼래?
           </SpeechBubble>
-          <img
-            src="/tobong.png"
-            alt="토봉 캐릭터"
+          <Lottie
+            animationData={tobong2}
+            loop
             style={{ width: 82, height: "auto" }}
           />
         </Stack>

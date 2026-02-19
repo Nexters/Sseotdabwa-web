@@ -1,5 +1,8 @@
+import Lottie from "lottie-react";
+
 import { Stack } from "@/components/ui/flex";
 
+import tobong3 from "../../../../public/lottie/토봉3.json";
 import { FadeLayer, SpeechBubble } from "./shared";
 
 interface Section3SceneProps {
@@ -22,9 +25,9 @@ function Section3Scene({ opacity, transitionMs = 340 }: Section3SceneProps) {
         <SpeechBubble centerArrow animateOn="visible" isVisible={opacity > 0.01}>
           의견줘서 고마워~~!
         </SpeechBubble>
-        <img
-          src="/tobong.png"
-          alt="토봉 캐릭터 감사 인사"
+        <Lottie
+          animationData={tobong3}
+          loop
           style={{ width: 210, height: "auto" }}
         />
       </Stack>
