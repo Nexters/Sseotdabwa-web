@@ -10,12 +10,19 @@ import { FadeLayer, SpeechBubble } from "./shared";
 
 function ProductLottie() {
   const { View } = useLottie({ animationData: productLottieData, loop: true, autoplay: true })
-  return <div style={{ width: "100%", height: 240 }}>{View}</div>
+  return (
+    <div
+      className="w-full rounded-[16px]"
+      style={{ height: 242, backgroundColor: "#FFE9F0" }}
+    >
+      {View}
+    </div>
+  )
 }
 
 function TobongLottie() {
   const { View } = useLottie({ animationData: tobong4Data, loop: true, autoplay: true })
-  return <div className="absolute z-0" style={{ width: 96, right: 15, bottom: 34 }}>{View}</div>
+  return <div className="absolute z-0" style={{ width: 97, height: 47, right: 15, bottom: 34 }}>{View}</div>
 }
 
 interface Section4SceneProps {
@@ -49,7 +56,7 @@ function Section4Scene({
           className="absolute inset-0 flex items-center justify-center"
           style={{ pointerEvents: isSection5Visible ? "none" : "auto" }}
         >
-          <div className="flex w-full px-[34px] flex-col items-center gap-[10px]">
+          <div className="flex w-full px-[20px] flex-col items-center gap-[10px]">
             <SpeechBubble
               centerArrow
               animateOn="visible"
@@ -58,7 +65,7 @@ function Section4Scene({
               혹시 너도 살까말까 고민해본적 있어?
             </SpeechBubble>
 
-            <div className="flex h-[240px] w-full items-center justify-center">
+            <div className="w-full">
               <ProductLottie />
             </div>
 

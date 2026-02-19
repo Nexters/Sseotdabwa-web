@@ -35,9 +35,16 @@ function TobongLottie({ style }: { style?: React.CSSProperties }) {
     animationData: tobong1,
     loop: true,
     autoplay: true,
-    style: { width: "auto", height: "100%" },
+    style: { width: "auto", height: "100%", display: "block", maxWidth: "none" },
   })
-  return <div className="absolute max-w-none" style={style}>{View}</div>
+  return (
+    <div
+      className="absolute max-w-none [&_svg]:!h-full [&_svg]:!w-auto"
+      style={{ ...style, width: "fit-content" }}
+    >
+      {View}
+    </div>
+  )
 }
 
 interface Section1SceneProps {
@@ -69,7 +76,8 @@ function Section1Scene({
 
   const logoTop = containerHeight * 0.04;
   const bubble1Top = 60;
-  const bubble2Top = containerHeight * 0.3;
+  const charEndTopPx = containerHeight - charEndBottom - containerHeight * charEndHeightPct / 100;
+  const bubble2Top = charEndTopPx + 26;
   const hintBottom = containerHeight * 0.06;
 
   const titleOpacity = mapRange(progress, 0, 0.35, 1, 0);

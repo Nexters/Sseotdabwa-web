@@ -86,14 +86,19 @@ function SpeechBubble({
       setIsPendingAnimation(false);
       el.animate(
         [
-          { transform: withBase("translateY(4px) scale(0.12)") },
-          { transform: withBase("translateY(0) scale(1.04)"), offset: 0.75 },
-          { transform: withBase("translateY(0) scale(1)") },
+          { transform: withBase("translateY(0)"), offset: 0 },
+          { transform: withBase("translateY(-4px)"), offset: 1 / 6 },
+          { transform: withBase("translateY(-4px)"), offset: 2 / 6 },
+          { transform: withBase("translateY(-4px)"), offset: 3 / 6 },
+          { transform: withBase("translateY(0)"), offset: 4 / 6 },
+          { transform: withBase("translateY(0)"), offset: 5 / 6 },
+          { transform: withBase("translateY(0)"), offset: 1 },
         ],
         {
-          duration: 320,
-          easing: "cubic-bezier(0.2, 0.85, 0.25, 1)",
+          duration: 2000,
+          easing: "ease-in-out",
           fill: "both",
+          iterations: Infinity,
         },
       );
     }, Math.max(0, animateDelayMs));
@@ -110,15 +115,14 @@ function SpeechBubble({
   return (
     <div
       ref={popRef}
-      className={`relative inline-flex w-fit items-center rounded-[10px] px-3 py-[7px] ${className ?? ""}`}
+      className={`relative inline-flex w-fit items-center rounded-[10px] px-[12px] py-[10px] ${className ?? ""}`}
       style={{
-        background:
-          "radial-gradient(circle at 30% 30%, #2A3038 0%, #77879E 100%)",
+        background: "#2A3038",
         visibility: isPendingAnimation ? "hidden" : "visible",
         ...style,
       }}
     >
-      <Typography variant="s5-semibold" className="text-gray-0">
+      <Typography variant="s4-semibold" className="text-gray-0">
         {children}
       </Typography>
       <div

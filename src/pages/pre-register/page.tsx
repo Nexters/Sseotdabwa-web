@@ -8,7 +8,6 @@ import { Section4Scene } from "./components/section4-scene";
 const SCROLL_DISTANCE = 1200;
 const SECTION2_WAIT_MS = 1000;
 const SECTION2_WHITE_MS = 1400;
-const SECTION3_HOLD_MS = 2000;
 const SECTION4_TO_5_FADE_MS = 260;
 const SECTION3_TO_4_FADE_OUT_MS = 320;
 const SECTION3_TO_4_FADE_IN_MS = 340;
@@ -116,25 +115,24 @@ function PreRegisterPage() {
       setSection2Phase("section3");
     }, SECTION2_WAIT_MS + SECTION2_WHITE_MS);
 
-    const section3FadeOutTimer = window.setTimeout(() => {
-      setSection2Phase("section3-fadeout");
-    }, SECTION2_WAIT_MS + SECTION2_WHITE_MS + SECTION3_HOLD_MS);
-
-    const section4FadeInTimer = window.setTimeout(() => {
-      setSection2Phase("section4-fadein");
-    }, SECTION2_WAIT_MS + SECTION2_WHITE_MS + SECTION3_HOLD_MS + SECTION3_TO_4_FADE_OUT_MS);
-
-    const section4Timer = window.setTimeout(() => {
-      setSection2Phase("section4");
-    }, SECTION2_WAIT_MS + SECTION2_WHITE_MS + SECTION3_HOLD_MS + SECTION3_TO_4_FADE_OUT_MS + SECTION3_TO_4_FADE_IN_MS);
-
     section2TimersRef.current = [
       whiteTimer,
       section3Timer,
-      section3FadeOutTimer,
-      section4FadeInTimer,
-      section4Timer,
     ];
+  };
+
+  const handleSection3AnimationComplete = () => {
+    setSection2Phase("section3-fadeout");
+
+    const section4FadeInTimer = window.setTimeout(() => {
+      setSection2Phase("section4-fadein");
+    }, SECTION3_TO_4_FADE_OUT_MS);
+
+    const section4Timer = window.setTimeout(() => {
+      setSection2Phase("section4");
+    }, SECTION3_TO_4_FADE_OUT_MS + SECTION3_TO_4_FADE_IN_MS);
+
+    section2TimersRef.current.push(section4FadeInTimer, section4Timer);
   };
 
   const handleSection4Vote = (voteId: string) => {
@@ -174,7 +172,7 @@ function PreRegisterPage() {
             onVote={handleVote}
           />
 
-          <Section3Scene opacity={section3ContentOpacity} transitionMs={SECTION3_TO_4_FADE_OUT_MS} />
+          <Section3Scene opacity={section3ContentOpacity} transitionMs={SECTION3_TO_4_FADE_OUT_MS} onAnimationComplete={handleSection3AnimationComplete} />
 
           {(section2Phase === "section3-fadeout" ||
             section2Phase === "section4-fadein" ||

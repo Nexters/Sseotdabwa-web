@@ -8,7 +8,7 @@ import { FadeLayer, SpeechBubble } from "./shared";
 
 function TobongLottie() {
   const { View } = useLottie({ animationData: tobong2, loop: true, autoplay: true })
-  return <div style={{ width: 82 }}>{View}</div>
+  return <div style={{ width: 62, height: 73 }}>{View}</div>
 }
 
 interface Section2SceneProps {
@@ -38,15 +38,22 @@ function Section2Scene({
           <TobongLottie />
         </Stack>
 
-        <div className="relative z-0 -mt-[30px] px-5">
+        <div className="relative z-0 -mt-[20px] px-5">
           <FeedCard
             content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
             image="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"
             price={31900}
-            voteOptions={[
-              { id: "1", label: "사! 가즈아!", percentage: 80 },
-              { id: "2", label: "애매하긴 해..", percentage: 20 },
-            ]}
+            voteOptions={
+              selectedVoteId
+                ? [
+                    { id: "1", label: "사! 가즈아!", percentage: 80 },
+                    { id: "2", label: "애매하긴 해..", percentage: 20 },
+                  ].filter((o) => o.id === selectedVoteId)
+                : [
+                    { id: "1", label: "사! 가즈아!", percentage: 80 },
+                    { id: "2", label: "애매하긴 해..", percentage: 20 },
+                  ]
+            }
             selectedVoteId={selectedVoteId}
             onVote={onVote}
           />
