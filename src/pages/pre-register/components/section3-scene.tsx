@@ -14,12 +14,17 @@ interface TobongLottieProps {
 function TobongLottie({ isVisible, onComplete }: TobongLottieProps) {
   const playCountRef = useRef(0);
   const hasStartedRef = useRef(false);
+  const onCompleteRef = useRef(onComplete);
 
   const { View, animationItem } = useLottie({
     animationData: tobong3,
     loop: false,
     autoplay: false,
-  })
+  });
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     if (!animationItem) return;
@@ -29,13 +34,22 @@ function TobongLottie({ isVisible, onComplete }: TobongLottieProps) {
       if (playCountRef.current < 2) {
         animationItem.goToAndPlay(0, true);
       } else {
-        onComplete?.();
+        onCompleteRef.current?.();
       }
     };
 
     animationItem.addEventListener("complete", handleComplete);
-    return () => animationItem.removeEventListener("complete", handleComplete);
-  }, [animationItem, onComplete]);
+
+    return () => {
+      // lottie-react + route unmount 타이밍에서 내부 인스턴스가 먼저 해제되면
+      // removeEventListener가 예외를 던질 수 있어 안전하게 무시한다.
+      try {
+        animationItem.removeEventListener("complete", handleComplete);
+      } catch {
+        // noop
+      }
+    };
+  }, [animationItem]);
 
   useEffect(() => {
     if (!animationItem) return;
@@ -51,7 +65,7 @@ function TobongLottie({ isVisible, onComplete }: TobongLottieProps) {
     }
   }, [animationItem, isVisible]);
 
-  return <div style={{ width: 266, height: 320 }}>{View}</div>
+  return <div style={{ width: 266, height: 320 }}>{View}</div>;
 }
 
 interface Section3SceneProps {
@@ -60,7 +74,11 @@ interface Section3SceneProps {
   onAnimationComplete?: () => void;
 }
 
-function Section3Scene({ opacity, transitionMs = 340, onAnimationComplete }: Section3SceneProps) {
+function Section3Scene({
+  opacity,
+  transitionMs = 340,
+  onAnimationComplete,
+}: Section3SceneProps) {
   const isVisible = opacity > 0.01;
 
   return (

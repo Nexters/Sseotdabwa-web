@@ -7,8 +7,12 @@ import tobong2 from "@/assets/lottie/토봉2.json";
 import { FadeLayer, SpeechBubble } from "./shared";
 
 function TobongLottie() {
-  const { View } = useLottie({ animationData: tobong2, loop: true, autoplay: true })
-  return <div style={{ width: 82, height: 73 }}>{View}</div>
+  const { View } = useLottie({
+    animationData: tobong2,
+    loop: true,
+    autoplay: true,
+  });
+  return <div style={{ width: 82, height: 73 }}>{View}</div>;
 }
 
 interface Section2SceneProps {
@@ -43,8 +47,8 @@ function Section2Scene({
         <div className="relative z-0 -mt-[21px] px-5">
           <FeedCard
             content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
-            image="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"
-            price={31900}
+            image="https://buy-or-not.com/du.png"
+            price={9_700}
             voteOptions={[
               { id: "1", label: "사! 가즈아!", percentage: 80 },
               { id: "2", label: "애매하긴 해..", percentage: 20 },
