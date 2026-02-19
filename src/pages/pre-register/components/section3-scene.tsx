@@ -1,9 +1,14 @@
-import Lottie from "lottie-react";
+import { useLottie } from "lottie-react";
 
 import { Stack } from "@/components/ui/flex";
 
-import tobong3 from "../../../../public/lottie/토봉3.json";
+import tobong3 from "@/assets/lottie/토봉3.json";
 import { FadeLayer, SpeechBubble } from "./shared";
+
+function TobongLottie() {
+  const { View } = useLottie({ animationData: tobong3, loop: true, autoplay: true })
+  return <div style={{ width: 210 }}>{View}</div>
+}
 
 interface Section3SceneProps {
   opacity: number;
@@ -29,12 +34,7 @@ function Section3Scene({ opacity, transitionMs = 340 }: Section3SceneProps) {
         >
           의견줘서 고마워~~!
         </SpeechBubble>
-        <Lottie
-          animationData={tobong3}
-          loop
-          autoplay
-          style={{ width: 210, height: "auto" }}
-        />
+        <TobongLottie />
       </Stack>
     </FadeLayer>
   );

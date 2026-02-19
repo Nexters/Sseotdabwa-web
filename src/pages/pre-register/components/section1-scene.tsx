@@ -1,10 +1,11 @@
-import Lottie from "lottie-react";
+import React from "react";
+import { useLottie } from "lottie-react";
 
 import { Logo } from "@/components/ui/logo";
 import { Icon } from "@/components/ui/icon";
 import { Typography } from "@/components/ui/typography";
 
-import tobong1 from "../../../../public/lottie/토봉1.json";
+import tobong1 from "@/assets/lottie/토봉1.json";
 import { FadeLayer, SpeechBubble } from "./shared";
 
 function lerp(a: number, b: number, t: number) {
@@ -27,6 +28,11 @@ function mapRange(
 
 function easeInOut(t: number): number {
   return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+}
+
+function TobongLottie({ style }: { style?: React.CSSProperties }) {
+  const { View } = useLottie({ animationData: tobong1, loop: true, autoplay: true })
+  return <div className="absolute max-w-none" style={style}>{View}</div>
 }
 
 interface Section1SceneProps {
@@ -80,11 +86,7 @@ function Section1Scene({
         <Logo />
       </div>
 
-      <Lottie
-        animationData={tobong1}
-        loop
-        autoplay
-        className="absolute max-w-none"
+      <TobongLottie
         style={{
           bottom: charBottom,
           left: charLeft,

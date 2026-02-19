@@ -1,12 +1,22 @@
-import Lottie from "lottie-react";
+import { useLottie } from "lottie-react";
 import { Link } from "react-router-dom";
 
 import { Stack } from "@/components/ui/flex";
 import { Typography } from "@/components/ui/typography";
 
-import productLottie from "../../../../public/lottie/상품로띠.json";
-import tobong4 from "../../../../public/lottie/토봉4.json";
+import productLottieData from "@/assets/lottie/상품로띠.json";
+import tobong4Data from "@/assets/lottie/토봉4.json";
 import { FadeLayer, SpeechBubble } from "./shared";
+
+function ProductLottie() {
+  const { View } = useLottie({ animationData: productLottieData, loop: true, autoplay: true })
+  return <div style={{ width: "100%", height: 240 }}>{View}</div>
+}
+
+function TobongLottie() {
+  const { View } = useLottie({ animationData: tobong4Data, loop: true, autoplay: true })
+  return <div className="absolute z-0" style={{ width: 96, right: 15, bottom: 34 }}>{View}</div>
+}
 
 interface Section4SceneProps {
   opacity: number;
@@ -49,12 +59,7 @@ function Section4Scene({
             </SpeechBubble>
 
             <div className="flex h-[240px] w-full items-center justify-center">
-              <Lottie
-                animationData={productLottie}
-                loop
-                autoplay
-                style={{ width: "100%", height: 240 }}
-              />
+              <ProductLottie />
             </div>
 
             <div className="flex w-full flex-col gap-[10px]">
@@ -112,13 +117,7 @@ function Section4Scene({
             </div>
 
             <div className="relative w-full pt-[12px]">
-              <Lottie
-                animationData={tobong4}
-                loop
-                autoplay
-                className="absolute z-0"
-                style={{ width: 96, right: 15, bottom: 34 }}
-              />
+              <TobongLottie />
               <Link
                 to="/?from=pre-register"
                 className="relative z-10 block w-full rounded-[18px] border border-gray-100 bg-gray-100 px-6 py-[18px] text-center text-gray-800"

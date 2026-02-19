@@ -1,10 +1,15 @@
-import Lottie from "lottie-react";
+import { useLottie } from "lottie-react";
 
 import { FeedCard } from "@/components/ui/feed-card";
 import { Stack } from "@/components/ui/flex";
 
-import tobong2 from "../../../../public/lottie/토봉2.json";
+import tobong2 from "@/assets/lottie/토봉2.json";
 import { FadeLayer, SpeechBubble } from "./shared";
+
+function TobongLottie() {
+  const { View } = useLottie({ animationData: tobong2, loop: true, autoplay: true })
+  return <div style={{ width: 82 }}>{View}</div>
+}
 
 interface Section2SceneProps {
   contentOpacity: number;
@@ -30,12 +35,7 @@ function Section2Scene({
           >
             한 번 투표해볼래?
           </SpeechBubble>
-          <Lottie
-            animationData={tobong2}
-            loop
-            autoplay
-            style={{ width: 82, height: "auto" }}
-          />
+          <TobongLottie />
         </Stack>
 
         <div className="relative z-0 -mt-[30px] px-5">
