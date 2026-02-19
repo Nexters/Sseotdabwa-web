@@ -1,4 +1,4 @@
-import { Lottie } from "lottie-react";
+import Lottie from "react-lottie";
 
 import { Stack } from "@/components/ui/flex";
 
@@ -22,13 +22,17 @@ function Section3Scene({ opacity, transitionMs = 340 }: Section3SceneProps) {
         gap={100}
         className="absolute bottom-[135px] left-1/2 -translate-x-1/2"
       >
-        <SpeechBubble centerArrow animateOn="visible" isVisible={opacity > 0.01}>
+        <SpeechBubble
+          centerArrow
+          animateOn="visible"
+          isVisible={opacity > 0.01}
+        >
           의견줘서 고마워~~!
         </SpeechBubble>
         <Lottie
-          animationData={tobong3}
-          loop
-          style={{ width: 210, height: "auto" }}
+          options={{ animationData: tobong3, loop: true, autoplay: true }}
+          isClickToPauseDisabled
+          width={210}
         />
       </Stack>
     </FadeLayer>

@@ -1,4 +1,4 @@
-import { Lottie } from "lottie-react";
+import Lottie from "react-lottie";
 
 import { Logo } from "@/components/ui/logo";
 import { Icon } from "@/components/ui/icon";
@@ -73,15 +73,18 @@ function Section1Scene({
 
   return (
     <div className="sticky top-0 h-screen overflow-hidden">
-      <div className="absolute left-5" style={{ top: logoTop, opacity: titleOpacity }}>
+      <div
+        className="absolute left-5"
+        style={{ top: logoTop, opacity: titleOpacity }}
+      >
         <Logo />
       </div>
 
       <Lottie
-        animationData={tobong1}
-        loop
-        className="absolute max-w-none"
+        options={{ animationData: tobong1, loop: true, autoplay: true }}
+        isClickToPauseDisabled
         style={{
+          position: "absolute",
           bottom: charBottom,
           left: charLeft,
           height: `${charHeightPct}%`,

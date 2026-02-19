@@ -1,4 +1,4 @@
-import { Lottie } from "lottie-react";
+import Lottie from "react-lottie";
 
 import { FeedCard } from "@/components/ui/feed-card";
 import { Stack } from "@/components/ui/flex";
@@ -23,13 +23,17 @@ function Section2Scene({
     <>
       <FadeLayer opacity={contentOpacity}>
         <Stack align="center" gap={20} className="relative pt-[35px]">
-          <SpeechBubble centerArrow animateOn="visible" isVisible={contentOpacity > 0.01}>
+          <SpeechBubble
+            centerArrow
+            animateOn="visible"
+            isVisible={contentOpacity > 0.01}
+          >
             한 번 투표해볼래?
           </SpeechBubble>
           <Lottie
-            animationData={tobong2}
-            loop
-            style={{ width: 82, height: "auto" }}
+            options={{ animationData: tobong2, loop: true, autoplay: true }}
+            isClickToPauseDisabled
+            width={82}
           />
         </Stack>
 
