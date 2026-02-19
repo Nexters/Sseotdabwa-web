@@ -31,7 +31,12 @@ function easeInOut(t: number): number {
 }
 
 function TobongLottie({ style }: { style?: React.CSSProperties }) {
-  const { View } = useLottie({ animationData: tobong1, loop: true, autoplay: true })
+  const { View } = useLottie({
+    animationData: tobong1,
+    loop: true,
+    autoplay: true,
+    style: { width: "auto", height: "100%" },
+  })
   return <div className="absolute max-w-none" style={style}>{View}</div>
 }
 
