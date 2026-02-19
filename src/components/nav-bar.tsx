@@ -12,7 +12,7 @@ function NavBar() {
     >
       <Logo />
       <Button variant="outline" size="small" onClick={open}>
-        앱 사전 예약하기
+        앱 런칭 사전예약
       </Button>
     </nav>
   );

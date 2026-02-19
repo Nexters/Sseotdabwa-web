@@ -149,7 +149,7 @@ function Section4Scene({
             <div className="relative w-full pt-[12px]">
               <TobongLottie />
               <Link
-                to="/?from=pre-register"
+                to="/"
                 className="relative z-10 block w-full px-6 py-[18px] text-center"
                 style={{
                   borderRadius: 15,
