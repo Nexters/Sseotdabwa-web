@@ -126,7 +126,13 @@ export function PreRegisterBottomSheet({
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/40 data-[state=open]:animate-[dialog-overlay-in_200ms_ease-out] data-[state=closed]:animate-[dialog-overlay-out_150ms_ease-in]" />
+        <DialogPrimitive.Overlay
+          className="fixed left-0 right-0 z-50 bg-black/40 data-[state=open]:animate-[dialog-overlay-in_200ms_ease-out] data-[state=closed]:animate-[dialog-overlay-out_150ms_ease-in]"
+          style={{
+            top: "calc(env(safe-area-inset-top) * -1)",
+            bottom: "calc(env(safe-area-inset-bottom) * -1)",
+          }}
+        />
         <DialogPrimitive.Content
           ref={sheetRef}
           className="fixed bottom-0 left-0 right-0 z-50 rounded-[26px] bg-white outline-none transition-[bottom] duration-150 ease-out
