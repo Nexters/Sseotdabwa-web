@@ -19,6 +19,7 @@ export function PreRegisterBottomSheet({
   onSubmit,
 }: PreRegisterBottomSheetProps) {
   const [email, setEmail] = React.useState("");
+  const [keyboardInset, setKeyboardInset] = React.useState(0);
   const { open: openSnackbar } = useSnackbar();
   const sheetRef = React.useRef<HTMLDivElement>(null);
   const dragStartY = React.useRef<number | null>(null);
@@ -46,6 +47,51 @@ export function PreRegisterBottomSheet({
   const clear = () => {
     setEmail("");
   };
+
+  React.useEffect(() => {
+    if (!open) {
+      setKeyboardInset(0);
+      return;
+    }
+
+    const visualViewport = window.visualViewport;
+
+    if (!visualViewport) {
+      return;
+    }
+
+    const updateKeyboardInset = () => {
+      const activeElement = document.activeElement as HTMLElement | null;
+      const isTextInputFocused =
+        !!activeElement &&
+        (activeElement.tagName === "INPUT" ||
+          activeElement.tagName === "TEXTAREA" ||
+          activeElement.isContentEditable);
+
+      if (!isTextInputFocused) {
+        setKeyboardInset(0);
+        return;
+      }
+
+      const viewportBottom = visualViewport.height + visualViewport.offsetTop;
+      const obscuredHeight = Math.max(0, window.innerHeight - viewportBottom);
+
+      setKeyboardInset(obscuredHeight);
+    };
+
+    updateKeyboardInset();
+    visualViewport.addEventListener("resize", updateKeyboardInset);
+    visualViewport.addEventListener("scroll", updateKeyboardInset);
+    window.addEventListener("focusin", updateKeyboardInset);
+    window.addEventListener("focusout", updateKeyboardInset);
+
+    return () => {
+      visualViewport.removeEventListener("resize", updateKeyboardInset);
+      visualViewport.removeEventListener("scroll", updateKeyboardInset);
+      window.removeEventListener("focusin", updateKeyboardInset);
+      window.removeEventListener("focusout", updateKeyboardInset);
+    };
+  }, [open]);
 
   function handleTouchStart(e: React.TouchEvent) {
     dragStartY.current = e.touches[0].clientY;
@@ -83,10 +129,14 @@ export function PreRegisterBottomSheet({
         <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/40 data-[state=open]:animate-[dialog-overlay-in_200ms_ease-out] data-[state=closed]:animate-[dialog-overlay-out_150ms_ease-in]" />
         <DialogPrimitive.Content
           ref={sheetRef}
-          className="fixed bottom-0 left-0 right-0 z-50 rounded-[26px] bg-white outline-none
+          className="fixed bottom-0 left-0 right-0 z-50 rounded-[26px] bg-white outline-none transition-[bottom] duration-150 ease-out
             data-[state=open]:animate-[sheet-in_300ms_ease-out]
             data-[state=closed]:animate-[sheet-out_200ms_ease-in]"
-          style={{ margin: "0 14px 10px" }}
+          style={{
+            marginLeft: 14,
+            marginRight: 14,
+            bottom: `calc(${keyboardInset + 10}px + env(safe-area-inset-bottom))`,
+          }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
