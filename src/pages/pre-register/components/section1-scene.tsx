@@ -35,12 +35,12 @@ function TobongLottie({ style }: { style?: React.CSSProperties }) {
     animationData: tobong1,
     loop: true,
     autoplay: true,
-    style: { width: "auto", height: "100%", display: "block", maxWidth: "none" },
+    style: { width: "100%", height: "100%", display: "block" },
   })
   return (
     <div
-      className="absolute max-w-none [&_svg]:!h-full [&_svg]:!w-auto"
-      style={{ ...style, width: "fit-content" }}
+      className="absolute"
+      style={style}
     >
       {View}
     </div>
@@ -63,21 +63,25 @@ function Section1Scene({
   const progress = clamp01(scrollTop / scrollDistance);
   const ep = easeInOut(progress);
 
+  const charStartWidth = 638;
+  const charStartHeight = 567;
+  const charEndWidth = 302;
+  const charEndHeight = 268;
+
   const charStartBottom = -containerHeight * 0.14;
   const charStartLeft = -containerWidth * 0.2;
-  const charEndHeightPct = 28;
-  const charEndBottom = (containerHeight * (1 - charEndHeightPct / 100)) / 2;
+  const charEndBottom = (containerHeight - charEndHeight) / 2;
   const charEndLeft = containerWidth / 2;
 
   const charBottom = lerp(charStartBottom, charEndBottom, ep);
   const charLeft = lerp(charStartLeft, charEndLeft, ep);
   const charTranslateX = lerp(0, -50, ep);
-  const charHeightPct = lerp(100, charEndHeightPct, ep);
+  const charWidth = lerp(charStartWidth, charEndWidth, ep);
+  const charHeight = lerp(charStartHeight, charEndHeight, ep);
 
   const logoTop = containerHeight * 0.04;
   const bubble1Top = 60;
-  const charEndTopPx = containerHeight - charEndBottom - containerHeight * charEndHeightPct / 100;
-  const bubble2Top = charEndTopPx + 26;
+  const bubble2Bottom = charEndBottom + charEndHeight + 26;
   const hintBottom = containerHeight * 0.06;
 
   const titleOpacity = mapRange(progress, 0, 0.35, 1, 0);
@@ -103,8 +107,8 @@ function Section1Scene({
         style={{
           bottom: charBottom,
           left: charLeft,
-          height: `${charHeightPct}%`,
-          width: "auto",
+          width: charWidth,
+          height: charHeight,
           transform: `translateX(${charTranslateX}%)`,
         }}
       />
@@ -132,7 +136,7 @@ function Section1Scene({
         className="whitespace-nowrap"
         style={{
           position: "absolute",
-          top: bubble2Top,
+          bottom: bubble2Bottom,
           left: "50%",
           transform: "translateX(-50%)",
           opacity: bubble2Opacity,

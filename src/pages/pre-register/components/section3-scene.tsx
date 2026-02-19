@@ -51,7 +51,7 @@ function TobongLottie({ isVisible, onComplete }: TobongLottieProps) {
     }
   }, [animationItem, isVisible]);
 
-  return <div style={{ width: 268 }}>{View}</div>
+  return <div style={{ width: 266, height: 320 }}>{View}</div>
 }
 
 interface Section3SceneProps {
@@ -71,7 +71,7 @@ function Section3Scene({ opacity, transitionMs = 340, onAnimationComplete }: Sec
     >
       <Stack
         align="center"
-        gap={16}
+        gap={10}
         className="absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2"
       >
         <SpeechBubble

@@ -87,9 +87,9 @@ function SpeechBubble({
       el.animate(
         [
           { transform: withBase("translateY(0)"), offset: 0 },
-          { transform: withBase("translateY(-4px)"), offset: 1 / 6 },
-          { transform: withBase("translateY(-4px)"), offset: 2 / 6 },
-          { transform: withBase("translateY(-4px)"), offset: 3 / 6 },
+          { transform: withBase("translateY(-8px)"), offset: 1 / 6 },
+          { transform: withBase("translateY(-8px)"), offset: 2 / 6 },
+          { transform: withBase("translateY(-8px)"), offset: 3 / 6 },
           { transform: withBase("translateY(0)"), offset: 4 / 6 },
           { transform: withBase("translateY(0)"), offset: 5 / 6 },
           { transform: withBase("translateY(0)"), offset: 1 },
