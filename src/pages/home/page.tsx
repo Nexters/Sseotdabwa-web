@@ -8,6 +8,7 @@ import { Divider } from "@/components/ui/divider";
 import { FAB } from "@/components/ui/fab";
 import { Group } from "@/components/ui/flex";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useSnackbar } from "@/components/ui/snackbar";
 import { usePreRegister } from "@/pages/pre-register/components/pre-register-provider";
 
 function HomePage() {
@@ -15,11 +16,16 @@ function HomePage() {
   const [hasFeedError, setHasFeedError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { setContainer } = usePreRegister();
+  const { setContainer: setSnackbarContainer } = useSnackbar();
 
   useEffect(() => {
     setContainer(containerRef.current);
-    return () => setContainer(null);
-  }, [setContainer]);
+    setSnackbarContainer(containerRef.current);
+    return () => {
+      setContainer(null);
+      setSnackbarContainer(null);
+    };
+  }, [setContainer, setSnackbarContainer]);
 
   return (
     <div className="app-layout flex h-screen w-full justify-center">

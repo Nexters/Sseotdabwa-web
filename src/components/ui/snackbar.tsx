@@ -36,6 +36,7 @@ interface SnackbarItem {
 interface SnackbarContextType {
   open: (options: Omit<SnackbarItem, "id">) => void;
   close: () => void;
+  setContainer: (el: HTMLElement | null) => void;
 }
 
 const SnackbarContext = React.createContext<SnackbarContextType | null>(null);
@@ -56,6 +57,13 @@ function SnackbarProvider({ children }: SnackbarProviderProps) {
   const [queue, setQueue] = React.useState<SnackbarItem[]>([]);
   const [current, setCurrent] = React.useState<SnackbarItem | null>(null);
   const [isVisible, setIsVisible] = React.useState(false);
+  const [container, setContainer] = React.useState<HTMLElement | null>(null);
+  const [containerRect, setContainerRect] = React.useState<{
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  } | null>(null);
   const timeoutRef = React.useRef<number | null>(null);
 
   const open = React.useCallback((options: Omit<SnackbarItem, "id">) => {
@@ -67,6 +75,28 @@ function SnackbarProvider({ children }: SnackbarProviderProps) {
   const close = React.useCallback(() => {
     setIsVisible(false);
   }, []);
+
+  React.useEffect(() => {
+    if (!container) {
+      setContainerRect(null);
+      return;
+    }
+
+    const update = () => {
+      const rect = container.getBoundingClientRect();
+      setContainerRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height });
+    };
+    update();
+
+    const resizeObserver = new ResizeObserver(update);
+    resizeObserver.observe(container);
+    window.addEventListener("resize", update);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, [container]);
 
   React.useEffect(() => {
     if (!current && queue.length > 0) {
@@ -98,12 +128,42 @@ function SnackbarProvider({ children }: SnackbarProviderProps) {
     }
   }, [isVisible, current]);
 
-  const contextValue = React.useMemo(() => ({ open, close }), [open, close]);
+  const contextValue = React.useMemo(
+    () => ({ open, close, setContainer }),
+    [open, close],
+  );
+
+  const wrapperStyle: React.CSSProperties =
+    container && containerRect
+      ? {
+          position: "fixed",
+          top: containerRect.top,
+          left: containerRect.left,
+          width: containerRect.width,
+          height: containerRect.height,
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "center",
+          paddingBottom: 32,
+          pointerEvents: "none",
+          zIndex: 50,
+        }
+      : {
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          display: "flex",
+          justifyContent: "center",
+          paddingBottom: 32,
+          pointerEvents: "none",
+          zIndex: 50,
+        };
 
   return (
     <SnackbarContext.Provider value={contextValue}>
       {children}
-      <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-8 pointer-events-none">
+      <div style={wrapperStyle}>
         {current && (
           <Snackbar
             message={current.message}
