@@ -96,7 +96,10 @@ class FeedContentErrorBoundary extends Component<
   { children: ReactNode; onErrorChange?: (hasError: boolean) => void },
   { hasError: boolean }
 > {
-  constructor(props: { children: ReactNode; onErrorChange?: (hasError: boolean) => void }) {
+  constructor(props: {
+    children: ReactNode;
+    onErrorChange?: (hasError: boolean) => void;
+  }) {
     super(props);
     this.state = { hasError: false };
   }
@@ -144,9 +147,15 @@ function FeedContentBody() {
     return raw?.data?.data ?? [];
   }, [data]);
 
-  const handleVote = (feedId: string, optionId: string, originalYes: number, originalNo: number) => {
+  const handleVote = (
+    feedId: string,
+    optionId: string,
+    originalYes: number,
+    originalNo: number,
+  ) => {
     const numericFeedId = Number(feedId);
-    const choice = optionId === "yes" ? VoteRequestChoice.YES : VoteRequestChoice.NO;
+    const choice =
+      optionId === "yes" ? VoteRequestChoice.YES : VoteRequestChoice.NO;
 
     guestVote(
       { feedId: numericFeedId, data: { choice } },
@@ -160,8 +169,11 @@ function FeedContentBody() {
             ...prev,
             [feedId]: {
               selectedId: optionId,
-              yesCount: voteData?.yesCount ?? originalYes + (optionId === "yes" ? 1 : 0),
-              noCount: voteData?.noCount ?? originalNo + (optionId === "no" ? 1 : 0),
+              yesCount:
+                voteData?.yesCount ??
+                originalYes + (optionId === "yes" ? 1 : 0),
+              noCount:
+                voteData?.noCount ?? originalNo + (optionId === "no" ? 1 : 0),
             },
           }));
         },
@@ -174,13 +186,19 @@ function FeedContentBody() {
 
   if (isLoading) {
     return (
-      <div data-slot="feed-content" className="px-[20px] py-[24px] text-gray-600">
+      <div
+        data-slot="feed-content"
+        className="px-[20px] py-[24px] text-gray-600"
+      >
         피드를 불러오는 중...
       </div>
     );
   }
 
-  if (isError) throw ApiError.isApiError(error) ? error : new Error("Failed to fetch feed list");
+  if (isError)
+    throw ApiError.isApiError(error)
+      ? error
+      : new Error("Failed to fetch feed list");
 
   return (
     <div
@@ -192,9 +210,10 @@ function FeedContentBody() {
         const voteState = votes[id];
 
         // 로그인 유저의 기존 투표 선택을 서버 응답에서 초기값으로 사용
-        const serverSelectedId = feed.hasVoted && feed.myVoteChoice
-          ? feed.myVoteChoice.toLowerCase()  // "YES" -> "yes", "NO" -> "no"
-          : undefined;
+        const serverSelectedId =
+          feed.hasVoted && feed.myVoteChoice
+            ? feed.myVoteChoice.toLowerCase() // "YES" -> "yes", "NO" -> "no"
+            : undefined;
         const selectedVoteId = voteState?.selectedId ?? serverSelectedId;
 
         const yes = voteState?.yesCount ?? feed.yesCount ?? 0;
@@ -233,17 +252,23 @@ function FeedContentBody() {
               voteCount={total}
               isVoting={feed.feedStatus !== "CLOSED"}
               selectedVoteId={selectedVoteId}
-              onVote={(optionId) => handleVote(id, optionId, feed.yesCount ?? 0, feed.noCount ?? 0)}
+              onVote={(optionId) =>
+                handleVote(id, optionId, feed.yesCount ?? 0, feed.noCount ?? 0)
+              }
               onMoreClick={() => console.log("More clicked:", id)}
             />
             {showBannerAfter && (
               <>
-                <Divider size="small" className="bg-gray-100" />
                 <PreRegisterBanner onClick={openPreRegister} />
+                <Divider size="small" className="bg-gray-100" />
               </>
             )}
             {!showBannerAfter && index < feeds.length - 1 && (
-              <Divider key={`divider-${id}`} size="small" className="bg-gray-100" />
+              <Divider
+                key={`divider-${id}`}
+                size="small"
+                className="bg-gray-100"
+              />
             )}
           </>
         );

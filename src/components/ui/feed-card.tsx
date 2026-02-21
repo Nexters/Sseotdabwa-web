@@ -266,7 +266,7 @@ function FeedCard({
                 aspectRatio:
                   imageWidth && imageHeight && imageWidth === imageHeight
                     ? "1 / 1"
-                    : "4 / 5",
+                    : "5 / 4",
               }}
             >
               <img
@@ -330,7 +330,7 @@ function FeedCard({
               })}
             </Stack>
 
-            {voteCount !== undefined && voteCount > 0 && (
+            {voteCount !== undefined && (voteCount > 0 || !isVoting) && (
               <Typography variant="b5-medium" className="text-gray-600">
                 {voteCount}명이 투표했어요 · {statusLabel}
               </Typography>
