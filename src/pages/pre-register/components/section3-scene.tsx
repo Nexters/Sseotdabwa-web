@@ -32,19 +32,33 @@ function TobongLottie({ isVisible, onComplete }: TobongLottieProps) {
     const handleComplete = () => {
       playCountRef.current += 1;
       if (playCountRef.current < 2) {
+        // 2번째 재생: 절반 프레임까지만 재생 후 완료 처리
         animationItem.goToAndPlay(0, true);
       } else {
         onCompleteRef.current?.();
       }
     };
 
+    const handleEnterFrame = () => {
+      // 2번째 재생 중 절반 지점 도달 시 정지
+      if (playCountRef.current === 1) {
+        const half = animationItem.totalFrames / 2;
+        if (animationItem.currentFrame >= half) {
+          animationItem.goToAndStop(half, true);
+          onCompleteRef.current?.();
+        }
+      }
+    };
+
     animationItem.addEventListener("complete", handleComplete);
+    animationItem.addEventListener("enterFrame", handleEnterFrame);
 
     return () => {
       // lottie-react + route unmount 타이밍에서 내부 인스턴스가 먼저 해제되면
       // removeEventListener가 예외를 던질 수 있어 안전하게 무시한다.
       try {
         animationItem.removeEventListener("complete", handleComplete);
+        animationItem.removeEventListener("enterFrame", handleEnterFrame);
       } catch {
         // noop
       }
