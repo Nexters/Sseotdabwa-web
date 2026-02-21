@@ -206,7 +206,7 @@ function Section4Scene({
         >
           <div
             className="flex w-full flex-col items-center"
-            style={{ paddingBlock: 40, paddingInline: px }}
+            style={{ padding: 40 }}
           >
             <SpeechBubble
               centerArrow

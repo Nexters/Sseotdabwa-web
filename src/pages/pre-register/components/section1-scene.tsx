@@ -63,8 +63,8 @@ function Section1Scene({
   const scale = containerWidth / 375;
   const charStartWidth = 638 * scale;
   const charStartHeight = 567 * scale;
-  const charEndWidth = 302 * scale;
-  const charEndHeight = 268 * scale;
+  const charEndWidth = 270;
+  const charEndHeight = 240;
 
   const charStartBottom = -containerHeight * 0.14;
   const charStartLeft = -containerWidth * 0.2;
