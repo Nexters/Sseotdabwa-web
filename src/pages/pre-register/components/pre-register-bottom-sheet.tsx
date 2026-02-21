@@ -223,8 +223,13 @@ export function PreRegisterBottomSheet({
           bottom: `calc(${keyboardInset + 10}px + env(safe-area-inset-bottom))`,
         };
 
+  function handleOpenChange(nextOpen: boolean) {
+    if (!nextOpen) clear();
+    onOpenChange(nextOpen);
+  }
+
   return (
-    <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
+    <DialogPrimitive.Root open={open} onOpenChange={handleOpenChange}>
       <DialogPrimitive.Portal container={container ?? undefined}>
         <DialogPrimitive.Overlay
           className="z-50 bg-black/40 data-[state=open]:animate-[dialog-overlay-in_200ms_ease-out] data-[state=closed]:animate-[dialog-overlay-out_150ms_ease-in]"
@@ -271,26 +276,28 @@ export function PreRegisterBottomSheet({
                 </DialogPrimitive.Description>
               </Stack>
 
-              <Stack gap={16}>
-                <input
-                  type="email"
-                  placeholder="이메일 작성하기"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-[10px] border border-gray-300 bg-gray-0 px-[14px] text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-500"
-                  style={{ height: 46 }}
-                />
+              <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+                <Stack gap={16}>
+                  <input
+                    type="email"
+                    placeholder="이메일 작성하기"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full rounded-[10px] border border-gray-300 bg-gray-0 px-[14px] text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-500"
+                    style={{ height: 46 }}
+                  />
 
-                <Button
-                  variant="filled"
-                  size="large"
-                  fullWidth
-                  disabled={!isValid}
-                  onClick={handleSubmit}
-                >
-                  제출하기
-                </Button>
-              </Stack>
+                  <Button
+                    type="submit"
+                    variant="filled"
+                    size="large"
+                    fullWidth
+                    disabled={!isValid}
+                  >
+                    제출하기
+                  </Button>
+                </Stack>
+              </form>
             </Stack>
           </div>
         </DialogPrimitive.Content>
