@@ -2,7 +2,7 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 import { Icon } from "@/components/ui/icon"
-import { Typography } from "@/components/ui/typography"
+import { Typography, typographyVariants } from "@/components/ui/typography"
 
 interface PreRegisterBannerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
@@ -20,9 +20,9 @@ function PreRegisterBanner({ className, ...props }: PreRegisterBannerProps) {
       <Typography variant="s5-semibold" className="shrink-0 text-gray-900">
         안내
       </Typography>
-      <Typography variant="b5-semibold" className="flex-1 text-left text-gray-800">
+      <span className={cn(typographyVariants({ variant: "b5-semibold" }), "flex-1 text-left text-gray-800")}>
         사전 예약하고 앱 출시 안내를 받아보세요!
-      </Typography>
+      </span>
       <Icon icon="right" size={14} className="shrink-0 text-gray-600" />
     </button>
   )
