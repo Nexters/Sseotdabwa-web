@@ -125,32 +125,74 @@ export function PreRegisterBottomSheet({
     dragCurrentY.current = 0;
   }
 
+  const [containerRect, setContainerRect] = React.useState<DOMRect | null>(null);
+
+  React.useEffect(() => {
+    if (!container) {
+      setContainerRect(null);
+      return;
+    }
+
+    const update = () => setContainerRect(container.getBoundingClientRect());
+    update();
+
+    const resizeObserver = new ResizeObserver(update);
+    resizeObserver.observe(container);
+    window.addEventListener("resize", update);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, [container]);
+
   const isContained = container != null;
+
+  const overlayStyle: React.CSSProperties = isContained && containerRect
+    ? {
+        position: "fixed",
+        top: containerRect.top,
+        left: containerRect.left,
+        width: containerRect.width,
+        height: containerRect.height,
+      }
+    : {
+        position: "fixed",
+        top: "calc(env(safe-area-inset-top) * -1)",
+        left: 0,
+        right: 0,
+        bottom: "calc(env(safe-area-inset-bottom) * -1)",
+      };
+
+  const contentStyle: React.CSSProperties = isContained && containerRect
+    ? {
+        position: "fixed",
+        left: containerRect.left + 14,
+        width: containerRect.width - 28,
+        bottom: keyboardInset + 10,
+      }
+    : {
+        position: "fixed",
+        left: 0,
+        right: 0,
+        marginLeft: 14,
+        marginRight: 14,
+        bottom: `calc(${keyboardInset + 10}px + env(safe-area-inset-bottom))`,
+      };
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal container={container ?? undefined}>
         <DialogPrimitive.Overlay
-          className="left-0 right-0 z-50 bg-black/40 data-[state=open]:animate-[dialog-overlay-in_200ms_ease-out] data-[state=closed]:animate-[dialog-overlay-out_150ms_ease-in]"
-          style={{
-            position: isContained ? "absolute" : "fixed",
-            top: isContained ? 0 : "calc(env(safe-area-inset-top) * -1)",
-            bottom: isContained ? 0 : "calc(env(safe-area-inset-bottom) * -1)",
-          }}
+          className="z-50 bg-black/40 data-[state=open]:animate-[dialog-overlay-in_200ms_ease-out] data-[state=closed]:animate-[dialog-overlay-out_150ms_ease-in]"
+          style={overlayStyle}
         />
         <DialogPrimitive.Content
           ref={sheetRef}
-          className="left-0 right-0 z-50 rounded-[26px] bg-white outline-none transition-[bottom] duration-150 ease-out
+          className="z-50 rounded-[26px] bg-white outline-none transition-[bottom] duration-150 ease-out
             data-[state=open]:animate-[sheet-in_300ms_ease-out]
             data-[state=closed]:animate-[sheet-out_200ms_ease-in]"
-          style={{
-            position: isContained ? "absolute" : "fixed",
-            marginLeft: 14,
-            marginRight: 14,
-            bottom: isContained
-              ? `calc(${keyboardInset + 10}px)`
-              : `calc(${keyboardInset + 10}px + env(safe-area-inset-bottom))`,
-          }}
+          style={contentStyle}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
