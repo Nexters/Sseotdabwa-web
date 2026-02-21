@@ -6,11 +6,12 @@ import { Typography } from "@/components/ui/typography";
 import { Stack } from "@/components/ui/flex";
 import { useSnackbar } from "@/components/ui/snackbar";
 import { Icon } from "@/components/ui/icon";
+import { useRegisterEmail } from "@/api/pre-launch/pre-launch";
 
 interface PreRegisterBottomSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (email: string) => void;
+  onSubmit: () => void;
   container?: HTMLElement | null;
 }
 
@@ -20,6 +21,7 @@ export function PreRegisterBottomSheet({
   onSubmit,
   container,
 }: PreRegisterBottomSheetProps) {
+  const { mutateAsync: registerEmail } = useRegisterEmail();
   const [email, setEmail] = React.useState("");
   const [keyboardInset, setKeyboardInset] = React.useState(0);
   const { open: openSnackbar } = useSnackbar();
@@ -29,21 +31,29 @@ export function PreRegisterBottomSheet({
 
   const isValid = email.includes("@") && email.includes(".");
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!isValid) return;
-    onSubmit(email);
-    openSnackbar({
-      message: "제출되었어요! 앱 런칭 후 안내드릴게요 :)",
-      icon: (
-        <Icon
-          icon="circle-checked-solid"
-          size={18}
-          className="text-green-500"
-        />
-      ),
-      duration: 3000,
-    });
-    clear();
+
+    registerEmail(
+      { data: { email } },
+      {
+        onSuccess: () => {
+          onSubmit();
+          openSnackbar({
+            message: "제출되었어요! 앱 런칭 후 안내드릴게요 :)",
+            icon: (
+              <Icon
+                icon="circle-checked-solid"
+                size={18}
+                className="text-green-500"
+              />
+            ),
+            duration: 3000,
+          });
+          clear();
+        },
+      },
+    );
   }
 
   const clear = () => {
@@ -125,7 +135,9 @@ export function PreRegisterBottomSheet({
     dragCurrentY.current = 0;
   }
 
-  const [containerRect, setContainerRect] = React.useState<DOMRect | null>(null);
+  const [containerRect, setContainerRect] = React.useState<DOMRect | null>(
+    null,
+  );
 
   React.useEffect(() => {
     if (!container) {
@@ -148,37 +160,39 @@ export function PreRegisterBottomSheet({
 
   const isContained = container != null;
 
-  const overlayStyle: React.CSSProperties = isContained && containerRect
-    ? {
-        position: "fixed",
-        top: containerRect.top,
-        left: containerRect.left,
-        width: containerRect.width,
-        height: containerRect.height,
-      }
-    : {
-        position: "fixed",
-        top: "calc(env(safe-area-inset-top) * -1)",
-        left: 0,
-        right: 0,
-        bottom: "calc(env(safe-area-inset-bottom) * -1)",
-      };
+  const overlayStyle: React.CSSProperties =
+    isContained && containerRect
+      ? {
+          position: "fixed",
+          top: containerRect.top,
+          left: containerRect.left,
+          width: containerRect.width,
+          height: containerRect.height,
+        }
+      : {
+          position: "fixed",
+          top: "calc(env(safe-area-inset-top) * -1)",
+          left: 0,
+          right: 0,
+          bottom: "calc(env(safe-area-inset-bottom) * -1)",
+        };
 
-  const contentStyle: React.CSSProperties = isContained && containerRect
-    ? {
-        position: "fixed",
-        left: containerRect.left + 14,
-        width: containerRect.width - 28,
-        bottom: keyboardInset + 10,
-      }
-    : {
-        position: "fixed",
-        left: 0,
-        right: 0,
-        marginLeft: 14,
-        marginRight: 14,
-        bottom: `calc(${keyboardInset + 10}px + env(safe-area-inset-bottom))`,
-      };
+  const contentStyle: React.CSSProperties =
+    isContained && containerRect
+      ? {
+          position: "fixed",
+          left: containerRect.left + 14,
+          width: containerRect.width - 28,
+          bottom: keyboardInset + 10,
+        }
+      : {
+          position: "fixed",
+          left: 0,
+          right: 0,
+          marginLeft: 14,
+          marginRight: 14,
+          bottom: `calc(${keyboardInset + 10}px + env(safe-area-inset-bottom))`,
+        };
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>

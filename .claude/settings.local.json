@@ -32,7 +32,8 @@
       "Bash(export PATH=\"/Users/dohun/.nvm/versions/node/v22.11.0/bin:$PATH\")",
       "Bash(node:*)",
       "Bash(pnpm lint:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(pnpm orval:*)"
     ]
   }
 }

@@ -32,8 +32,7 @@ function PreRegisterProvider({ children }: { children: React.ReactNode }) {
         open={isOpen}
         onOpenChange={setIsOpen}
         container={container}
-        onSubmit={(email) => {
-          console.log("pre-register email:", email);
+        onSubmit={() => {
           setIsOpen(false);
         }}
       />
