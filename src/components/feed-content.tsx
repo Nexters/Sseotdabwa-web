@@ -185,6 +185,13 @@ function FeedContentBody() {
       {feeds.map((feed, index) => {
         const id = String(feed.feedId ?? index);
         const voteState = votes[id];
+
+        // 로그인 유저의 기존 투표 선택을 서버 응답에서 초기값으로 사용
+        const serverSelectedId = feed.hasVoted && feed.myVoteChoice
+          ? feed.myVoteChoice.toLowerCase()  // "YES" -> "yes", "NO" -> "no"
+          : undefined;
+        const selectedVoteId = voteState?.selectedId ?? serverSelectedId;
+
         const yes = voteState?.yesCount ?? feed.yesCount ?? 0;
         const no = voteState?.noCount ?? feed.noCount ?? 0;
         const total = yes + no;
@@ -218,7 +225,7 @@ function FeedContentBody() {
               voteOptions={voteOptions}
               voteCount={total}
               isVoting={feed.feedStatus !== "CLOSED"}
-              selectedVoteId={voteState?.selectedId}
+              selectedVoteId={selectedVoteId}
               onVote={(optionId) => handleVote(id, optionId, feed.yesCount ?? 0, feed.noCount ?? 0)}
               onMoreClick={() => console.log("More clicked:", id)}
             />
