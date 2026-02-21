@@ -291,7 +291,10 @@ export function PreRegisterBottomSheet({
                       {...register("email")}
                     />
                     {errors.email?.message && (
-                      <Typography variant="b6-medium" className="text-red-100">
+                      <Typography
+                        variant="b6-medium"
+                        className="text-red-100 pl-[6px]"
+                      >
                         {errors.email.message}
                       </Typography>
                     )}
