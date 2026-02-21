@@ -7,6 +7,7 @@ import { Stack } from "@/components/ui/flex";
 import { useSnackbar } from "@/components/ui/snackbar";
 import { Icon } from "@/components/ui/icon";
 import { useRegisterEmail } from "@/api/pre-launch/pre-launch";
+import { ApiError } from "@/api/api-error";
 
 interface PreRegisterBottomSheetProps {
   open: boolean;
@@ -51,6 +52,23 @@ export function PreRegisterBottomSheet({
             duration: 3000,
           });
           clear();
+        },
+        onError: (err) => {
+          const message =
+            ApiError.isApiError(err) && err.errorCode === "PRELAUNCH_001"
+              ? "이미 등록된 이메일입니다."
+              : "오류가 발생했어요. 다시 시도해주세요.";
+          openSnackbar({
+            message,
+            icon: (
+              <Icon
+                icon="circle-checked-solid"
+                size={18}
+                className="text-red-100"
+              />
+            ),
+            duration: 3000,
+          });
         },
       },
     );
