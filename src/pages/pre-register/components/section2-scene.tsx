@@ -48,6 +48,8 @@ function Section2Scene({
           <FeedCard
             content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
             image="https://buy-or-not.com/du.png"
+            imageWidth={1}
+            imageHeight={1}
             price={9_700}
             voteOptions={[
               { id: "1", label: "사! 가즈아!", percentage: 80 },
