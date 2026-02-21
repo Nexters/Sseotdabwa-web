@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
+import { useLottie } from "lottie-react";
 
 import { Typography } from "@/components/ui/typography";
 
 import { FadeLayer, SpeechBubble } from "./shared";
 import { Group } from "@/components/ui/flex";
+import tobong4 from "@/assets/lottie/토봉4.json";
+
+function TobongLottie() {
+  const { View } = useLottie({
+    animationData: tobong4,
+    loop: true,
+    autoplay: true,
+  });
+  return <div style={{ width: 96, height: 96 }}>{View}</div>;
+}
 
 interface Section4SceneProps {
   opacity: number;
@@ -226,12 +237,9 @@ function Section4Scene({
             </div>
 
             <div className="relative w-full pt-[12px]">
-              <img
-                src="/tobong.png"
-                alt="토봉 캐릭터"
-                className="absolute z-0"
-                style={{ width: 96, right: 15, bottom: 34 }}
-              />
+              <div className="absolute z-0" style={{ right: 15, bottom: 34 }}>
+                <TobongLottie />
+              </div>
               <Link
                 to="/"
                 className="relative z-10 block w-full px-6 py-[18px] text-center"
