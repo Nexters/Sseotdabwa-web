@@ -28,13 +28,13 @@ function HomePage() {
   }, [setContainer, setSnackbarContainer]);
 
   return (
-    <div className="app-layout flex h-screen w-full justify-center">
-      <div className="app-bridge hidden h-screen max-w-[412px]">
+    <div className="app-layout flex h-[100svh] h-[100dvh] w-full justify-center">
+      <div className="app-bridge hidden h-[100svh] h-[100dvh] max-w-[412px]">
         <AppBridgeBanner />
       </div>
 
-      <div ref={containerRef} className="relative h-screen w-full max-w-[540px]">
-        <div className="hide-scrollbar h-full overflow-y-auto bg-white">
+      <div ref={containerRef} className="relative h-[100svh] h-[100dvh] w-full max-w-[540px]">
+        <div className="hide-scrollbar h-full overflow-y-auto bg-white pb-[env(safe-area-inset-bottom)]">
           <Tabs defaultValue="vote-feed">
             <div className="sticky top-0 z-10 bg-white">
               <NavBar />

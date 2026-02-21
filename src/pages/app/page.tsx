@@ -19,7 +19,7 @@ function AppRoutePage() {
   );
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-5">
+    <div className="flex min-h-[100svh] min-h-[100dvh] items-center justify-center bg-gray-100 px-5">
       <Typography variant="h2-bold" className="text-gray-900 text-center">
         {target}
       </Typography>

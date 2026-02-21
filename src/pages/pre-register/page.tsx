@@ -149,10 +149,10 @@ function PreRegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 overflow-hidden">
+    <div className="min-h-[100svh] min-h-[100dvh] bg-gray-100 overflow-hidden">
       <div
         ref={scrollRef}
-        className="relative mx-auto h-screen w-full max-w-[540px] overflow-y-scroll bg-gray-0"
+        className="relative mx-auto h-[100svh] h-[100dvh] w-full max-w-[540px] overflow-y-scroll bg-gray-0"
         style={{ scrollbarWidth: "none" } as React.CSSProperties}
       >
         <Section1Scene
@@ -164,7 +164,7 @@ function PreRegisterPage() {
 
         <div aria-hidden style={{ height: totalSpacer }} />
 
-        <div className="relative z-1 mx-auto h-screen overflow-hidden bg-gray-0">
+        <div className="relative z-1 mx-auto h-[100svh] h-[100dvh] overflow-hidden bg-gray-0">
           <Section2Scene
             contentOpacity={section2ContentOpacity}
             whiteOpacity={section2WhiteOpacity}
