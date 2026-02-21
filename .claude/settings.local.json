@@ -30,7 +30,9 @@
       "Bash(export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\")",
       "Bash(node node_modules/.bin/orval:*)",
       "Bash(export PATH=\"/Users/dohun/.nvm/versions/node/v22.11.0/bin:$PATH\")",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(git push:*)"
     ]
   }
 }
