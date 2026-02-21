@@ -1,19 +1,26 @@
-import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import * as React from "react";
+import { useForm } from "react-hook-form";
 
-import { Button } from "@/components/ui/button";
-import { Typography } from "@/components/ui/typography";
-import { Stack } from "@/components/ui/flex";
-import { useSnackbar } from "@/components/ui/snackbar";
-import { Icon } from "@/components/ui/icon";
-import { useRegisterEmail } from "@/api/pre-launch/pre-launch";
 import { ApiError } from "@/api/api-error";
+import { useRegisterEmail } from "@/api/pre-launch/pre-launch";
+import { Button } from "@/components/ui/button";
+import { Stack } from "@/components/ui/flex";
+import { Icon } from "@/components/ui/icon";
+import { useSnackbar } from "@/components/ui/snackbar";
+import { Typography } from "@/components/ui/typography";
+import { cva } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
 interface PreRegisterBottomSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: () => void;
   container?: HTMLElement | null;
+}
+
+interface EmailFormValues {
+  email: string;
 }
 
 export function PreRegisterBottomSheet({
@@ -23,19 +30,26 @@ export function PreRegisterBottomSheet({
   container,
 }: PreRegisterBottomSheetProps) {
   const { mutateAsync: registerEmail } = useRegisterEmail();
-  const [email, setEmail] = React.useState("");
   const [keyboardInset, setKeyboardInset] = React.useState(0);
   const { open: openSnackbar } = useSnackbar();
   const sheetRef = React.useRef<HTMLDivElement>(null);
   const dragStartY = React.useRef<number | null>(null);
   const dragCurrentY = React.useRef<number>(0);
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    setError,
+    formState: { isSubmitting, errors },
+  } = useForm<EmailFormValues>({ defaultValues: { email: "" } });
+
+  const email = watch("email");
   const isValid = email.includes("@") && email.includes(".");
 
-  async function handleSubmit() {
-    if (!isValid) return;
-
-    registerEmail(
+  async function onValid({ email }: EmailFormValues) {
+    await registerEmail(
       { data: { email } },
       {
         onSuccess: () => {
@@ -51,32 +65,18 @@ export function PreRegisterBottomSheet({
             ),
             duration: 3000,
           });
-          clear();
+          reset();
         },
         onError: (err) => {
           const message =
             ApiError.isApiError(err) && err.errorCode === "PRELAUNCH_001"
-              ? "이미 등록된 이메일입니다."
+              ? "이미 신청한 이메일입니다."
               : "오류가 발생했어요. 다시 시도해주세요.";
-          openSnackbar({
-            message,
-            icon: (
-              <Icon
-                icon="circle-checked-solid"
-                size={18}
-                className="text-red-100"
-              />
-            ),
-            duration: 3000,
-          });
+          setError("email", { message });
         },
       },
     );
   }
-
-  const clear = () => {
-    setEmail("");
-  };
 
   React.useEffect(() => {
     if (!open) {
@@ -224,7 +224,7 @@ export function PreRegisterBottomSheet({
         };
 
   function handleOpenChange(nextOpen: boolean) {
-    if (!nextOpen) clear();
+    if (!nextOpen) reset();
     onOpenChange(nextOpen);
   }
 
@@ -276,23 +276,34 @@ export function PreRegisterBottomSheet({
                 </DialogPrimitive.Description>
               </Stack>
 
-              <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+              <form onSubmit={handleSubmit(onValid)}>
                 <Stack gap={16}>
-                  <input
-                    type="email"
-                    placeholder="이메일 작성하기"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-[10px] border border-gray-300 bg-gray-0 px-[14px] text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-500"
-                    style={{ height: 46 }}
-                  />
+                  <Stack gap={8}>
+                    <input
+                      type="email"
+                      placeholder="이메일 작성하기"
+                      className={cn([
+                        "w-full rounded-[10px] border border-gray-300 bg-gray-0 px-[14px] text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-500",
+                        errors.email?.message
+                          ? "border-red-100 focus:border-red-500"
+                          : "",
+                      ])}
+                      style={{ height: 46 }}
+                      {...register("email")}
+                    />
+                    {errors.email?.message && (
+                      <Typography variant="b6-medium" className="text-red-100">
+                        {errors.email.message}
+                      </Typography>
+                    )}
+                  </Stack>
 
                   <Button
                     type="submit"
                     variant="filled"
                     size="large"
                     fullWidth
-                    disabled={!isValid}
+                    disabled={!isValid || isSubmitting}
                   >
                     제출하기
                   </Button>
