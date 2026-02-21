@@ -25,7 +25,8 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
-  FeedCreateRequest
+  FeedCreateRequest,
+  GetFeedListParams
 } from '.././model';
 
 import { customFetch } from '.././custom-fetch';
@@ -36,7 +37,7 @@ type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 
 /**
- * 전체 피드 리스트를 조회합니다. 비로그인 유저도 접근 가능하며, 로그인 시 투표 상태가 포함됩니다.
+ * 커서 기반 페이지네이션으로 피드 리스트를 조회합니다. 비로그인 유저도 접근 가능하며, 로그인 시 투표 상태가 포함됩니다.
  * @summary 피드 리스트 조회
  */
 export type getFeedListResponse200 = {
@@ -51,17 +52,24 @@ export type getFeedListResponseSuccess = (getFeedListResponse200) & {
 
 export type getFeedListResponse = (getFeedListResponseSuccess)
 
-export const getGetFeedListUrl = () => {
+export const getGetFeedListUrl = (params?: GetFeedListParams,) => {
+  const normalizedParams = new URLSearchParams();
 
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
 
-  
+  const stringifiedParams = normalizedParams.toString();
 
-  return `/api/v1/feeds`
+  return stringifiedParams.length > 0 ? `/api/v1/feeds?${stringifiedParams}` : `/api/v1/feeds`
 }
 
-export const getFeedList = async ( options?: RequestInit): Promise<getFeedListResponse> => {
+export const getFeedList = async (params?: GetFeedListParams, options?: RequestInit): Promise<getFeedListResponse> => {
   
-  return customFetch<getFeedListResponse>(getGetFeedListUrl(),
+  return customFetch<getFeedListResponse>(getGetFeedListUrl(params),
   {      
     ...options,
     method: 'GET'
@@ -74,23 +82,23 @@ export const getFeedList = async ( options?: RequestInit): Promise<getFeedListRe
 
 
 
-export const getGetFeedListQueryKey = () => {
+export const getGetFeedListQueryKey = (params?: GetFeedListParams,) => {
     return [
-    `/api/v1/feeds`
+    `/api/v1/feeds`, ...(params ? [params] : [])
     ] as const;
     }
 
     
-export const getGetFeedListQueryOptions = <TData = Awaited<ReturnType<typeof getFeedList>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFeedList>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+export const getGetFeedListQueryOptions = <TData = Awaited<ReturnType<typeof getFeedList>>, TError = unknown>(params?: GetFeedListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFeedList>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetFeedListQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getGetFeedListQueryKey(params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getFeedList>>> = ({ signal }) => getFeedList({ signal, ...requestOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getFeedList>>> = ({ signal }) => getFeedList(params, { signal, ...requestOptions });
 
       
 
@@ -104,7 +112,7 @@ export type GetFeedListQueryError = unknown
 
 
 export function useGetFeedList<TData = Awaited<ReturnType<typeof getFeedList>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFeedList>>, TError, TData>> & Pick<
+ params: undefined |  GetFeedListParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFeedList>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getFeedList>>,
           TError,
@@ -114,7 +122,7 @@ export function useGetFeedList<TData = Awaited<ReturnType<typeof getFeedList>>, 
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetFeedList<TData = Awaited<ReturnType<typeof getFeedList>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFeedList>>, TError, TData>> & Pick<
+ params?: GetFeedListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFeedList>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getFeedList>>,
           TError,
@@ -124,7 +132,7 @@ export function useGetFeedList<TData = Awaited<ReturnType<typeof getFeedList>>, 
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetFeedList<TData = Awaited<ReturnType<typeof getFeedList>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFeedList>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ params?: GetFeedListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFeedList>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -132,11 +140,11 @@ export function useGetFeedList<TData = Awaited<ReturnType<typeof getFeedList>>, 
  */
 
 export function useGetFeedList<TData = Awaited<ReturnType<typeof getFeedList>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFeedList>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ params?: GetFeedListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFeedList>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getGetFeedListQueryOptions(options)
+  const queryOptions = getGetFeedListQueryOptions(params,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

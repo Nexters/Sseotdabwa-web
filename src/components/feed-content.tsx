@@ -9,10 +9,16 @@ import {
 
 import { useGetFeedList } from "@/api/feeds/feeds";
 import { ApiError } from "@/api/api-error";
-import type { FeedResponse, VoteResponse } from "@/api/model";
-import { VoteRequestChoice } from "@/api/model";
+import {
+  GetFeedListFeedStatus,
+  VoteRequestChoice,
+  type FeedResponse,
+  type GetFeedListParams,
+  type VoteResponse,
+} from "@/api/model";
 import { useGuestVote } from "@/api/votes/votes";
 import { Divider } from "@/components/ui/divider";
+import { Stack } from "@/components/ui/flex";
 import { FeedCard } from "@/components/ui/feed-card";
 import { FeedCardSkeleton } from "@/components/ui/feed-card-skeleton";
 import { PreRegisterBanner } from "@/components/ui/pre-register-banner";
@@ -93,6 +99,27 @@ function FeedContentErrorFallback({ onRetry }: { onRetry: () => void }) {
   );
 }
 
+function FeedContentEmptyFallback() {
+  return (
+    <div
+      data-slot="feed-content-empty"
+      className="flex w-full flex-col items-center px-5 pt-[140px]"
+    >
+      <div className="flex flex-col items-center gap-6">
+        <img src="/empty-image.png" alt="빈 피드" className="h-[120px] w-[104px]" />
+        <Stack gap={6} align="center">
+          <Typography variant="t1-bold" className="text-gray-800">
+            아직 올린 투표가 없어요
+          </Typography>
+          <Typography variant="b5-medium" className="text-gray-600">
+            고민되는 상품의 투표를 올려보세요!
+          </Typography>
+        </Stack>
+      </div>
+    </div>
+  );
+}
+
 class FeedContentErrorBoundary extends Component<
   { children: ReactNode; onErrorChange?: (hasError: boolean) => void },
   { hasError: boolean }
@@ -137,15 +164,39 @@ interface VoteState {
 
 const BANNER_INSERT_AFTER = 3;
 
-function FeedContentBody() {
+type FeedFilter = "all" | "ongoing" | "closed";
+
+function FeedContentBody({ filter }: { filter: FeedFilter }) {
   const [votes, setVotes] = useState<Record<string, VoteState>>({});
-  const { data, isLoading, isError, error } = useGetFeedList();
+  const params = useMemo<GetFeedListParams | undefined>(() => {
+    if (filter === "ongoing") {
+      return { feedStatus: GetFeedListFeedStatus.OPEN };
+    }
+    if (filter === "closed") {
+      return { feedStatus: GetFeedListFeedStatus.CLOSED };
+    }
+    return undefined;
+  }, [filter]);
+  const queryKey = useMemo(() => ["/api/v1/feeds", { filter }] as const, [filter]);
+  const { data, isLoading, isError, error } = useGetFeedList(params, {
+    query: {
+      queryKey,
+      refetchOnMount: "always",
+    },
+  });
   const { mutate: guestVote } = useGuestVote();
   const { open: openPreRegister } = usePreRegister();
 
   const feeds = useMemo(() => {
-    const raw = data as unknown as { data?: { data?: FeedResponse[] } };
-    return raw?.data?.data ?? [];
+    const raw = data as unknown as {
+      data?: {
+        data?: FeedResponse[] | { content?: FeedResponse[] };
+      };
+    };
+    const payload = raw?.data?.data;
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload?.content)) return payload.content;
+    return [];
   }, [data]);
 
   const handleVote = (
@@ -202,6 +253,10 @@ function FeedContentBody() {
     throw ApiError.isApiError(error)
       ? error
       : new Error("Failed to fetch feed list");
+
+  if (feeds.length === 0) {
+    return <FeedContentEmptyFallback />;
+  }
 
   return (
     <div
@@ -281,19 +336,21 @@ function FeedContentBody() {
 }
 
 interface FeedContentProps {
+  filter: FeedFilter;
   onErrorChange?: (hasError: boolean) => void;
 }
 
-function FeedContent({ onErrorChange }: FeedContentProps) {
+function FeedContent({ filter, onErrorChange }: FeedContentProps) {
   useEffect(() => {
     onErrorChange?.(false);
   }, [onErrorChange]);
 
   return (
     <FeedContentErrorBoundary onErrorChange={onErrorChange}>
-      <FeedContentBody />
+      <FeedContentBody filter={filter} />
     </FeedContentErrorBoundary>
   );
 }
 
 export { FeedContent };
+export type { FeedFilter };

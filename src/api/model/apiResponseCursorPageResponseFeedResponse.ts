@@ -5,10 +5,10 @@
  * Sseotdabwa Project
  * OpenAPI spec version: v1.0.0
  */
-import type { PreLaunchEmailResponse } from './preLaunchEmailResponse';
+import type { CursorPageResponseFeedResponse } from './cursorPageResponseFeedResponse';
 
-export interface ApiResponsePreLaunchEmailResponse {
-  data?: PreLaunchEmailResponse;
+export interface ApiResponseCursorPageResponseFeedResponse {
+  data?: CursorPageResponseFeedResponse;
   message?: string;
   status?: string;
   errorCode?: string;

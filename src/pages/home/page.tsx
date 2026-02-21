@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { AppBridgeBanner } from "@/components/app-bridge-banner";
-import { FeedContent } from "@/components/feed-content";
+import { FeedContent, type FeedFilter } from "@/components/feed-content";
 import { NavBar } from "@/components/nav-bar";
 import { Chip } from "@/components/ui/chip";
 import { Divider } from "@/components/ui/divider";
@@ -12,7 +12,7 @@ import { useSnackbar } from "@/components/ui/snackbar";
 import { usePreRegister } from "@/pages/pre-register/components/pre-register-provider";
 
 function HomePage() {
-  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [selectedFilter, setSelectedFilter] = useState<FeedFilter>("all");
   const [hasFeedError, setHasFeedError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { setContainer } = usePreRegister();
@@ -66,11 +66,11 @@ function HomePage() {
               </Chip>
             </Group>
             <TabsContent value="vote-feed">
-              <FeedContent onErrorChange={setHasFeedError} />
+              <FeedContent filter={selectedFilter} onErrorChange={setHasFeedError} />
             </TabsContent>
           </Tabs>
-          {!hasFeedError && <FAB className="sticky bottom-[20px] float-right mr-[20px]" />}
         </div>
+        {!hasFeedError && <FAB className="absolute right-[20px] bottom-[20px] z-20" />}
       </div>
     </div>
   );

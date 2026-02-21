@@ -5,132 +5,120 @@
  * Sseotdabwa Project
  * OpenAPI spec version: v1.0.0
  */
-import { useMutation } from "@tanstack/react-query";
+import {
+  useMutation
+} from '@tanstack/react-query';
 import type {
   MutationFunction,
   QueryClient,
   UseMutationOptions,
-  UseMutationResult,
-} from "@tanstack/react-query";
+  UseMutationResult
+} from '@tanstack/react-query';
 
-import type { PreLaunchEmailRequest } from ".././model";
+import type {
+  PreLaunchEmailRequest
+} from '.././model';
 
-import { customFetch } from ".././custom-fetch";
+import { customFetch } from '.././custom-fetch';
+
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
+
 
 /**
  * 앱 런칭 전 사전 등록 이메일을 수집합니다. 인증 없이 접근 가능합니다.
  * @summary 사전 등록 이메일 등록
  */
 export type registerEmailResponse201 = {
-  data: Blob;
-  status: 201;
-};
+  data: Blob
+  status: 201
+}
 
 export type registerEmailResponse400 = {
-  data: Blob;
-  status: 400;
-};
+  data: Blob
+  status: 400
+}
 
 export type registerEmailResponse409 = {
-  data: Blob;
-  status: 409;
-};
-
-export type registerEmailResponseSuccess = registerEmailResponse201 & {
+  data: Blob
+  status: 409
+}
+    
+export type registerEmailResponseSuccess = (registerEmailResponse201) & {
   headers: Headers;
 };
-export type registerEmailResponseError = (
-  | registerEmailResponse400
-  | registerEmailResponse409
-) & {
+export type registerEmailResponseError = (registerEmailResponse400 | registerEmailResponse409) & {
   headers: Headers;
 };
 
-export type registerEmailResponse =
-  | registerEmailResponseSuccess
-  | registerEmailResponseError;
+export type registerEmailResponse = (registerEmailResponseSuccess | registerEmailResponseError)
 
 export const getRegisterEmailUrl = () => {
-  return `/api/v1/pre-launch/emails`;
-};
 
-export const registerEmail = async (
-  preLaunchEmailRequest: PreLaunchEmailRequest,
-  options?: RequestInit,
-): Promise<registerEmailResponse> => {
-  return customFetch<registerEmailResponse>(getRegisterEmailUrl(), {
+
+  
+
+  return `/api/v1/pre-launch/emails`
+}
+
+export const registerEmail = async (preLaunchEmailRequest: PreLaunchEmailRequest, options?: RequestInit): Promise<registerEmailResponse> => {
+  
+  return customFetch<registerEmailResponse>(getRegisterEmailUrl(),
+  {      
     ...options,
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(preLaunchEmailRequest),
-  });
-};
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      preLaunchEmailRequest,)
+  }
+);}
 
-export const getRegisterEmailMutationOptions = <
-  TError = Blob,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof registerEmail>>,
-    TError,
-    { data: PreLaunchEmailRequest },
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof registerEmail>>,
-  TError,
-  { data: PreLaunchEmailRequest },
-  TContext
-> => {
-  const mutationKey = ["registerEmail"];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      "mutationKey" in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof registerEmail>>,
-    { data: PreLaunchEmailRequest }
-  > = (props) => {
-    const { data } = props ?? {};
 
-    return registerEmail(data, requestOptions);
-  };
 
-  return { mutationFn, ...mutationOptions };
-};
+export const getRegisterEmailMutationOptions = <TError = Blob,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof registerEmail>>, TError,{data: PreLaunchEmailRequest}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof registerEmail>>, TError,{data: PreLaunchEmailRequest}, TContext> => {
 
-export type RegisterEmailMutationResult = NonNullable<
-  Awaited<ReturnType<typeof registerEmail>>
->;
-export type RegisterEmailMutationBody = PreLaunchEmailRequest;
-export type RegisterEmailMutationError = Blob;
+const mutationKey = ['registerEmail'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-/**
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof registerEmail>>, {data: PreLaunchEmailRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  registerEmail(data,requestOptions)
+        }
+
+
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RegisterEmailMutationResult = NonNullable<Awaited<ReturnType<typeof registerEmail>>>
+    export type RegisterEmailMutationBody = PreLaunchEmailRequest
+    export type RegisterEmailMutationError = Blob
+
+    /**
  * @summary 사전 등록 이메일 등록
  */
-export const useRegisterEmail = <TError = Blob, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof registerEmail>>,
-      TError,
-      { data: PreLaunchEmailRequest },
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof registerEmail>>,
-  TError,
-  { data: PreLaunchEmailRequest },
-  TContext
-> => {
-  return useMutation(getRegisterEmailMutationOptions(options), queryClient);
-};
+export const useRegisterEmail = <TError = Blob,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof registerEmail>>, TError,{data: PreLaunchEmailRequest}, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof registerEmail>>,
+        TError,
+        {data: PreLaunchEmailRequest},
+        TContext
+      > => {
+      return useMutation(getRegisterEmailMutationOptions(options), queryClient);
+    }
+    
