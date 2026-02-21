@@ -76,7 +76,7 @@ function ImageModalProvider({ children }: ImageModalProviderProps) {
               </DialogClose>
             </div>
 
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center max-[700px]:px-[10px]">
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center max-[700px]:px-[10px] max-[700px]:py-[60px]">
               {data && (
                 <img
                   src={data.src}
