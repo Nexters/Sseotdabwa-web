@@ -98,7 +98,7 @@ function SpeechBubble({
         ],
         {
           duration: 2000,
-          easing: "ease-in-out",
+          easing: "linear",
           fill: "both",
           iterations: Infinity,
         },

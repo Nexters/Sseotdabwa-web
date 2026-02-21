@@ -20,6 +20,7 @@ interface Section2SceneProps {
   whiteOpacity: number;
   selectedVoteId?: string;
   onVote: (optionId: string) => void;
+  containerWidth: number;
 }
 
 function Section2Scene({
@@ -27,7 +28,9 @@ function Section2Scene({
   whiteOpacity,
   selectedVoteId,
   onVote,
+  containerWidth,
 }: Section2SceneProps) {
+  const px = containerWidth > 375 ? 40 : 20;
   return (
     <>
       <FadeLayer opacity={contentOpacity}>
@@ -44,7 +47,7 @@ function Section2Scene({
           </div>
         </Stack>
 
-        <div className="relative z-0 -mt-[21px] px-5">
+        <div className="relative z-0 -mt-[21px]" style={{ paddingInline: px }}>
           <FeedCard
             content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
             image="https://buy-or-not.com/du.png"

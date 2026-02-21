@@ -170,6 +170,7 @@ function PreRegisterPage() {
             whiteOpacity={section2WhiteOpacity}
             selectedVoteId={selectedVoteId}
             onVote={handleVote}
+            containerWidth={containerWidth}
           />
 
           <Section3Scene opacity={section3ContentOpacity} transitionMs={SECTION3_TO_4_FADE_OUT_MS} onAnimationComplete={handleSection3AnimationComplete} />
@@ -185,6 +186,7 @@ function PreRegisterPage() {
               isSection5Visible={isSection5Visible}
               onVote={handleSection4Vote}
               transitionMs={SECTION3_TO_4_FADE_IN_MS}
+              containerWidth={containerWidth}
             />
           )}
         </div>

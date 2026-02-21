@@ -44,6 +44,7 @@ interface Section4SceneProps {
   isSection5Visible: boolean;
   onVote: (voteId: string) => void;
   transitionMs?: number;
+  containerWidth: number;
 }
 
 function Section4Scene({
@@ -54,7 +55,9 @@ function Section4Scene({
   isSection5Visible,
   onVote,
   transitionMs = 340,
+  containerWidth,
 }: Section4SceneProps) {
+  const px = containerWidth > 375 ? 40 : 20;
   return (
     <FadeLayer
       opacity={opacity}
@@ -84,7 +87,8 @@ function Section4Scene({
             </div>
 
             <div
-              className="flex w-full flex-col gap-[10px] px-[20px]"
+              className="flex w-full flex-col gap-[10px]"
+              style={{ paddingInline: px }}
               style={{ marginTop: 7 }}
             >
               <button
@@ -115,7 +119,8 @@ function Section4Scene({
           style={{ pointerEvents: isSection5Visible ? "auto" : "none" }}
         >
           <div
-            className="flex w-full flex-col items-center px-5"
+            className="flex w-full flex-col items-center"
+            style={{ paddingInline: px }}
             style={{ paddingTop: 40, paddingBottom: 40 }}
           >
             <SpeechBubble

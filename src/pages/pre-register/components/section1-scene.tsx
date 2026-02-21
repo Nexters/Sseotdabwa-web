@@ -63,10 +63,11 @@ function Section1Scene({
   const progress = clamp01(scrollTop / scrollDistance);
   const ep = easeInOut(progress);
 
-  const charStartWidth = 638;
-  const charStartHeight = 567;
-  const charEndWidth = 302;
-  const charEndHeight = 268;
+  const scale = containerWidth / 375;
+  const charStartWidth = 638 * scale;
+  const charStartHeight = 567 * scale;
+  const charEndWidth = 302 * scale;
+  const charEndHeight = 268 * scale;
 
   const charStartBottom = -containerHeight * 0.14;
   const charStartLeft = -containerWidth * 0.2;
@@ -80,7 +81,7 @@ function Section1Scene({
   const charHeight = lerp(charStartHeight, charEndHeight, ep);
 
   const logoTop = containerHeight * 0.04;
-  const bubble1Top = 60;
+  const bubble1Top = containerWidth > 375 ? 52 : 60;
   const bubble2Bottom = charEndBottom + charEndHeight + 26;
   const hintBottom = containerHeight * 0.06;
 
