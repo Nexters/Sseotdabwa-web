@@ -126,6 +126,12 @@
   line-height: 125% !important;
 }
 
+@utility text-b5-semibold {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 125% !important;
+}
+
 @utility text-b6-medium {
   font-size: 12px !important;
   font-weight: 500 !important;

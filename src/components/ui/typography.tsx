@@ -31,6 +31,7 @@ const typographyVariants = cva("", {
       "b3-medium": "text-b3-medium",
       "b4-medium": "text-b4-medium",
       "b5-medium": "text-b5-medium",
+      "b5-semibold": "text-b5-semibold",
       "b6-medium": "text-b6-medium",
       "b7-medium": "text-b7-medium",
       // Caption

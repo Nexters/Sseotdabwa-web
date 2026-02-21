@@ -14,8 +14,10 @@ import { VoteRequestChoice } from "@/api/model";
 import { useGuestVote } from "@/api/votes/votes";
 import { Divider } from "@/components/ui/divider";
 import { FeedCard } from "@/components/ui/feed-card";
+import { PreRegisterBanner } from "@/components/ui/pre-register-banner";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
+import { usePreRegister } from "@/pages/pre-register/components/pre-register-provider";
 
 function formatTimeAgo(createdAt?: string) {
   if (!createdAt) return undefined;
@@ -129,10 +131,13 @@ interface VoteState {
   noCount: number;
 }
 
+const BANNER_INSERT_AFTER = 3;
+
 function FeedContentBody() {
   const [votes, setVotes] = useState<Record<string, VoteState>>({});
   const { data, isLoading, isError, error } = useGetFeedList();
   const { mutate: guestVote } = useGuestVote();
+  const { open: openPreRegister } = usePreRegister();
 
   const feeds = useMemo(() => {
     const raw = data as unknown as { data?: { data?: FeedResponse[] } };
@@ -209,6 +214,8 @@ function FeedContentBody() {
           },
         ];
 
+        const showBannerAfter = index === BANNER_INSERT_AFTER - 1;
+
         return (
           <>
             <FeedCard
@@ -229,7 +236,15 @@ function FeedContentBody() {
               onVote={(optionId) => handleVote(id, optionId, feed.yesCount ?? 0, feed.noCount ?? 0)}
               onMoreClick={() => console.log("More clicked:", id)}
             />
-            {index < feeds.length - 1 && <Divider key={`divider-${id}`} size="small" className="bg-gray-100" />}
+            {showBannerAfter && (
+              <>
+                <Divider size="small" className="bg-gray-100" />
+                <PreRegisterBanner onClick={openPreRegister} />
+              </>
+            )}
+            {!showBannerAfter && index < feeds.length - 1 && (
+              <Divider key={`divider-${id}`} size="small" className="bg-gray-100" />
+            )}
           </>
         );
       })}
