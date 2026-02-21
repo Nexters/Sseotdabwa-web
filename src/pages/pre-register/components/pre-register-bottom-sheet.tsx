@@ -135,9 +135,12 @@ export function PreRegisterBottomSheet({
     dragCurrentY.current = 0;
   }
 
-  const [containerRect, setContainerRect] = React.useState<DOMRect | null>(
-    null,
-  );
+  const [containerRect, setContainerRect] = React.useState<{
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  } | null>(null);
 
   React.useEffect(() => {
     if (!container) {
@@ -145,7 +148,15 @@ export function PreRegisterBottomSheet({
       return;
     }
 
-    const update = () => setContainerRect(container.getBoundingClientRect());
+    const update = () => {
+      const rect = container.getBoundingClientRect();
+      setContainerRect({
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      });
+    };
     update();
 
     const resizeObserver = new ResizeObserver(update);
