@@ -24,6 +24,10 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query';
 
+import type {
+  FcmTokenRequest
+} from '.././model';
+
 import { customFetch } from '.././custom-fetch';
 
 
@@ -32,6 +36,96 @@ type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 
 /**
+ * 현재 로그인한 사용자의 FCM 토큰을 저장(업데이트)합니다.
+ * @summary FCM 토큰 등록/갱신
+ */
+export type updateFcmTokenResponse200 = {
+  data: Blob
+  status: 200
+}
+
+export type updateFcmTokenResponse401 = {
+  data: Blob
+  status: 401
+}
+    
+export type updateFcmTokenResponseSuccess = (updateFcmTokenResponse200) & {
+  headers: Headers;
+};
+export type updateFcmTokenResponseError = (updateFcmTokenResponse401) & {
+  headers: Headers;
+};
+
+export type updateFcmTokenResponse = (updateFcmTokenResponseSuccess | updateFcmTokenResponseError)
+
+export const getUpdateFcmTokenUrl = () => {
+
+
+  
+
+  return `/api/v1/users/fcm`
+}
+
+export const updateFcmToken = async (fcmTokenRequest: FcmTokenRequest, options?: RequestInit): Promise<updateFcmTokenResponse> => {
+  
+  return customFetch<updateFcmTokenResponse>(getUpdateFcmTokenUrl(),
+  {      
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      fcmTokenRequest,)
+  }
+);}
+
+
+
+
+export const getUpdateFcmTokenMutationOptions = <TError = Blob,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateFcmToken>>, TError,{data: FcmTokenRequest}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateFcmToken>>, TError,{data: FcmTokenRequest}, TContext> => {
+
+const mutationKey = ['updateFcmToken'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateFcmToken>>, {data: FcmTokenRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateFcmToken(data,requestOptions)
+        }
+
+
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateFcmTokenMutationResult = NonNullable<Awaited<ReturnType<typeof updateFcmToken>>>
+    export type UpdateFcmTokenMutationBody = FcmTokenRequest
+    export type UpdateFcmTokenMutationError = Blob
+
+    /**
+ * @summary FCM 토큰 등록/갱신
+ */
+export const useUpdateFcmToken = <TError = Blob,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateFcmToken>>, TError,{data: FcmTokenRequest}, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateFcmToken>>,
+        TError,
+        {data: FcmTokenRequest},
+        TContext
+      > => {
+      return useMutation(getUpdateFcmTokenMutationOptions(options), queryClient);
+    }
+    /**
  * 현재 로그인한 사용자의 정보를 조회합니다.
  * @summary 내 정보 조회
  */

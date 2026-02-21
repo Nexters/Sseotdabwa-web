@@ -9,7 +9,9 @@ import {
 
 import { useGetFeedList } from "@/api/feeds/feeds";
 import { ApiError } from "@/api/api-error";
-import type { FeedResponse } from "@/api/model";
+import type { FeedResponse, VoteResponse } from "@/api/model";
+import { VoteRequestChoice } from "@/api/model";
+import { useGuestVote } from "@/api/votes/votes";
 import { Divider } from "@/components/ui/divider";
 import { FeedCard } from "@/components/ui/feed-card";
 import { Button } from "@/components/ui/button";
@@ -121,17 +123,46 @@ class FeedContentErrorBoundary extends Component<
   }
 }
 
+interface VoteState {
+  selectedId: string;
+  yesCount: number;
+  noCount: number;
+}
+
 function FeedContentBody() {
-  const [votes, setVotes] = useState<Record<string, string>>({});
+  const [votes, setVotes] = useState<Record<string, VoteState>>({});
   const { data, isLoading, isError, error } = useGetFeedList();
+  const { mutate: guestVote } = useGuestVote();
 
   const feeds = useMemo(() => {
     const raw = data as unknown as { data?: { data?: FeedResponse[] } };
     return raw?.data?.data ?? [];
   }, [data]);
 
-  const handleVote = (feedId: string, optionId: string) => {
-    setVotes((prev) => ({ ...prev, [feedId]: optionId }));
+  const handleVote = (feedId: string, optionId: string, originalYes: number, originalNo: number) => {
+    const numericFeedId = Number(feedId);
+    const choice = optionId === "yes" ? VoteRequestChoice.YES : VoteRequestChoice.NO;
+
+    guestVote(
+      { feedId: numericFeedId, data: { choice } },
+      {
+        onSuccess: (res) => {
+          const raw = res as unknown as { data?: { data?: VoteResponse } };
+          const voteData = raw?.data?.data;
+          setVotes((prev) => ({
+            ...prev,
+            [feedId]: {
+              selectedId: optionId,
+              yesCount: voteData?.yesCount ?? originalYes,
+              noCount: voteData?.noCount ?? originalNo,
+            },
+          }));
+        },
+        onError: () => {
+          // 실패 시 낙관적 업데이트 없이 무시
+        },
+      },
+    );
   };
 
   if (isLoading) {
@@ -151,8 +182,9 @@ function FeedContentBody() {
     >
       {feeds.map((feed, index) => {
         const id = String(feed.feedId ?? index);
-        const yes = feed.yesCount ?? 0;
-        const no = feed.noCount ?? 0;
+        const voteState = votes[id];
+        const yes = voteState?.yesCount ?? feed.yesCount ?? 0;
+        const no = voteState?.noCount ?? feed.noCount ?? 0;
         const total = yes + no;
 
         const voteOptions = [
@@ -182,8 +214,8 @@ function FeedContentBody() {
               voteOptions={voteOptions}
               voteCount={total}
               isVoting={feed.feedStatus !== "CLOSED"}
-              selectedVoteId={votes[id]}
-              onVote={(optionId) => handleVote(id, optionId)}
+              selectedVoteId={voteState?.selectedId}
+              onVote={(optionId) => handleVote(id, optionId, feed.yesCount ?? 0, feed.noCount ?? 0)}
               onMoreClick={() => console.log("More clicked:", id)}
             />
             {index < feeds.length - 1 && <Divider key={`divider-${id}`} size="small" className="bg-gray-100" />}

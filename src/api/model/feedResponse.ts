@@ -8,6 +8,7 @@
 import type { FeedAuthorResponse } from './feedAuthorResponse';
 import type { FeedResponseCategory } from './feedResponseCategory';
 import type { FeedResponseFeedStatus } from './feedResponseFeedStatus';
+import type { FeedResponseMyVoteChoice } from './feedResponseMyVoteChoice';
 
 export interface FeedResponse {
   feedId?: number;
@@ -16,10 +17,14 @@ export interface FeedResponse {
   category?: FeedResponseCategory;
   yesCount?: number;
   noCount?: number;
+  totalCount?: number;
   feedStatus?: FeedResponseFeedStatus;
   s3ObjectKey?: string;
+  viewUrl?: string;
   imageWidth?: number;
   imageHeight?: number;
   author?: FeedAuthorResponse;
   createdAt?: string;
+  hasVoted?: boolean;
+  myVoteChoice?: FeedResponseMyVoteChoice;
 }

@@ -36,7 +36,7 @@ type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 
 /**
- * 전체 피드 리스트를 조회합니다. 비로그인 유저도 접근 가능합니다.
+ * 전체 피드 리스트를 조회합니다. 비로그인 유저도 접근 가능하며, 로그인 시 투표 상태가 포함됩니다.
  * @summary 피드 리스트 조회
  */
 export type getFeedListResponse200 = {
