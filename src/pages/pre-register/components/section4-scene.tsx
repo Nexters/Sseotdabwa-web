@@ -62,7 +62,7 @@ function Section4Scene({
             <div className="flex py-[62px] w-full items-center justify-center">
               <div
                 style={{
-                  animation: "brandAssetFloat 4.5s ease-in-out infinite",
+                  animation: "brandAssetFloat 3s ease-in-out infinite",
                   animationDelay: "0s",
                   marginRight: -10,
                   zIndex: 0,
@@ -99,8 +99,8 @@ function Section4Scene({
               </div>
               <div
                 style={{
-                  animation: "brandAssetFloat 4.5s ease-in-out infinite",
-                  animationDelay: "1.5s",
+                  animation: "brandAssetFloat 3s ease-in-out infinite",
+                  animationDelay: "1s",
                   zIndex: 1,
                 }}
               >
@@ -136,8 +136,8 @@ function Section4Scene({
               </div>
               <div
                 style={{
-                  animation: "brandAssetFloat 4.5s ease-in-out infinite",
-                  animationDelay: "3s",
+                  animation: "brandAssetFloat 3s ease-in-out infinite",
+                  animationDelay: "2s",
                   marginLeft: -10,
                   zIndex: 0,
                 }}
