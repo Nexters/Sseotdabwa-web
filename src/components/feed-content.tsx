@@ -106,13 +106,14 @@ function FeedContentEmptyFallback() {
       className="flex w-full flex-col items-center px-5 pt-[140px]"
     >
       <div className="flex flex-col items-center gap-6">
-        <img src="/empty-image.png" alt="빈 피드" className="h-[120px] w-[104px]" />
+        <img
+          src="/empty-image.png"
+          alt="빈 피드"
+          className="h-[120px] w-[104px]"
+        />
         <Stack gap={6} align="center">
           <Typography variant="t1-bold" className="text-gray-800">
-            아직 올린 투표가 없어요
-          </Typography>
-          <Typography variant="b5-medium" className="text-gray-600">
-            고민되는 상품의 투표를 올려보세요!
+            아직 올라온 투표가 없어요
           </Typography>
         </Stack>
       </div>
@@ -177,7 +178,10 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
     }
     return undefined;
   }, [filter]);
-  const queryKey = useMemo(() => ["/api/v1/feeds", { filter }] as const, [filter]);
+  const queryKey = useMemo(
+    () => ["/api/v1/feeds", { filter }] as const,
+    [filter],
+  );
   const { data, isLoading, isError, error } = useGetFeedList(params, {
     query: {
       queryKey,
