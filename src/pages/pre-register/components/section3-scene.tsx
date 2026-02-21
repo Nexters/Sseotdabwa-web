@@ -32,33 +32,19 @@ function TobongLottie({ isVisible, onComplete }: TobongLottieProps) {
     const handleComplete = () => {
       playCountRef.current += 1;
       if (playCountRef.current < 2) {
-        // 2번째 재생: 절반 프레임까지만 재생 후 완료 처리
-        animationItem.goToAndPlay(0, true);
+        // 2번째 재생: 0 ~ totalFrames/3 구간만 재생
+        const target = Math.floor(animationItem.totalFrames / 3);
+        animationItem.playSegments([0, target], true);
       } else {
         onCompleteRef.current?.();
       }
     };
 
-    const handleEnterFrame = () => {
-      // 2번째 재생 중 절반 지점 도달 시 정지
-      if (playCountRef.current === 1) {
-        const half = animationItem.totalFrames / 2;
-        if (animationItem.currentFrame >= half) {
-          animationItem.goToAndStop(half, true);
-          onCompleteRef.current?.();
-        }
-      }
-    };
-
     animationItem.addEventListener("complete", handleComplete);
-    animationItem.addEventListener("enterFrame", handleEnterFrame);
 
     return () => {
-      // lottie-react + route unmount 타이밍에서 내부 인스턴스가 먼저 해제되면
-      // removeEventListener가 예외를 던질 수 있어 안전하게 무시한다.
       try {
         animationItem.removeEventListener("complete", handleComplete);
-        animationItem.removeEventListener("enterFrame", handleEnterFrame);
       } catch {
         // noop
       }
@@ -106,11 +92,7 @@ function Section3Scene({
         gap={10}
         className="absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2"
       >
-        <SpeechBubble
-          centerArrow
-          animateOn="visible"
-          isVisible={isVisible}
-        >
+        <SpeechBubble centerArrow animateOn="visible" isVisible={isVisible}>
           의견줘서 고마워~~!
         </SpeechBubble>
         <TobongLottie isVisible={isVisible} onComplete={onAnimationComplete} />
