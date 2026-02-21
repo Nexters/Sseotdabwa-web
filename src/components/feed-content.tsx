@@ -147,19 +147,21 @@ function FeedContentBody() {
       { feedId: numericFeedId, data: { choice } },
       {
         onSuccess: (res) => {
+          // customFetch returns { data: ApiResponse, status, headers }
+          // ApiResponse is { data: VoteResponse, message, status, errorCode }
           const raw = res as unknown as { data?: { data?: VoteResponse } };
           const voteData = raw?.data?.data;
           setVotes((prev) => ({
             ...prev,
             [feedId]: {
               selectedId: optionId,
-              yesCount: voteData?.yesCount ?? originalYes,
-              noCount: voteData?.noCount ?? originalNo,
+              yesCount: voteData?.yesCount ?? originalYes + (optionId === "yes" ? 1 : 0),
+              noCount: voteData?.noCount ?? originalNo + (optionId === "no" ? 1 : 0),
             },
           }));
         },
-        onError: () => {
-          // 실패 시 낙관적 업데이트 없이 무시
+        onError: (err) => {
+          console.error("[vote error]", err);
         },
       },
     );

@@ -2,7 +2,7 @@ import { ApiError } from "@/api/api-error"
 import { getAccessToken } from "@/lib/token"
 
 const DEFAULT_API_BASE_URL = import.meta.env.DEV
-  ? "https://dev.buy-or-not.com"
+  ? ""
   : "https://api.buy-or-not.com"
 
 const API_BASE_URL = (
