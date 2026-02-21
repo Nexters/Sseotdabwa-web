@@ -101,7 +101,7 @@ function VoteOptionButton({
       )}
 
       {/* 기본 콘텐츠 */}
-      <div className="relative flex items-center justify-between px-[15px] py-[14px]">
+      <div className="relative flex items-center justify-between px-[14px] py-[16px]">
         <Typography
           variant="s3-semibold"
           className={

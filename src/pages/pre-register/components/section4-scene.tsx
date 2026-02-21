@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Typography } from "@/components/ui/typography";
 
 import { FadeLayer, SpeechBubble } from "./shared";
+import { Group } from "@/components/ui/flex";
 
 interface Section4SceneProps {
   opacity: number;
@@ -240,7 +241,7 @@ function Section4Scene({
                   boxShadow: "0 4px 60px 0 rgba(52, 71, 99, 0.2)",
                 }}
               >
-                <span className="inline-flex items-center justify-center gap-[6px]">
+                <Group align="center" justify="center" gap={6}>
                   <svg
                     width="20"
                     height="20"
@@ -265,7 +266,7 @@ function Section4Scene({
                   <Typography variant="t1-bold" className="text-gray-900">
                     '살까말까' 바로가기
                   </Typography>
-                </span>
+                </Group>
               </Link>
             </div>
           </div>

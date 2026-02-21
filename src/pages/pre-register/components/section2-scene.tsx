@@ -37,12 +37,10 @@ function Section2Scene({
         {/* 피드카드를 세로 중앙에 배치 */}
         <Stack align="center" justify="center" gap={0} className="h-full">
           <div className="relative w-full" style={{ paddingInline: px }}>
-            {/* 말풍선 + 토봉: 피드카드 상단에 absolute로 겹침 */}
             <Stack
               align="center"
               gap={0}
-              className="absolute bottom-full left-1/2 -translate-x-1/2"
-              style={{ marginBottom: -21 }}
+              style={{ marginBottom: -21, paddingTop: 10 }}
             >
               <SpeechBubble
                 centerArrow
@@ -56,21 +54,25 @@ function Section2Scene({
               </div>
             </Stack>
 
-            <FeedCard
-              priceTypographyVariant={containerWidth > 375 ? "h2-bold" : "t1-bold"}
-              zoomable={false}
-              content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
-              image="https://buy-or-not.com/du.png"
-              imageWidth={1}
-              imageHeight={1}
-              price={9_700}
-              voteOptions={[
-                { id: "1", label: "사! 가즈아!", percentage: 80 },
-                { id: "2", label: "애매하긴 해..", percentage: 20 },
-              ]}
-              selectedVoteId={selectedVoteId}
-              onVote={onVote}
-            />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <FeedCard
+                priceTypographyVariant={
+                  containerWidth > 375 ? "h2-bold" : "t1-bold"
+                }
+                zoomable={false}
+                content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
+                image="https://buy-or-not.com/du.png"
+                imageWidth={1}
+                imageHeight={1}
+                price={9_700}
+                voteOptions={[
+                  { id: "1", label: "사! 가즈아!", percentage: 80 },
+                  { id: "2", label: "애매하긴 해..", percentage: 20 },
+                ]}
+                selectedVoteId={selectedVoteId}
+                onVote={onVote}
+              />
+            </div>
           </div>
         </Stack>
       </FadeLayer>
