@@ -11,12 +11,14 @@ interface PreRegisterBottomSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (email: string) => void;
+  container?: HTMLElement | null;
 }
 
 export function PreRegisterBottomSheet({
   open,
   onOpenChange,
   onSubmit,
+  container,
 }: PreRegisterBottomSheetProps) {
   const [email, setEmail] = React.useState("");
   const [keyboardInset, setKeyboardInset] = React.useState(0);
@@ -123,25 +125,31 @@ export function PreRegisterBottomSheet({
     dragCurrentY.current = 0;
   }
 
+  const isContained = container != null;
+
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal container={container ?? undefined}>
         <DialogPrimitive.Overlay
-          className="fixed left-0 right-0 z-50 bg-black/40 data-[state=open]:animate-[dialog-overlay-in_200ms_ease-out] data-[state=closed]:animate-[dialog-overlay-out_150ms_ease-in]"
+          className="left-0 right-0 z-50 bg-black/40 data-[state=open]:animate-[dialog-overlay-in_200ms_ease-out] data-[state=closed]:animate-[dialog-overlay-out_150ms_ease-in]"
           style={{
-            top: "calc(env(safe-area-inset-top) * -1)",
-            bottom: "calc(env(safe-area-inset-bottom) * -1)",
+            position: isContained ? "absolute" : "fixed",
+            top: isContained ? 0 : "calc(env(safe-area-inset-top) * -1)",
+            bottom: isContained ? 0 : "calc(env(safe-area-inset-bottom) * -1)",
           }}
         />
         <DialogPrimitive.Content
           ref={sheetRef}
-          className="fixed bottom-0 left-0 right-0 z-50 rounded-[26px] bg-white outline-none transition-[bottom] duration-150 ease-out
+          className="left-0 right-0 z-50 rounded-[26px] bg-white outline-none transition-[bottom] duration-150 ease-out
             data-[state=open]:animate-[sheet-in_300ms_ease-out]
             data-[state=closed]:animate-[sheet-out_200ms_ease-in]"
           style={{
+            position: isContained ? "absolute" : "fixed",
             marginLeft: 14,
             marginRight: 14,
-            bottom: `calc(${keyboardInset + 10}px + env(safe-area-inset-bottom))`,
+            bottom: isContained
+              ? `calc(${keyboardInset + 10}px)`
+              : `calc(${keyboardInset + 10}px + env(safe-area-inset-bottom))`,
           }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}

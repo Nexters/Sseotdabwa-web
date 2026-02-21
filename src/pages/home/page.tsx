@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { AppBridgeBanner } from "@/components/app-bridge-banner";
 import { FeedContent } from "@/components/feed-content";
@@ -8,10 +8,18 @@ import { Divider } from "@/components/ui/divider";
 import { FAB } from "@/components/ui/fab";
 import { Group } from "@/components/ui/flex";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { usePreRegister } from "@/pages/pre-register/components/pre-register-provider";
 
 function HomePage() {
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [hasFeedError, setHasFeedError] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { setContainer } = usePreRegister();
+
+  useEffect(() => {
+    setContainer(containerRef.current);
+    return () => setContainer(null);
+  }, [setContainer]);
 
   return (
     <div className="app-layout flex h-screen w-full justify-center">
@@ -19,7 +27,7 @@ function HomePage() {
         <AppBridgeBanner />
       </div>
 
-      <div className="hide-scrollbar relative h-screen w-full max-w-[540px] overflow-y-auto bg-white">
+      <div ref={containerRef} className="hide-scrollbar relative h-screen w-full max-w-[540px] overflow-y-auto bg-white">
         <Tabs defaultValue="vote-feed">
           <div className="sticky top-0 z-10 bg-white">
             <NavBar />
