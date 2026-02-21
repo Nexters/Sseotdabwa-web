@@ -21,6 +21,8 @@ interface FeedCardProps extends React.HTMLAttributes<HTMLDivElement> {
   timeAgo?: string;
   content?: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   price?: number;
   voteOptions: VoteOption[];
   voteCount?: number;
@@ -158,6 +160,8 @@ function FeedCard({
   timeAgo,
   content,
   image,
+  imageWidth,
+  imageHeight,
   price,
   voteOptions,
   voteCount,
@@ -256,7 +260,15 @@ function FeedCard({
           )}
 
           {image && (
-            <div className="relative aspect-[1] w-full overflow-hidden rounded-[12px]">
+            <div
+              className="relative w-full overflow-hidden rounded-[12px]"
+              style={{
+                aspectRatio:
+                  imageWidth && imageHeight && imageWidth === imageHeight
+                    ? "1 / 1"
+                    : "4 / 5",
+              }}
+            >
               <img
                 src={image}
                 alt="Feed content"

@@ -54,11 +54,11 @@ function mapCategory(category?: string) {
   return categoryMap[category] ?? category;
 }
 
-function toImageUrl(s3ObjectKey?: string) {
-  if (!s3ObjectKey) return undefined;
-  if (s3ObjectKey.startsWith("http://") || s3ObjectKey.startsWith("https://")) {
-    return s3ObjectKey;
-  }
+function toImageUrl(feed: FeedResponse) {
+  if (feed.viewUrl) return feed.viewUrl;
+  const key = feed.s3ObjectKey;
+  if (!key) return undefined;
+  if (key.startsWith("http://") || key.startsWith("https://")) return key;
   return undefined;
 }
 
@@ -211,7 +211,9 @@ function FeedContentBody() {
               category={mapCategory(feed.category)}
               timeAgo={formatTimeAgo(feed.createdAt)}
               content={feed.content}
-              image={toImageUrl(feed.s3ObjectKey)}
+              image={toImageUrl(feed)}
+              imageWidth={feed.imageWidth ?? undefined}
+              imageHeight={feed.imageHeight ?? undefined}
               price={feed.price}
               voteOptions={voteOptions}
               voteCount={total}
