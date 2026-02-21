@@ -261,7 +261,7 @@ export function PreRegisterBottomSheet({
                     variant="s1-semibold"
                     className="block text-gray-900"
                   >
-                    앱 런칭 사전예약하기
+                    앱 런칭 사전 예약하기
                   </Typography>
                 </DialogPrimitive.Title>
 
