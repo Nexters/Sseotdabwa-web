@@ -24,10 +24,12 @@ interface FeedCardProps extends React.HTMLAttributes<HTMLDivElement> {
   imageWidth?: number;
   imageHeight?: number;
   price?: number;
+  priceTypographyVariant?: "h2-bold" | "t1-bold";
   voteOptions: VoteOption[];
   voteCount?: number;
   isVoting?: boolean;
   selectedVoteId?: string;
+  zoomable?: boolean;
   onVote?: (optionId: string) => void;
   onMoreClick?: () => void;
 }
@@ -115,7 +117,11 @@ function VoteOptionButton({
         {!isDefault && (
           <Group gap={6} align="center">
             {isSelected && status === "voted" && (
-              <Icon icon="my-solid" size={15} className="text-gray-600" />
+              <img
+                src="/profile-image.png"
+                alt="내 프로필"
+                style={{ width: 18, height: 18 }}
+              />
             )}
             <Typography
               variant="s3-semibold"
@@ -141,7 +147,11 @@ function VoteOptionButton({
           </Typography>
           <Group gap={6} align="center">
             {isSelected && status === "voted" && (
-              <Icon icon="my-solid" size={15} className="text-gray-0" />
+              <img
+                src="/profile-image.png"
+                alt="내 프로필"
+                style={{ width: 18, height: 18 }}
+              />
             )}
             <Typography variant="s3-semibold" className="text-gray-0">
               {percentage}%
@@ -163,10 +173,12 @@ function FeedCard({
   imageWidth,
   imageHeight,
   price,
+  priceTypographyVariant = "t1-bold",
   voteOptions,
   voteCount,
   isVoting = true,
   selectedVoteId,
+  zoomable = true,
   onVote,
   onMoreClick,
   className,
@@ -254,7 +266,7 @@ function FeedCard({
           className="overflow-hidden rounded-2xl bg-gray-100 px-4 py-3.5"
         >
           {content && (
-            <Typography variant="p4-medium" className="text-gray-900">
+            <Typography variant="p3-medium" className="text-gray-900">
               {content}
             </Typography>
           )}
@@ -282,14 +294,16 @@ function FeedCard({
                     "linear-gradient(180deg, transparent 0%, #191919 100%)",
                 }}
               />
-              <button
-                type="button"
-                aria-label="이미지 확대"
-                onClick={() => openImageModal(image, "Feed content enlarged")}
-                className="absolute right-[12px] top-[12px] inline-flex size-[30px] items-center justify-center rounded-[8px] bg-gray-1000/50 text-gray-300 transition-colors hover:bg-gray-1000/65"
-              >
-                <Icon icon="expand" size={18} className="text-gray-300" />
-              </button>
+              {zoomable === true ? (
+                <button
+                  type="button"
+                  aria-label="이미지 확대"
+                  onClick={() => openImageModal(image, "Feed content enlarged")}
+                  className="absolute right-[12px] top-[12px] inline-flex size-[30px] items-center justify-center rounded-[8px] bg-gray-1000/50 text-gray-300 transition-colors hover:bg-gray-1000/65"
+                >
+                  <Icon icon="expand" size={18} className="text-gray-300" />
+                </button>
+              ) : null}
               {price !== undefined && (
                 <Group
                   gap={4}
@@ -300,7 +314,7 @@ function FeedCard({
                   }}
                 >
                   <Icon icon="krw" size={18} className="text-white" />
-                  <Typography variant="h2-bold" className="text-white">
+                  <Typography variant={priceTypographyVariant} className="text-white">
                     {price.toLocaleString()}
                   </Typography>
                 </Group>

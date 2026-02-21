@@ -149,7 +149,7 @@ function PreRegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 overflow-hidden">
       <div
         ref={scrollRef}
         className="relative mx-auto h-screen w-full max-w-[540px] overflow-y-scroll bg-gray-0"
@@ -193,10 +193,10 @@ function PreRegisterPage() {
       </div>
 
       <style>{`
-        @keyframes brandAssetFloatStep {
-          0% { transform: translateY(0); }
-          15% { transform: translateY(-10px); }
-          30% { transform: translateY(0); }
+        @keyframes brandAssetFloat {
+          0%   { transform: translateY(0); }
+          25%  { transform: translateY(-14px); }
+          50%  { transform: translateY(0); }
           100% { transform: translateY(0); }
         }
       `}</style>

@@ -96,7 +96,7 @@ function Section1Scene({
   const section1FadeOut = mapRange(scrollTop, fadeOutStart, fadeOutEnd, 0, 1);
 
   return (
-    <div className="sticky top-0 h-screen overflow-hidden">
+    <div className="sticky top-0 h-screen" style={{ overflow: "clip" }}>
       <div
         className="absolute left-5"
         style={{ top: logoTop, opacity: titleOpacity }}

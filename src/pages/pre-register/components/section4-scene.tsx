@@ -1,40 +1,8 @@
-import { useLottie } from "lottie-react";
 import { Link } from "react-router-dom";
 
 import { Typography } from "@/components/ui/typography";
 
-import productLottieData from "@/assets/lottie/상품로띠.json";
-import tobong4Data from "@/assets/lottie/토봉4.json";
 import { FadeLayer, SpeechBubble } from "./shared";
-
-function ProductLottie() {
-  const { View } = useLottie({
-    animationData: productLottieData,
-    loop: true,
-    autoplay: true,
-  });
-  return (
-    <div className="rounded-[16px]" style={{ width: 375, height: 242 }}>
-      {View}
-    </div>
-  );
-}
-
-function TobongLottie() {
-  const { View } = useLottie({
-    animationData: tobong4Data,
-    loop: true,
-    autoplay: true,
-  });
-  return (
-    <div
-      className="absolute z-10"
-      style={{ width: 97, height: 87, right: 6, bottom: 30 }}
-    >
-      {View}
-    </div>
-  );
-}
 
 interface Section4SceneProps {
   opacity: number;
@@ -70,10 +38,7 @@ function Section4Scene({
           className="absolute inset-0 flex items-center justify-center"
           style={{ pointerEvents: isSection5Visible ? "none" : "auto" }}
         >
-          <div
-            className="flex w-full flex-col items-center"
-            style={{ paddingTop: 130, paddingBottom: 104 }}
-          >
+          <div className="flex w-full flex-col items-center gap-[10px]">
             <SpeechBubble
               centerArrow
               animateOn="visible"
@@ -82,14 +47,123 @@ function Section4Scene({
               혹시 너도 살까말까 고민해본적 있어?
             </SpeechBubble>
 
-            <div style={{ marginTop: 10 }}>
-              <ProductLottie />
+            <div className="flex py-[62px] w-full items-center justify-center">
+              <div
+                style={{
+                  animation: "brandAssetFloat 4.5s ease-in-out infinite",
+                  animationDelay: "0s",
+                  marginRight: -10,
+                  zIndex: 0,
+                }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    width: 87,
+                    height: 101,
+                    transform: "rotate(-16.98deg)",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: 26,
+                      background: "#fff",
+                      boxShadow: "0 8px 56px 0 rgba(215, 220, 225, 0.5)",
+                    }}
+                  />
+                  <img
+                    src="/socks.png"
+                    alt="양말"
+                    style={{
+                      position: "relative",
+                      width: 87,
+                      height: 101,
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
+              </div>
+              <div
+                style={{
+                  animation: "brandAssetFloat 4.5s ease-in-out infinite",
+                  animationDelay: "1.5s",
+                  zIndex: 1,
+                }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    width: 87,
+                    height: 101,
+                    transform: "rotate(18.01deg)",
+                  }}
+                >
+                  <div
+                    style={{
+                      margin: 1,
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: 26,
+                      background: "#fff",
+                      boxShadow: "0 8px 56px 0 rgba(215, 220, 225, 0.5)",
+                    }}
+                  />
+                  <img
+                    src="/tshirt.png"
+                    alt="옷"
+                    style={{
+                      position: "relative",
+                      width: 87,
+                      height: 101,
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
+              </div>
+              <div
+                style={{
+                  animation: "brandAssetFloat 4.5s ease-in-out infinite",
+                  animationDelay: "3s",
+                  marginLeft: -10,
+                  zIndex: 0,
+                }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    width: 87,
+                    height: 101,
+                    transform: "rotate(-6.22deg)",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: 26,
+                      background: "#fff",
+                      boxShadow: "0 8px 56px 0 rgba(215, 220, 225, 0.5)",
+                    }}
+                  />
+                  <img
+                    src="/pants.png"
+                    alt="바지"
+                    style={{
+                      position: "relative",
+                      width: 87,
+                      height: 101,
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
+              </div>
             </div>
 
             <div
               className="flex w-full flex-col gap-[10px]"
               style={{ paddingInline: px }}
-              style={{ marginTop: 7 }}
             >
               <button
                 type="button"
@@ -120,8 +194,7 @@ function Section4Scene({
         >
           <div
             className="flex w-full flex-col items-center"
-            style={{ paddingInline: px }}
-            style={{ paddingTop: 40, paddingBottom: 40 }}
+            style={{ paddingBlock: 40, paddingInline: px }}
           >
             <SpeechBubble
               centerArrow
@@ -152,7 +225,12 @@ function Section4Scene({
             </div>
 
             <div className="relative w-full pt-[12px]">
-              <TobongLottie />
+              <img
+                src="/tobong.png"
+                alt="토봉 캐릭터"
+                className="absolute z-0"
+                style={{ width: 96, right: 15, bottom: 34 }}
+              />
               <Link
                 to="/"
                 className="relative z-10 block w-full px-6 py-[18px] text-center"
