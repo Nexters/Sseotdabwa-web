@@ -9,7 +9,6 @@ import { Stack } from "@/components/ui/flex";
 import { Icon } from "@/components/ui/icon";
 import { useSnackbar } from "@/components/ui/snackbar";
 import { Typography } from "@/components/ui/typography";
-import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 interface PreRegisterBottomSheetProps {
