@@ -20,7 +20,17 @@
       "Bash(./node_modules/.bin/tsc:*)",
       "Bash(PATH=\"$HOME/.local/share/nvm/versions/node/v22.14.0/bin:$PATH\" npx tsc:*)",
       "Bash(source:*)",
-      "Bash(/opt/homebrew/bin/pnpm add:*)"
+      "Bash(/opt/homebrew/bin/pnpm add:*)",
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(npx orval:*)",
+      "Bash(bun run:*)",
+      "Bash(bun orval:*)",
+      "Bash(node --version:*)",
+      "Bash(export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\")",
+      "Bash(node node_modules/.bin/orval:*)",
+      "Bash(export PATH=\"/Users/dohun/.nvm/versions/node/v22.11.0/bin:$PATH\")",
+      "Bash(node:*)"
     ]
   }
 }
