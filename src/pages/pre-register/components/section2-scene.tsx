@@ -33,37 +33,39 @@ function Section2Scene({
   const px = containerWidth > 375 ? 40 : 20;
   return (
     <>
-      <FadeLayer opacity={contentOpacity}>
-        <Stack align="center" gap={0} className="pt-[35px]">
-          <SpeechBubble
-            centerArrow
-            animateOn="visible"
-            isVisible={contentOpacity > 0.01}
-          >
-            한 번 투표해볼래?
-          </SpeechBubble>
-          <div style={{ marginTop: 12 }}>
-            <TobongLottie />
+      <FadeLayer opacity={contentOpacity} className="h-full">
+        <Stack align="center" justify="center" gap={0} className="h-full">
+          <Stack align="center" gap={0}>
+            <SpeechBubble
+              centerArrow
+              animateOn="visible"
+              isVisible={contentOpacity > 0.01}
+            >
+              한 번 투표해볼래?
+            </SpeechBubble>
+            <div style={{ marginTop: 12 }}>
+              <TobongLottie />
+            </div>
+          </Stack>
+
+          <div className="relative z-0 -mt-[21px] w-full" style={{ paddingInline: px }}>
+            <FeedCard
+              priceTypographyVariant={containerWidth > 375 ? "h2-bold" : "t1-bold"}
+              zoomable={false}
+              content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
+              image="https://buy-or-not.com/du.png"
+              imageWidth={1}
+              imageHeight={1}
+              price={9_700}
+              voteOptions={[
+                { id: "1", label: "사! 가즈아!", percentage: 80 },
+                { id: "2", label: "애매하긴 해..", percentage: 20 },
+              ]}
+              selectedVoteId={selectedVoteId}
+              onVote={onVote}
+            />
           </div>
         </Stack>
-
-        <div className="relative z-0 -mt-[21px]" style={{ paddingInline: px }}>
-          <FeedCard
-            priceTypographyVariant={containerWidth > 375 ? "h2-bold" : "t1-bold"}
-            zoomable={false}
-            content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
-            image="https://buy-or-not.com/du.png"
-            imageWidth={1}
-            imageHeight={1}
-            price={9_700}
-            voteOptions={[
-              { id: "1", label: "사! 가즈아!", percentage: 80 },
-              { id: "2", label: "애매하긴 해..", percentage: 20 },
-            ]}
-            selectedVoteId={selectedVoteId}
-            onVote={onVote}
-          />
-        </div>
       </FadeLayer>
 
       <FadeLayer
