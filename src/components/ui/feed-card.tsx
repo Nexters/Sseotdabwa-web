@@ -314,7 +314,10 @@ function FeedCard({
                   }}
                 >
                   <Icon icon="krw" size={18} className="text-white" />
-                  <Typography variant={priceTypographyVariant} className="text-white">
+                  <Typography
+                    variant={priceTypographyVariant}
+                    className="text-white"
+                  >
                     {price.toLocaleString()}
                   </Typography>
                 </Group>
@@ -345,7 +348,10 @@ function FeedCard({
             </Stack>
 
             {voteCount !== undefined && (voteCount > 0 || !isVoting) && (
-              <Typography variant="b5-medium" className="text-gray-600">
+              <Typography
+                variant="b5-medium"
+                className="text-gray-600 pl-[6px]"
+              >
                 {voteCount}명이 투표했어요 · {statusLabel}
               </Typography>
             )}
