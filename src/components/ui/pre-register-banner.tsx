@@ -4,11 +4,12 @@ import { cn } from "@/lib/utils"
 import { Icon } from "@/components/ui/icon"
 import { Typography } from "@/components/ui/typography"
 
-interface PreRegisterBannerProps extends React.HTMLAttributes<HTMLButtonElement> {}
+interface PreRegisterBannerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 function PreRegisterBanner({ className, ...props }: PreRegisterBannerProps) {
   return (
     <button
+      type="button"
       data-slot="pre-register-banner"
       className={cn(
         "flex w-full items-center gap-[6px] rounded-[10px] bg-gray-300 px-[16px] py-[14px]",
@@ -19,9 +20,12 @@ function PreRegisterBanner({ className, ...props }: PreRegisterBannerProps) {
       <Typography variant="s5-semibold" className="shrink-0 text-gray-900">
         안내
       </Typography>
-      <Typography variant="b5-semibold" className="flex-1 text-left text-gray-800">
+      <span
+        className="flex-1 text-left text-gray-800"
+        style={{ fontSize: 13, fontWeight: 600, lineHeight: "125%" }}
+      >
         사전 예약하고 앱 출시 안내를 받아보세요!
-      </Typography>
+      </span>
       <Icon icon="right" size={14} className="shrink-0 text-gray-600" />
     </button>
   )
