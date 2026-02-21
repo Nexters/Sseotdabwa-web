@@ -32,8 +32,8 @@ function TobongLottie({ isVisible, onComplete }: TobongLottieProps) {
     const handleComplete = () => {
       playCountRef.current += 1;
       if (playCountRef.current < 2) {
-        // 2번째 재생: 0 ~ totalFrames/3 구간만 재생
-        const target = Math.floor(animationItem.totalFrames / 4);
+        // 2번째 재생: 0 ~ totalFrames/5 구간만 재생
+        const target = Math.floor(animationItem.totalFrames / 5);
         animationItem.playSegments([0, target], true);
       } else {
         onCompleteRef.current?.();

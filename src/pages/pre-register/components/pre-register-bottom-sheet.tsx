@@ -259,7 +259,7 @@ export function PreRegisterBottomSheet({
                   placeholder="이메일 작성하기"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-[10px] border border-gray-300 bg-gray-0 px-[14px] text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-600"
+                  className="w-full rounded-[10px] border border-gray-300 bg-gray-0 px-[14px] text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-500"
                   style={{ height: 46 }}
                 />
 
