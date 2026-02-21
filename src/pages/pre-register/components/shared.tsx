@@ -84,15 +84,17 @@ function SpeechBubble({
         hasToggleAnimatedRef.current = true;
       }
       setIsPendingAnimation(false);
+      // 말풍선이 아래로 내려올 때 로띠와의 간격(10px)을 유지하기 위해
+      // 기준점을 -10px(위)로 잡고, 최고점은 -18px(-8px 추가)까지 올라감
       el.animate(
         [
-          { transform: withBase("translateY(0)"), offset: 0 },
-          { transform: withBase("translateY(-8px)"), offset: 1 / 6 },
-          { transform: withBase("translateY(-8px)"), offset: 2 / 6 },
-          { transform: withBase("translateY(-8px)"), offset: 3 / 6 },
-          { transform: withBase("translateY(0)"), offset: 4 / 6 },
-          { transform: withBase("translateY(0)"), offset: 5 / 6 },
-          { transform: withBase("translateY(0)"), offset: 1 },
+          { transform: withBase("translateY(-10px)"), offset: 0 },
+          { transform: withBase("translateY(-18px)"), offset: 1 / 6 },
+          { transform: withBase("translateY(-18px)"), offset: 2 / 6 },
+          { transform: withBase("translateY(-18px)"), offset: 3 / 6 },
+          { transform: withBase("translateY(-10px)"), offset: 4 / 6 },
+          { transform: withBase("translateY(-10px)"), offset: 5 / 6 },
+          { transform: withBase("translateY(-10px)"), offset: 1 },
         ],
         {
           duration: 2000,
