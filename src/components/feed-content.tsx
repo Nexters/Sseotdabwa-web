@@ -14,6 +14,7 @@ import { VoteRequestChoice } from "@/api/model";
 import { useGuestVote } from "@/api/votes/votes";
 import { Divider } from "@/components/ui/divider";
 import { FeedCard } from "@/components/ui/feed-card";
+import { FeedCardSkeleton } from "@/components/ui/feed-card-skeleton";
 import { PreRegisterBanner } from "@/components/ui/pre-register-banner";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
@@ -188,9 +189,11 @@ function FeedContentBody() {
     return (
       <div
         data-slot="feed-content"
-        className="px-[20px] py-[24px] text-gray-600"
+        className="flex flex-col gap-[20px] px-[20px] pt-[20px] pb-[60px]"
       >
-        피드를 불러오는 중...
+        <FeedCardSkeleton />
+        <Divider size="small" className="bg-gray-100" />
+        <FeedCardSkeleton />
       </div>
     );
   }
