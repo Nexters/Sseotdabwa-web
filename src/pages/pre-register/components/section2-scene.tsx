@@ -34,21 +34,28 @@ function Section2Scene({
   return (
     <>
       <FadeLayer opacity={contentOpacity} className="h-full">
+        {/* 피드카드를 세로 중앙에 배치 */}
         <Stack align="center" justify="center" gap={0} className="h-full">
-          <Stack align="center" gap={0}>
-            <SpeechBubble
-              centerArrow
-              animateOn="visible"
-              isVisible={contentOpacity > 0.01}
+          <div className="relative w-full" style={{ paddingInline: px }}>
+            {/* 말풍선 + 토봉: 피드카드 상단에 absolute로 겹침 */}
+            <Stack
+              align="center"
+              gap={0}
+              className="absolute bottom-full left-1/2 -translate-x-1/2"
+              style={{ marginBottom: -21 }}
             >
-              한 번 투표해볼래?
-            </SpeechBubble>
-            <div style={{ marginTop: 12 }}>
-              <TobongLottie />
-            </div>
-          </Stack>
+              <SpeechBubble
+                centerArrow
+                animateOn="visible"
+                isVisible={contentOpacity > 0.01}
+              >
+                한 번 투표해볼래?
+              </SpeechBubble>
+              <div style={{ marginTop: 12 }}>
+                <TobongLottie />
+              </div>
+            </Stack>
 
-          <div className="relative z-0 -mt-[21px] w-full" style={{ paddingInline: px }}>
             <FeedCard
               priceTypographyVariant={containerWidth > 375 ? "h2-bold" : "t1-bold"}
               zoomable={false}
