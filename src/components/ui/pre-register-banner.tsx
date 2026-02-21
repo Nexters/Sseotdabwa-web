@@ -20,12 +20,9 @@ function PreRegisterBanner({ className, ...props }: PreRegisterBannerProps) {
       <Typography variant="s5-semibold" className="shrink-0 text-gray-900">
         안내
       </Typography>
-      <span
-        className="flex-1 text-left text-gray-800"
-        style={{ fontSize: 13, fontWeight: 600, lineHeight: "125%" }}
-      >
+      <Typography variant="b5-semibold" className="flex-1 text-left text-gray-800">
         사전 예약하고 앱 출시 안내를 받아보세요!
-      </span>
+      </Typography>
       <Icon icon="right" size={14} className="shrink-0 text-gray-600" />
     </button>
   )
