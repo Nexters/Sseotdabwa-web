@@ -30,7 +30,9 @@ function Section2Scene({
   onVote,
   containerWidth,
 }: Section2SceneProps) {
-  const px = containerWidth > 375 ? 40 : 20;
+  const isWideLayout = containerWidth >= 540;
+  const px = isWideLayout ? 40 : 20;
+
   return (
     <>
       <FadeLayer opacity={contentOpacity} className="h-full">
@@ -56,9 +58,7 @@ function Section2Scene({
 
             <div style={{ position: "relative", zIndex: 1 }}>
               <FeedCard
-                priceTypographyVariant={
-                  containerWidth > 375 ? "h2-bold" : "t1-bold"
-                }
+                priceTypographyVariant={isWideLayout ? "h2-bold" : "t1-bold"}
                 zoomable={false}
                 content="두쫀쿠 너~무 먹고싶은데 집근처엔 이 가격뿐..."
                 image="https://buy-or-not.com/du.png"
