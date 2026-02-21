@@ -137,15 +137,11 @@ interface VoteState {
 
 const BANNER_INSERT_AFTER = 3;
 
-function FeedContentBody({ onLoadingChange }: { onLoadingChange?: (isLoading: boolean) => void }) {
+function FeedContentBody() {
   const [votes, setVotes] = useState<Record<string, VoteState>>({});
   const { data, isLoading, isError, error } = useGetFeedList();
   const { mutate: guestVote } = useGuestVote();
   const { open: openPreRegister } = usePreRegister();
-
-  useEffect(() => {
-    onLoadingChange?.(isLoading);
-  }, [isLoading, onLoadingChange]);
 
   const feeds = useMemo(() => {
     const raw = data as unknown as { data?: { data?: FeedResponse[] } };
@@ -286,17 +282,16 @@ function FeedContentBody({ onLoadingChange }: { onLoadingChange?: (isLoading: bo
 
 interface FeedContentProps {
   onErrorChange?: (hasError: boolean) => void;
-  onLoadingChange?: (isLoading: boolean) => void;
 }
 
-function FeedContent({ onErrorChange, onLoadingChange }: FeedContentProps) {
+function FeedContent({ onErrorChange }: FeedContentProps) {
   useEffect(() => {
     onErrorChange?.(false);
   }, [onErrorChange]);
 
   return (
     <FeedContentErrorBoundary onErrorChange={onErrorChange}>
-      <FeedContentBody onLoadingChange={onLoadingChange} />
+      <FeedContentBody />
     </FeedContentErrorBoundary>
   );
 }

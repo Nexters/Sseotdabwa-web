@@ -7,14 +7,12 @@ import { Chip } from "@/components/ui/chip";
 import { Divider } from "@/components/ui/divider";
 import { FAB } from "@/components/ui/fab";
 import { Group } from "@/components/ui/flex";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePreRegister } from "@/pages/pre-register/components/pre-register-provider";
 
 function HomePage() {
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [hasFeedError, setHasFeedError] = useState(false);
-  const [isFeedLoading, setIsFeedLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const { setContainer } = usePreRegister();
 
@@ -41,33 +39,27 @@ function HomePage() {
             <Divider size="small" className="bg-gray-100" />
           </div>
           <Group gap={8} className="px-[20px] pt-[16px] pb-[4px]">
-            {isFeedLoading ? (
-              <Skeleton width={240} height={36} />
-            ) : (
-              <>
-                <Chip
-                  checked={selectedFilter === "all"}
-                  onClick={() => setSelectedFilter("all")}
-                >
-                  전체
-                </Chip>
-                <Chip
-                  checked={selectedFilter === "ongoing"}
-                  onClick={() => setSelectedFilter("ongoing")}
-                >
-                  진행중 투표
-                </Chip>
-                <Chip
-                  checked={selectedFilter === "closed"}
-                  onClick={() => setSelectedFilter("closed")}
-                >
-                  마감된 투표
-                </Chip>
-              </>
-            )}
+            <Chip
+              checked={selectedFilter === "all"}
+              onClick={() => setSelectedFilter("all")}
+            >
+              전체
+            </Chip>
+            <Chip
+              checked={selectedFilter === "ongoing"}
+              onClick={() => setSelectedFilter("ongoing")}
+            >
+              진행중 투표
+            </Chip>
+            <Chip
+              checked={selectedFilter === "closed"}
+              onClick={() => setSelectedFilter("closed")}
+            >
+              마감된 투표
+            </Chip>
           </Group>
           <TabsContent value="vote-feed">
-            <FeedContent onErrorChange={setHasFeedError} onLoadingChange={setIsFeedLoading} />
+            <FeedContent onErrorChange={setHasFeedError} />
           </TabsContent>
         </Tabs>
         {!hasFeedError && <FAB className="sticky bottom-[20px] float-right mr-[20px]" />}
