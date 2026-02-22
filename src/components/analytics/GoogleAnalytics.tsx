@@ -33,9 +33,12 @@ function GoogleAnalytics() {
     document.head.appendChild(script)
 
     // dataLayer 초기화
+    // GA4는 반드시 arguments 객체를 사용해야 함 (rest params 사용 시 데이터 전송 안 됨)
     window.dataLayer = window.dataLayer || []
-    function gtag(...args: unknown[]) {
-      window.dataLayer.push(args)
+    // eslint-disable-next-line prefer-rest-params
+    function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer.push(arguments)
     }
     window.gtag = gtag as typeof window.gtag
 
