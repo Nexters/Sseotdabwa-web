@@ -13,7 +13,7 @@ function Snackbar({ message, icon, className, ...props }: SnackbarProps) {
     <div
       data-slot="snackbar"
       className={cn(
-        "inline-flex items-center gap-2 rounded-[10px] bg-gray-900 px-[14px] py-[12px]",
+        "inline-flex items-center w-full gap-2 rounded-[10px] bg-gray-900 px-[14px] py-[12px] mx-5",
         className,
       )}
       {...props}
