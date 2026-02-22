@@ -99,7 +99,12 @@ function FeedContentErrorFallback({ onRetry }: { onRetry: () => void }) {
   );
 }
 
-function FeedContentEmptyFallback() {
+function FeedContentEmptyFallback({ filter }: { filter: FeedFilter }) {
+  const emptyText =
+    filter === "closed"
+      ? "아직 마감된 투표가 없어요"
+      : "아직 올라온 투표가 없어요";
+
   return (
     <div
       data-slot="feed-content-empty"
@@ -113,7 +118,7 @@ function FeedContentEmptyFallback() {
         />
         <Stack gap={6} align="center">
           <Typography variant="t1-bold" className="text-gray-800">
-            아직 올라온 투표가 없어요
+            {emptyText}
           </Typography>
         </Stack>
       </div>
@@ -259,7 +264,7 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
       : new Error("Failed to fetch feed list");
 
   if (feeds.length === 0) {
-    return <FeedContentEmptyFallback />;
+    return <FeedContentEmptyFallback filter={filter} />;
   }
 
   return (

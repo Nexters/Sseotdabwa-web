@@ -59,7 +59,7 @@ export function PreRegisterBottomSheet({
               <Icon
                 icon="circle-checked-solid"
                 size={18}
-                className="text-green-500"
+                className="text-green-200"
               />
             ),
             duration: 3000,

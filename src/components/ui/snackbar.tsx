@@ -84,7 +84,12 @@ function SnackbarProvider({ children }: SnackbarProviderProps) {
 
     const update = () => {
       const rect = container.getBoundingClientRect();
-      setContainerRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height });
+      setContainerRect({
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      });
     };
     update();
 
@@ -133,6 +138,9 @@ function SnackbarProvider({ children }: SnackbarProviderProps) {
     [open, close],
   );
 
+  // FAB: bottom-[20px], size-[60px] -> snackbar bottom = 20 + 60 + 10 = 90px
+  const SNACKBAR_BOTTOM = 90;
+
   const wrapperStyle: React.CSSProperties =
     container && containerRect
       ? {
@@ -144,7 +152,7 @@ function SnackbarProvider({ children }: SnackbarProviderProps) {
           display: "flex",
           alignItems: "flex-end",
           justifyContent: "center",
-          paddingBottom: 32,
+          paddingBottom: SNACKBAR_BOTTOM,
           pointerEvents: "none",
           zIndex: 50,
         }
@@ -155,7 +163,7 @@ function SnackbarProvider({ children }: SnackbarProviderProps) {
           right: 0,
           display: "flex",
           justifyContent: "center",
-          paddingBottom: 32,
+          paddingBottom: SNACKBAR_BOTTOM,
           pointerEvents: "none",
           zIndex: 50,
         };

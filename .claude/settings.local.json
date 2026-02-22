@@ -33,7 +33,13 @@
       "Bash(node:*)",
       "Bash(pnpm lint:*)",
       "Bash(git push:*)",
-      "Bash(pnpm orval:*)"
+      "Bash(pnpm orval:*)",
+      "Bash(/Users/dohun/.local/share/pnpm/pnpm tsc:*)",
+      "Bash(node_modules/.bin/tsc:*)",
+      "Bash(/usr/local/bin/node:*)",
+      "Bash(/opt/homebrew/bin/node:*)",
+      "Bash(NODE=/opt/homebrew/bin/node:*)",
+      "Bash($NODE /Users/dohun/project/nexters/Sseotdabwa-web/node_modules/.bin/tsc --noEmit)"
     ]
   }
 }
