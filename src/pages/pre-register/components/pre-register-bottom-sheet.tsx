@@ -192,10 +192,10 @@ export function PreRegisterBottomSheet({
     isContained && containerRect
       ? {
           position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          top: containerRect.top,
+          left: containerRect.left,
+          width: containerRect.width,
+          height: containerRect.height,
         }
       : {
           position: "fixed",
@@ -229,7 +229,7 @@ export function PreRegisterBottomSheet({
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={handleOpenChange}>
-      <DialogPrimitive.Portal container={container ?? undefined}>
+      <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay
           className="z-50 bg-black/40 data-[state=open]:animate-[dialog-overlay-in_200ms_ease-out] data-[state=closed]:animate-[dialog-overlay-out_150ms_ease-in]"
           style={overlayStyle}
