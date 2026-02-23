@@ -37,7 +37,7 @@ function Section4Scene({
   transitionMs = 340,
   containerWidth,
 }: Section4SceneProps) {
-  const px = containerWidth > 540 ? 40 : 20;
+  const px = containerWidth >= 540 ? 40 : 20;
   return (
     <FadeLayer
       opacity={opacity}
