@@ -162,7 +162,14 @@ export function PreRegisterBottomSheet({
     left: number;
     width: number;
     height: number;
-  } | null>(() => (container ? getRect(container) : null));
+  } | null>(null);
+
+  // open될 때마다 즉시 rect 계산
+  React.useEffect(() => {
+    if (open && container) {
+      setContainerRect(getRect(container));
+    }
+  }, [open, container]);
 
   React.useEffect(() => {
     if (!container) {
@@ -173,7 +180,6 @@ export function PreRegisterBottomSheet({
     const update = () => {
       setContainerRect(getRect(container));
     };
-    update();
 
     const resizeObserver = new ResizeObserver(update);
     resizeObserver.observe(container);
