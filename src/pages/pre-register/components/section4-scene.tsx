@@ -50,7 +50,7 @@ function Section4Scene({
           className="absolute inset-0 flex items-center justify-center"
           style={{ pointerEvents: isSection5Visible ? "none" : "auto" }}
         >
-          <div className="flex w-full flex-col items-center gap-[10px]">
+          <div className="flex w-full flex-col items-center gap-[10px]" style={{ paddingInline: px }}>
             <SpeechBubble
               centerArrow
               animateOn="visible"
@@ -175,7 +175,6 @@ function Section4Scene({
 
             <div
               className="flex w-full flex-col gap-[10px]"
-              style={{ paddingInline: px }}
             >
               <button
                 type="button"
