@@ -25,6 +25,7 @@ import { PreRegisterBanner } from "@/components/ui/pre-register-banner";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import { usePreRegister } from "@/pages/pre-register/components/pre-register-provider";
+import { getHasVoted, setHasVoted } from "@/lib/pre-register";
 
 function formatTimeAgo(createdAt?: string) {
   if (!createdAt) return undefined;
@@ -237,6 +238,11 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
                 voteData?.noCount ?? originalNo + (optionId === "no" ? 1 : 0),
             },
           }));
+
+          if (!getHasVoted()) {
+            setHasVoted();
+            openPreRegister();
+          }
         },
         onError: (err) => {
           console.error("[vote error]", err);
