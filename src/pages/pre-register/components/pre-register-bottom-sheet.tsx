@@ -152,12 +152,17 @@ export function PreRegisterBottomSheet({
     dragCurrentY.current = 0;
   }
 
+  const getRect = (el: HTMLElement) => {
+    const rect = el.getBoundingClientRect();
+    return { top: rect.top, left: rect.left, width: rect.width, height: rect.height };
+  };
+
   const [containerRect, setContainerRect] = React.useState<{
     top: number;
     left: number;
     width: number;
     height: number;
-  } | null>(null);
+  } | null>(() => (container ? getRect(container) : null));
 
   React.useEffect(() => {
     if (!container) {
@@ -166,13 +171,7 @@ export function PreRegisterBottomSheet({
     }
 
     const update = () => {
-      const rect = container.getBoundingClientRect();
-      setContainerRect({
-        top: rect.top,
-        left: rect.left,
-        width: rect.width,
-        height: rect.height,
-      });
+      setContainerRect(getRect(container));
     };
     update();
 
