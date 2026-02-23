@@ -192,10 +192,10 @@ export function PreRegisterBottomSheet({
     isContained && containerRect
       ? {
           position: "fixed",
-          top: containerRect.top,
-          left: containerRect.left,
-          width: containerRect.width,
-          height: containerRect.height,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
         }
       : {
           position: "fixed",
