@@ -4,6 +4,7 @@ import {
   type ReactNode,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -196,6 +197,15 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
   });
   const { mutate: guestVote } = useGuestVote();
   const { open: openPreRegister } = usePreRegister();
+  const preRegisterTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (preRegisterTimerRef.current !== null) {
+        clearTimeout(preRegisterTimerRef.current);
+      }
+    };
+  }, []);
 
   const feeds = useMemo(() => {
     const raw = data as unknown as {
@@ -241,7 +251,9 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
 
           if (!getHasVoted()) {
             setHasVoted();
-            openPreRegister();
+            preRegisterTimerRef.current = setTimeout(() => {
+              openPreRegister();
+            }, 1500);
           }
         },
         onError: (err) => {
