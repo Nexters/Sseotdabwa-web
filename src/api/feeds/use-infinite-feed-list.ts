@@ -22,19 +22,20 @@ function extractPageData(page: getFeedListResponse) {
   return raw?.data?.data;
 }
 
+type InfiniteFeedListQueryOptions = Partial<
+  UseInfiniteQueryOptions<
+    getFeedListResponse,
+    unknown,
+    InfiniteData<getFeedListResponse>,
+    readonly unknown[],
+    number | undefined
+  >
+>;
+
 export function useInfiniteGetFeedList(
   params?: Omit<GetFeedListParams, "cursor">,
   options?: {
-    query?: Partial<
-      UseInfiniteQueryOptions<
-        getFeedListResponse,
-        unknown,
-        InfiniteData<getFeedListResponse>,
-        getFeedListResponse,
-        readonly unknown[],
-        number | undefined
-      >
-    >;
+    query?: InfiniteFeedListQueryOptions;
     request?: SecondParameter<typeof getFeedList>;
   },
   queryClient?: QueryClient,
@@ -49,7 +50,7 @@ export function useInfiniteGetFeedList(
       queryKey,
       queryFn: ({ pageParam, signal }) =>
         getFeedList(
-          { ...params, cursor: pageParam },
+          { ...params, cursor: pageParam as number | undefined },
           { signal, ...requestOptions },
         ),
       initialPageParam: undefined as number | undefined,
