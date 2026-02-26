@@ -2,13 +2,14 @@ import {
   Component,
   type ErrorInfo,
   type ReactNode,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
 
-import { useGetFeedList } from "@/api/feeds/feeds";
+import { useInfiniteGetFeedList } from "@/api/feeds/use-infinite-feed-list";
 import { ApiError } from "@/api/api-error";
 import {
   GetFeedListFeedStatus,
@@ -176,7 +177,7 @@ type FeedFilter = "all" | "ongoing" | "closed";
 
 function FeedContentBody({ filter }: { filter: FeedFilter }) {
   const [votes, setVotes] = useState<Record<string, VoteState>>({});
-  const params = useMemo<GetFeedListParams | undefined>(() => {
+  const params = useMemo<Omit<GetFeedListParams, "cursor"> | undefined>(() => {
     if (filter === "ongoing") {
       return { feedStatus: GetFeedListFeedStatus.OPEN };
     }
@@ -185,19 +186,24 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
     }
     return undefined;
   }, [filter]);
-  const queryKey = useMemo(
-    () => ["/api/v1/feeds", { filter }] as const,
-    [filter],
-  );
-  const { data, isLoading, isError, error } = useGetFeedList(params, {
+
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteGetFeedList(params, {
     query: {
-      queryKey,
       refetchOnMount: "always",
     },
   });
   const { mutate: guestVote } = useGuestVote();
   const { open: openPreRegister } = usePreRegister();
   const preRegisterTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     return () => {
@@ -207,16 +213,35 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
     };
   }, []);
 
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
+  );
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(handleObserver, {
+      rootMargin: "200px",
+    });
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [handleObserver]);
+
   const feeds = useMemo(() => {
-    const raw = data as unknown as {
-      data?: {
-        data?: FeedResponse[] | { content?: FeedResponse[] };
+    if (!data) return [];
+    return data.pages.flatMap((page) => {
+      const raw = page as unknown as {
+        data?: { data?: { content?: FeedResponse[] } };
       };
-    };
-    const payload = raw?.data?.data;
-    if (Array.isArray(payload)) return payload;
-    if (Array.isArray(payload?.content)) return payload.content;
-    return [];
+      return raw?.data?.data?.content ?? [];
+    });
   }, [data]);
 
   const handleVote = (
@@ -358,6 +383,15 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
           </>
         );
       })}
+      {isFetchingNextPage && (
+        <>
+          <Divider size="small" className="bg-gray-100" />
+          <FeedCardSkeleton />
+          <Divider size="small" className="bg-gray-100" />
+          <FeedCardSkeleton />
+        </>
+      )}
+      <div ref={sentinelRef} />
     </div>
   );
 }
