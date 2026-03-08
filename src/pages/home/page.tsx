@@ -18,14 +18,12 @@ function HomePage() {
 
   useEffect(() => {
     setContainer(containerRef.current);
+    setSnackbarContainer(containerRef.current);
     return () => {
       setContainer(null);
+      setSnackbarContainer(null);
     };
-  }, [setContainer]);
-
-  useEffect(() => {
-    setSnackbarContainer(null);
-  }, [setSnackbarContainer]);
+  }, [setContainer, setSnackbarContainer]);
 
   return (
     <div className="app-layout flex w-full justify-center">

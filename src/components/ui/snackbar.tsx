@@ -144,25 +144,21 @@ function SnackbarProvider({ children }: SnackbarProviderProps) {
     container && containerRect
       ? {
           position: "fixed",
-          top: containerRect.top,
+          bottom: SNACKBAR_BOTTOM,
           left: containerRect.left,
           width: containerRect.width,
-          height: containerRect.height,
           display: "flex",
-          alignItems: "flex-end",
           justifyContent: "center",
-          paddingBottom: SNACKBAR_BOTTOM,
           pointerEvents: "none",
           zIndex: 50,
         }
       : {
           position: "fixed",
-          bottom: 0,
+          bottom: SNACKBAR_BOTTOM,
           left: 0,
           right: 0,
           display: "flex",
           justifyContent: "center",
-          paddingBottom: SNACKBAR_BOTTOM,
           pointerEvents: "none",
           zIndex: 50,
         };
