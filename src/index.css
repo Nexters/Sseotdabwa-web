@@ -367,7 +367,7 @@
 body {
   background-color: #fbfbfc;
   color: #1a1c20;
-  overflow: hidden;
+  overflow-x: hidden;
   color-scheme: light only;
 }
 

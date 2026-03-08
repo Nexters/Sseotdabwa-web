@@ -5,7 +5,6 @@ import { FeedContent, type FeedFilter } from "@/components/feed-content";
 import { NavBar } from "@/components/nav-bar";
 import { Chip } from "@/components/ui/chip";
 import { Divider } from "@/components/ui/divider";
-import { FAB } from "@/components/ui/fab";
 import { Group } from "@/components/ui/flex";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSnackbar } from "@/components/ui/snackbar";
@@ -13,7 +12,6 @@ import { usePreRegister } from "@/pages/pre-register/components/pre-register-pro
 
 function HomePage() {
   const [selectedFilter, setSelectedFilter] = useState<FeedFilter>("all");
-  const [hasFeedError, setHasFeedError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { setContainer } = usePreRegister();
   const { setContainer: setSnackbarContainer } = useSnackbar();
@@ -28,13 +26,13 @@ function HomePage() {
   }, [setContainer, setSnackbarContainer]);
 
   return (
-    <div className="app-layout flex h-[100svh] h-[100dvh] w-full justify-center">
-      <div className="app-bridge hidden h-[100svh] h-[100dvh] max-w-[412px]">
+    <div className="app-layout flex w-full justify-center">
+      <div className="app-bridge hidden max-w-[412px] sticky top-0 self-start h-[100svh] h-[100dvh]">
         <AppBridgeBanner />
       </div>
 
-      <div ref={containerRef} className="relative h-[100svh] h-[100dvh] w-full max-w-[540px]">
-        <div className="hide-scrollbar h-full overflow-y-auto bg-white pb-[env(safe-area-inset-bottom)]">
+      <div ref={containerRef} className="relative w-full max-w-[540px]">
+        <div className="bg-white pb-[env(safe-area-inset-bottom)]">
           <Tabs defaultValue="vote-feed">
             <div className="sticky top-0 z-10 bg-white">
               <NavBar />
@@ -66,11 +64,10 @@ function HomePage() {
               </Chip>
             </Group>
             <TabsContent value="vote-feed">
-              <FeedContent filter={selectedFilter} onErrorChange={setHasFeedError} />
+              <FeedContent filter={selectedFilter} />
             </TabsContent>
           </Tabs>
         </div>
-        {!hasFeedError && <FAB className="absolute right-[20px] bottom-[20px] z-20" />}
       </div>
     </div>
   );
