@@ -138,8 +138,7 @@ function SnackbarProvider({ children }: SnackbarProviderProps) {
     [open, close],
   );
 
-  // FAB: bottom-[20px], size-[60px] -> snackbar bottom = 20 + 60 + 10 = 90px
-  const SNACKBAR_BOTTOM = 90;
+  const SNACKBAR_BOTTOM = 20;
 
   const wrapperStyle: React.CSSProperties =
     container && containerRect
