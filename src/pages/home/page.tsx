@@ -1,29 +1,36 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { AppBridgeBanner } from "@/components/app-bridge-banner";
 import { FeedContent, type FeedFilter } from "@/components/feed-content";
 import { NavBar } from "@/components/nav-bar";
+import { BridgeBanner } from "@/components/ui/bridge-banner";
 import { Chip } from "@/components/ui/chip";
 import { Divider } from "@/components/ui/divider";
 import { Group } from "@/components/ui/flex";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSnackbar } from "@/components/ui/snackbar";
-import { usePreRegister } from "@/pages/pre-register/components/pre-register-provider";
 
 function HomePage() {
   const [selectedFilter, setSelectedFilter] = useState<FeedFilter>("all");
   const containerRef = useRef<HTMLDivElement>(null);
-  const { setContainer } = usePreRegister();
   const { setContainer: setSnackbarContainer } = useSnackbar();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setContainer(containerRef.current);
     setSnackbarContainer(containerRef.current);
     return () => {
-      setContainer(null);
       setSnackbarContainer(null);
     };
-  }, [setContainer, setSnackbarContainer]);
+  }, [setSnackbarContainer]);
+
+  const handleAppClick = useCallback(() => {
+    navigate("/app");
+  }, [navigate]);
+
+  const handleMyVoteTab = useCallback(() => {
+    navigate("/app");
+  }, [navigate]);
 
   return (
     <div className="app-layout flex w-full justify-center">
@@ -35,10 +42,19 @@ function HomePage() {
         <div className="bg-white pb-[env(safe-area-inset-bottom)]">
           <Tabs defaultValue="vote-feed">
             <div className="sticky top-0 z-10 bg-white">
+              {/* App Bridge Banner */}
+              <BridgeBanner onAppClick={handleAppClick} />
               <NavBar />
               <TabsList className="pl-[20px]">
                 <TabsTrigger value="vote-feed" className="px-[4px] py-[12px]">
                   투표 피드
+                </TabsTrigger>
+                <TabsTrigger
+                  value="my-vote"
+                  className="px-[4px] py-[12px]"
+                  onClick={handleMyVoteTab}
+                >
+                  내 투표
                 </TabsTrigger>
               </TabsList>
               <Divider size="small" className="bg-gray-100" />
