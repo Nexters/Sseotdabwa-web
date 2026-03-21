@@ -17,11 +17,13 @@ function getAppStoreUrl(userAgent: string) {
 /* ── QR 코드 (https://buyornot.com/app) ── */
 function QRCode() {
   return (
-    <img
-      src="/qr-app.svg"
-      alt="앱 다운로드 QR 코드"
-      className="h-[230px] w-[230px] rounded-[16px] object-contain"
-    />
+    <div className="flex h-[280px] w-[280px] items-center justify-center rounded-[18px] bg-gray-200">
+      <img
+        src="/qr-app.svg"
+        alt="앱 다운로드 QR 코드"
+        className="h-[230px] w-[230px] object-contain"
+      />
+    </div>
   );
 }
 
