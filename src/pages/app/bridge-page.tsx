@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AppBridgeBanner } from "@/components/app-bridge-banner";
-import { BrandAssetBox } from "@/components/ui/brand-asset";
 import { Typography } from "@/components/ui/typography";
 import { Flex } from "@/components/ui/flex";
 
@@ -26,47 +25,14 @@ function QRPlaceholder() {
   );
 }
 
-/* ── 모바일 카드 일러스트 ── */
+/* ── 모바일 카드 일러스트 (230×235) ── */
 function CardIllustration() {
   return (
-    <div className="flex h-[235px] w-[230px] items-center justify-center">
-      <div className="relative flex items-center justify-center">
-        <div
-          className="absolute"
-          style={{ transform: "rotate(-8deg) translateX(-20px)" }}
-        >
-          <div
-            className="flex items-center justify-center rounded-[18px] border-[1.5px] border-gray-200 bg-gray-0"
-            style={{ width: 120, height: 140, boxShadow: "0px 4px 30px 0px #D7DCE180" }}
-          >
-            <div className="h-[20px] w-[60px] rounded-[6px] bg-gray-300" />
-          </div>
-        </div>
-        <div
-          className="absolute"
-          style={{ transform: "rotate(6deg) translateX(20px)" }}
-        >
-          <div
-            className="flex items-center justify-center rounded-[18px] border-[1.5px] border-gray-200 bg-gray-0"
-            style={{ width: 120, height: 140, boxShadow: "0px 4px 30px 0px #D7DCE180" }}
-          >
-            <div className="h-[20px] w-[60px] rounded-[6px] bg-gray-300" />
-          </div>
-        </div>
-        <div className="relative z-10">
-          <div
-            className="flex flex-col items-center justify-center gap-[12px] rounded-[18px] border-[1.5px] border-gray-200 bg-gray-0"
-            style={{ width: 130, height: 150, boxShadow: "0px 4px 30px 0px #D7DCE180" }}
-          >
-            <BrandAssetBox asset="socks" iconSize={40} className="!h-[70px] !w-[60px] !rounded-[12px]" />
-            <div className="flex w-[80px] flex-col gap-[4px]">
-              <div className="h-[8px] w-full rounded-[4px] bg-gray-900" />
-              <div className="h-[8px] w-[50px] rounded-[4px] bg-gray-300" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <img
+      src="/bridge-illustration.svg"
+      alt="앱 브릿지 일러스트"
+      className="h-[235px] w-[230px] object-contain"
+    />
   );
 }
 
@@ -103,7 +69,7 @@ function BridgePage() {
             </div>
 
             {/* 텍스트 - 모바일: 20px / 데스크탑: 26px */}
-            <p className="mt-[24px] text-center text-[20px] font-bold leading-[150%] text-gray-900 sm:mt-[50px] sm:text-[26px]">
+            <p className="mt-[20px] text-center text-[20px] font-bold leading-[150%] text-gray-900 sm:mt-[50px] sm:text-[26px]">
               투표 등록부터, 알림까지
               <br />
               살까말까 앱에서 경험해보세요!
@@ -113,7 +79,7 @@ function BridgePage() {
             <button
               type="button"
               onClick={handleOpenApp}
-              className="mt-[32px] flex w-full max-w-[211px] cursor-pointer items-center justify-center rounded-[14px] bg-gray-900 py-[15px] transition-all duration-200 active:scale-95 sm:hidden"
+              className="mt-[30px] flex w-full max-w-[211px] cursor-pointer items-center justify-center rounded-[14px] bg-gray-900 py-[15px] transition-all duration-200 active:scale-95 sm:hidden"
             >
               <Typography variant="t2-bold" className="text-white">
                 편하게 앱으로 보기
@@ -124,7 +90,7 @@ function BridgePage() {
             <button
               type="button"
               onClick={handleContinueWeb}
-              className="mt-[16px] cursor-pointer bg-transparent sm:mt-[30px]"
+              className="mt-[20px] cursor-pointer bg-transparent sm:mt-[30px]"
             >
               <span className="text-gray-800 underline sm:hidden">
                 <Typography variant="s5-semibold" as="span">
