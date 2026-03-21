@@ -14,13 +14,13 @@ function getAppStoreUrl(userAgent: string) {
   return APP_STORE_URL;
 }
 
-/* ── QR 플레이스홀더 ── */
-function QRPlaceholder() {
+/* ── QR 코드 (https://buyornot.com/app) ── */
+function QRCode() {
   return (
     <img
-      src="/bridge-assetes.png"
-      alt="QR 코드"
-      className="h-[230px] w-[230px] rounded-[16px] border border-gray-200 object-contain p-[16px]"
+      src="/qr-app.svg"
+      alt="앱 다운로드 QR 코드"
+      className="h-[230px] w-[230px] rounded-[16px] object-contain"
     />
   );
 }
@@ -65,7 +65,7 @@ function BridgePage() {
               <CardIllustration />
             </div>
             <div className="hidden sm:block">
-              <QRPlaceholder />
+              <QRCode />
             </div>
 
             {/* 텍스트 - 모바일: 20px / 데스크탑: 26px */}
