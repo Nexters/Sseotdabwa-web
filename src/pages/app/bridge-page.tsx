@@ -109,11 +109,11 @@ function BridgePage() {
               살까말까 앱에서 경험해보세요!
             </p>
 
-            {/* CTA 버튼 - 모바일에서만 노출 */}
+            {/* CTA 버튼 - 모바일에서만 노출 (Primary, L, Square) */}
             <button
               type="button"
               onClick={handleOpenApp}
-              className="mt-[32px] flex w-full max-w-[211px] cursor-pointer items-center justify-center rounded-[14px] bg-green-200 py-[15px] transition-all duration-200 active:scale-95 sm:hidden"
+              className="mt-[32px] flex w-full max-w-[211px] cursor-pointer items-center justify-center rounded-[14px] bg-gray-900 py-[15px] transition-all duration-200 active:scale-95 sm:hidden"
             >
               <Typography variant="t2-bold" className="text-white">
                 편하게 앱으로 보기
