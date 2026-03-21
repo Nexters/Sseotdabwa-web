@@ -78,7 +78,7 @@ function FeedContentErrorFallback({ onRetry }: { onRetry: () => void }) {
   return (
     <div
       data-slot="feed-content-error"
-      className="flex min-h-[calc(100svh-200px)] w-full flex-col items-center justify-center px-5"
+      className="flex w-full flex-col items-center justify-center px-5 h-full"
     >
       <div className="flex flex-col items-center gap-4">
         <div className="pt-[10px] pr-[20px] pb-[10px] pl-[16px]">
@@ -202,7 +202,9 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
   });
   const { mutate: guestVote } = useGuestVote();
   const { open: openPreRegister } = usePreRegister();
-  const preRegisterTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const preRegisterTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

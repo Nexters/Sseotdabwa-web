@@ -1,27 +1,19 @@
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { AppBridgeBanner } from "@/components/app-bridge-banner";
 import { Typography } from "@/components/ui/typography";
 import { Flex } from "@/components/ui/flex";
-
-const APP_STORE_URL = "https://apps.apple.com/kr/app/살까말까-buyornot/id6758535406";
-const GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=com.sseotdabwa.buyornot";
-
-function getAppStoreUrl(userAgent: string) {
-  const ua = userAgent.toLowerCase();
-  if (ua.includes("android")) return GOOGLE_PLAY_URL;
-  return APP_STORE_URL;
-}
+import { getAppStoreUrl } from "@/utils/app-url";
 
 /* ── QR 코드 (https://buyornot.com/app) ── */
 function QRCode() {
   return (
-    <div className="flex h-[280px] w-[280px] items-center justify-center rounded-[18px] bg-gray-200">
+    <div className="flex p-[18px] items-center justify-center rounded-[18px] bg-gray-200">
       <img
-        src="/qr-app.svg"
+        src="/qr-app.png"
         alt="앱 다운로드 QR 코드"
-        className="h-[230px] w-[230px] object-contain"
+        className="h-[244px] w-[244px] object-contain"
       />
     </div>
   );
@@ -41,6 +33,7 @@ function CardIllustration() {
 /* ── 메인 페이지 ── */
 function BridgePage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const handleOpenApp = useCallback(() => {
     const url = getAppStoreUrl(window.navigator.userAgent);
@@ -50,6 +43,15 @@ function BridgePage() {
   const handleContinueWeb = useCallback(() => {
     navigate("/");
   }, [navigate]);
+
+  useEffect(() => {
+    const needRedirect = searchParams.get("redirect") === "true";
+
+    if (needRedirect) {
+      handleOpenApp();
+      navigate("/app", { replace: true });
+    }
+  }, []);
 
   return (
     <div className="app-layout flex w-full justify-center">
@@ -61,7 +63,11 @@ function BridgePage() {
       {/* 메인 콘텐츠 영역 */}
       <div className="relative w-full max-w-[540px]">
         <div className="flex min-h-[100svh] min-h-[100dvh] flex-col items-center justify-center bg-white pb-[env(safe-area-inset-bottom)]">
-          <Flex direction="col" align="center" className="w-full max-w-[375px] px-[20px]">
+          <Flex
+            direction="col"
+            align="center"
+            className="w-full max-w-[375px] px-[20px]"
+          >
             {/* 모바일: 카드 일러스트 / 데스크탑: QR 코드 */}
             <div className="sm:hidden">
               <CardIllustration />
@@ -95,14 +101,10 @@ function BridgePage() {
               className="mt-[20px] cursor-pointer bg-transparent sm:mt-[30px]"
             >
               <span className="text-gray-800 underline sm:hidden">
-                <Typography variant="s5-semibold" as="span">
-                  웹으로 계속하기
-                </Typography>
+                <Typography variant="s5-semibold">웹으로 계속하기</Typography>
               </span>
               <span className="hidden text-gray-800 underline sm:inline">
-                <Typography variant="s1-semibold" as="span">
-                  웹으로 계속하기
-                </Typography>
+                <Typography variant="s1-semibold">웹으로 계속하기</Typography>
               </span>
             </button>
           </Flex>

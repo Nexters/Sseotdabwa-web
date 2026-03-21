@@ -28,19 +28,15 @@ function HomePage() {
     navigate("/app");
   }, [navigate]);
 
-  const handleMyVoteTab = useCallback(() => {
-    navigate("/app");
-  }, [navigate]);
-
   return (
-    <div className="app-layout flex w-full justify-center">
+    <div className="app-layout flex w-full justify-center h-[100svh]">
       <div className="app-bridge hidden max-w-[412px] sticky top-0 self-start h-[100svh] h-[100dvh]">
         <AppBridgeBanner />
       </div>
 
       <div ref={containerRef} className="relative w-full max-w-[540px]">
-        <div className="bg-white pb-[env(safe-area-inset-bottom)]">
-          <Tabs defaultValue="vote-feed">
+        <div className="bg-white pb-[env(safe-area-inset-bottom)] h-full">
+          <Tabs defaultValue="vote-feed" className="h-full">
             <div className="sticky top-0 z-10 bg-white">
               {/* App Bridge Banner */}
               <BridgeBanner onAppClick={handleAppClick} />
@@ -48,13 +44,6 @@ function HomePage() {
               <TabsList className="pl-[20px]">
                 <TabsTrigger value="vote-feed" className="px-[4px] py-[12px]">
                   투표 피드
-                </TabsTrigger>
-                <TabsTrigger
-                  value="my-vote"
-                  className="px-[4px] py-[12px]"
-                  onClick={handleMyVoteTab}
-                >
-                  내 투표
                 </TabsTrigger>
               </TabsList>
               <Divider size="small" className="bg-gray-100" />
