@@ -1,16 +1,16 @@
 import {
   Component,
-  type ErrorInfo,
-  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
+  type ErrorInfo,
+  type ReactNode,
 } from "react";
 
-import { useInfiniteGetFeedList } from "@/api/feeds/use-infinite-feed-list";
 import { ApiError } from "@/api/api-error";
+import { useInfiniteGetFeedList } from "@/api/feeds/use-infinite-feed-list";
 import {
   GetFeedListFeedStatus,
   VoteRequestChoice,
@@ -19,15 +19,14 @@ import {
   type VoteResponse,
 } from "@/api/model";
 import { useGuestVote } from "@/api/votes/votes";
+import { Button } from "@/components/ui/button";
 import { Divider } from "@/components/ui/divider";
-import { Stack } from "@/components/ui/flex";
 import { FeedCard } from "@/components/ui/feed-card";
 import { FeedCardSkeleton } from "@/components/ui/feed-card-skeleton";
-import { PreRegisterBanner } from "@/components/ui/pre-register-banner";
-import { Button } from "@/components/ui/button";
+import { Stack } from "@/components/ui/flex";
 import { Typography } from "@/components/ui/typography";
-import { usePreRegister } from "@/pages/pre-register/components/pre-register-provider";
 import { getHasVoted, setHasVoted } from "@/lib/pre-register";
+import { AppBanner } from "./ui/app-banner";
 
 function formatTimeAgo(createdAt?: string) {
   if (!createdAt) return undefined;
@@ -201,7 +200,6 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
     },
   });
   const { mutate: guestVote } = useGuestVote();
-  const { open: openPreRegister } = usePreRegister();
   const preRegisterTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
@@ -278,9 +276,6 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
 
           if (!getHasVoted()) {
             setHasVoted();
-            preRegisterTimerRef.current = setTimeout(() => {
-              openPreRegister();
-            }, 1500);
           }
         },
         onError: (err) => {
@@ -371,7 +366,7 @@ function FeedContentBody({ filter }: { filter: FeedFilter }) {
             />
             {showBannerAfter && (
               <>
-                <PreRegisterBanner onClick={openPreRegister} />
+                <AppBanner />
                 <Divider size="small" className="bg-gray-100" />
               </>
             )}
