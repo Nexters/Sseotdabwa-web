@@ -29,14 +29,14 @@ function HomePage() {
   }, [navigate]);
 
   return (
-    <div className="app-layout flex w-full justify-center h-[100svh]">
-      <div className="app-bridge hidden max-w-[412px] sticky top-0 self-start h-[100svh] h-[100dvh]">
+    <div className="app-layout flex w-full justify-center">
+      <div className="app-bridge sticky top-0 hidden h-[100svh] h-[100dvh] max-w-[412px] self-start">
         <AppBridgeBanner />
       </div>
 
       <div ref={containerRef} className="relative w-full max-w-[540px]">
-        <div className="bg-white pb-[env(safe-area-inset-bottom)] h-full">
-          <Tabs defaultValue="vote-feed" className="h-full">
+        <div className="bg-white pb-[env(safe-area-inset-bottom)]">
+          <Tabs defaultValue="vote-feed">
             <div className="sticky top-0 z-10 bg-white">
               {/* App Bridge Banner */}
               <BridgeBanner onAppClick={handleAppClick} />

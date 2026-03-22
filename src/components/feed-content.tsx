@@ -77,7 +77,7 @@ function FeedContentErrorFallback({ onRetry }: { onRetry: () => void }) {
   return (
     <div
       data-slot="feed-content-error"
-      className="flex w-full flex-col items-center justify-center px-5 h-full"
+      className="flex min-h-[calc(100svh-200px)] w-full flex-col items-center justify-center px-5"
     >
       <div className="flex flex-col items-center gap-4">
         <div className="pt-[10px] pr-[20px] pb-[10px] pl-[16px]">
