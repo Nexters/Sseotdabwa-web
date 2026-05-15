@@ -46,14 +46,8 @@ function BridgePage() {
 
   useEffect(() => {
     const needRedirect = searchParams.get("redirect") === "true";
-    const ua = window.navigator.userAgent.toLowerCase();
-    const isMobile =
-      ua.includes("android") ||
-      ua.includes("iphone") ||
-      ua.includes("ipad") ||
-      ua.includes("ipod");
 
-    if (needRedirect || isMobile) {
+    if (needRedirect) {
       handleOpenApp();
       navigate("/app", { replace: true });
     }
