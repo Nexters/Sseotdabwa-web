@@ -1,30 +1,26 @@
 import * as React from "react";
 
-import { Typography } from "@/components/ui/typography";
+import { APP_STORE_URL, GOOGLE_PLAY_URL } from "@/constants/app-url";
 
-function getTargetFromUserAgent(userAgent: string) {
+function getStoreUrl(userAgent: string): string | null {
   const ua = userAgent.toLowerCase();
 
-  if (ua.includes("android")) return "Google Play로 이동";
+  if (ua.includes("android")) return GOOGLE_PLAY_URL;
   if (ua.includes("iphone") || ua.includes("ipad") || ua.includes("ipod")) {
-    return "App Store로 이동";
+    return APP_STORE_URL;
   }
-  return "desktop!!!";
+  return null;
 }
 
 function AppRoutePage() {
-  const target = React.useMemo(
-    () => getTargetFromUserAgent(window.navigator.userAgent),
-    [],
-  );
+  React.useEffect(() => {
+    const url = getStoreUrl(window.navigator.userAgent);
+    if (url) {
+      window.location.replace(url);
+    }
+  }, []);
 
-  return (
-    <div className="flex min-h-[100svh] min-h-[100dvh] items-center justify-center bg-gray-100 px-5">
-      <Typography variant="h2-bold" className="text-gray-900 text-center">
-        {target}
-      </Typography>
-    </div>
-  );
+  return null;
 }
 
 export default AppRoutePage;
